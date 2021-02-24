@@ -5,10 +5,11 @@ using Domain.Enums;
 
 namespace Domain.Entities
 {
-  public class Account
+  public class Account : AuditableEntity
   {
     public int ID { get; set;}
+    public string Name { get; set; }
+    public string Tlf { get; set; }
     public ICollection<int> UserIDs { get; set; }
-    public virtual ICollection<Schema> Schemas { get; set; }
   }
 }

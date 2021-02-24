@@ -9,8 +9,9 @@ class AuditableEntity {
 
 class Account {
   ID
+  Name
+  Tlf
   UserIDs
-  Schemas
 }
 
 class User {
@@ -18,7 +19,7 @@ class User {
   AccountID
   Email
   Password
-  Roles
+  Role
   Name
   Address
   Tlf
@@ -38,19 +39,13 @@ class Address {
   StreetNumber
   PostCode
   City
-  'Country er vel Danmark
   Country
 }
 
-class Schema {
-  'TODO...
-}
-
 User <|- AuditableEntity
-Schema <|- AuditableEntity
+Account <|- AuditableEntity
 Account "1"-->"1..*" User
-User "1"-->"1..*" Role
-User "1"-->"0..*" Schema
+User "1"-->"1" Role
 User "1"-->"1" Address
 
 @enduml

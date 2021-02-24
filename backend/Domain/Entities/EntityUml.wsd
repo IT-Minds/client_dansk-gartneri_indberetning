@@ -21,10 +21,10 @@ class User {
   Password
   Role
   Name
-  Address
+  Address1
+  Address2
   Tlf
   CVRNumber
-  SENumber
 }
 
 enum Role {
@@ -46,6 +46,6 @@ User <|- AuditableEntity
 Account <|- AuditableEntity
 Account "1"-->"1..*" User
 User "1"-->"1" Role
-User "1"-->"1" Address
+User "1"-->"1..2" Address
 
 @enduml

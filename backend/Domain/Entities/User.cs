@@ -11,9 +11,9 @@ namespace Domain.Entities
     public string Password { get; set; }
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
-    public virtual Address Address { get; set; }
+    public virtual Address Address1 { get; set; }
+    public virtual Address Address2 { get; set; }
     public string Tlf { get; set; }
     public int CVRNumber { get; set; }
-    public int SENumber { get; set; }
   }
 }

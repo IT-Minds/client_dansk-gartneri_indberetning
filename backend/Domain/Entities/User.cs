@@ -9,7 +9,7 @@ namespace Domain.Entities
     public int AccountID { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public ICollection<Role> Roles { get; set; }
+    public RoleEnum Role { get; set; }
     public string Name { get; set; }
     public virtual Address Address { get; set; }
     public string Tlf { get; set; }

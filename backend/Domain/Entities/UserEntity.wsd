@@ -1,0 +1,56 @@
+@startuml
+
+class AuditableEntity {
+  CreatedBy
+  Created
+  LastModifiedBy
+  LastModified
+}
+
+class Account {
+  ID
+  UserIDs
+  Schemas
+}
+
+class User {
+  ID
+  AccountID
+  Email
+  Password
+  Roles
+  Name
+  Address
+  Tlf
+  CVRNumber
+  SENumber
+}
+
+enum Role {
+  ADMIN
+  ACCOUNTANT
+  USER
+}
+
+class Address {
+  UserID
+  StreetName
+  StreetNumber
+  PostCode
+  City
+  'Country er vel Danmark
+  Country
+}
+
+class Schema {
+  'TODO...
+}
+
+User <|- AuditableEntity
+Schema <|- AuditableEntity
+Account "1"-->"1..*" User
+User "1"-->"1..*" Role
+User "1"-->"0..*" Schema
+User "1"-->"1" Address
+
+@enduml

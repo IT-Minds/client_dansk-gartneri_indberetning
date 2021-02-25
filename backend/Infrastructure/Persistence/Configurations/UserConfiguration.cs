@@ -8,17 +8,28 @@ namespace Infrastructure.Persistence.Configurations
   {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-      builder.Property(e => e.Name)
-          .HasMaxLength(200)
-          .IsRequired();
-
       builder.HasOne<Account>(e => e.Account)
           .WithMany(e => e.Users)
-          .HasForeignKey(e => e.AccountID)
+          .HasForeignKey(e => e.AccountId)
           .IsRequired(true);
+
+      builder.Property(e => e.Email)
+          .HasMaxLength(320)
+          .IsRequired();
 
       builder.HasIndex(e => e.Email)
           .IsUnique();
+
+      builder.Property(e => e.Role)
+          .IsRequired();
+
+      builder.Property(e => e.Name)
+          .HasMaxLength(200)
+          .IsRequired();
+      
+      
+
+      
     }
   }
 }

@@ -1,19 +1,22 @@
 using Domain.Common;
 using Domain.Enums;
+using System;
 
 namespace Domain.Entities
 {
   public class User : AuditableEntity
   {
     public int Id { get; set; }
-    public int AccountID { get; set; }
+    public int AccountId { get; set; }
+    public virtual Account Account { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
-    public virtual Address Address { get; set; }
-    public string Tlf { get; set; }
+    public virtual Address Address1 { get; set; }
+    public virtual Address Address2 { get; set; }
+    public string Tel { get; set; }
     public int CVRNumber { get; set; }
-    public int SENumber { get; set; }
+    public DateTimeOffset? DeactivationTime { get; set; }
   }
 }

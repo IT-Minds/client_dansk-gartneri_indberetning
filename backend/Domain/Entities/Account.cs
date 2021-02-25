@@ -1,15 +1,16 @@
 
 using System.Collections.Generic;
 using Domain.Common;
-using Domain.Enums;
+using System;
 
 namespace Domain.Entities
 {
   public class Account : AuditableEntity
   {
-    public int ID { get; set;}
+    public int Id { get; set;}
     public string Name { get; set; }
-    public string Tlf { get; set; }
-    public ICollection<int> UserIDs { get; set; }
+    public string Tel { get; set; }
+    public virtual ICollection<User> Users { get; set; }
+    public DateTimeOffset? DeactivationTime { get; set; }
   }
 }

@@ -8,33 +8,35 @@ class AuditableEntity {
 }
 
 class Account {
-  ID
+  Id
   Name
-  Tlf
-  UserIDs
+  Tel
+  Users
+  DeactivationTime
 }
 
 class User {
-  ID
-  AccountID
+  Id
+  AccountId
   Email
   Password
   Role
   Name
-  Address
-  Tlf
+  Address1
+  Address2
+  Tel
   CVRNumber
-  SENumber
+  DeactivationTime
 }
 
 enum Role {
-  ADMIN
-  ACCOUNTANT
-  USER
+  Admin
+  Accountant
+  User
 }
 
 class Address {
-  UserID
+  UserId
   StreetName
   StreetNumber
   PostCode
@@ -42,10 +44,9 @@ class Address {
   Country
 }
 
-User <|- AuditableEntity
-Account <|- AuditableEntity
-Account "1"-->"1..*" User
-User "1"-->"1" Role
-User "1"-->"1" Address
+User -|> AuditableEntity
+Account -|> AuditableEntity
+Account "1"-->"0..*" User
+User "1"-->"1..2" Address
 
 @enduml

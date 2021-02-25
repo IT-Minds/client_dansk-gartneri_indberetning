@@ -6,7 +6,7 @@ namespace Domain.Entities
   public class User : AuditableEntity
   {
     public int Id { get; set; }
-    public int AccountID { get; set; }
+    public int AccountId { get; set; }
     public virtual Account Account { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }

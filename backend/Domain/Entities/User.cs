@@ -17,6 +17,6 @@ namespace Domain.Entities
     public virtual Address Address2 { get; set; }
     public string Tel { get; set; }
     public int CVRNumber { get; set; }
-    public DateTimeOffset DeactivationTime { get; set; }
+    public DateTimeOffset? DeactivationTime { get; set; }
   }
 }

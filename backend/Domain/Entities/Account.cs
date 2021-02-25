@@ -9,7 +9,7 @@ namespace Domain.Entities
   {
     public int ID { get; set;}
     public string Name { get; set; }
-    public string Tlf { get; set; }
-    public ICollection<int> UserIDs { get; set; }
+    public string Tel { get; set; }
+    public virtual ICollection<User> Users { get; set; }
   }
 }

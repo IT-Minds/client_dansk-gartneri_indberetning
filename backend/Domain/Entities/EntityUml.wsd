@@ -10,7 +10,7 @@ class AuditableEntity {
 class Account {
   ID
   Name
-  Tlf
+  Tel
   UserIDs
 }
 
@@ -23,7 +23,7 @@ class User {
   Name
   Address1
   Address2
-  Tlf
+  Tel
   CVRNumber
 }
 
@@ -42,10 +42,9 @@ class Address {
   Country
 }
 
-User <|- AuditableEntity
-Account <|- AuditableEntity
-Account "1"-->"1..*" User
-User "1"-->"1" Role
+User -|> AuditableEntity
+Account -|> AuditableEntity
+Account "1"-->"0..*" User
 User "1"-->"1..2" Address
 
 @enduml

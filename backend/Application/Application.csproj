@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\" />
+    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
 </Project>

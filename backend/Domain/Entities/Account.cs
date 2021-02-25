@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 using Domain.Common;
-using Domain.Enums;
+using System;
 
 namespace Domain.Entities
 {
@@ -11,5 +11,6 @@ namespace Domain.Entities
     public string Name { get; set; }
     public string Tel { get; set; }
     public virtual ICollection<User> Users { get; set; }
+    public DateTimeOffset DeactivationTime { get; set; }
   }
 }

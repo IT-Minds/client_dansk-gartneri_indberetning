@@ -8,15 +8,16 @@ class AuditableEntity {
 }
 
 class Account {
-  ID
+  Id
   Name
   Tel
-  UserIDs
+  Users
+  DeactivationTime
 }
 
 class User {
-  ID
-  AccountID
+  Id
+  AccountId
   Email
   Password
   Role
@@ -25,16 +26,17 @@ class User {
   Address2
   Tel
   CVRNumber
+  DeactivationTime
 }
 
 enum Role {
-  ADMIN
-  ACCOUNTANT
-  USER
+  Admin
+  Accountant
+  User
 }
 
 class Address {
-  UserID
+  UserId
   StreetName
   StreetNumber
   PostCode

@@ -5,18 +5,6 @@ namespace Domain.Entities
 {
   public class User : BaseUser
   {
-    private RoleEnum _role;
-
-    public override RoleEnum Role
-    {
-      get => _role;
-      set
-      {
-        if (value == RoleEnum.Admin)
-          throw new ArgumentException("A User (client or accountant) may not be an admin");
-        _role = value;
-      }
-    }
     public int AccountId { get; set; }
     public virtual Account Account { get; set; }
 

@@ -30,5 +30,8 @@ namespace Application.UnitTests
   }
 
   [CollectionDefinition("QueryTests")]
-  public class QueryCollection : ICollectionFixture<QueryTestFixture> { }
+  public class QueryCollection : ICollectionFixture<QueryTestFixture>
+  {
+
+  }
 }

@@ -27,7 +27,7 @@ namespace Infrastructure.Persistence.Configurations
       builder.Property(e => e.Role)
           .IsRequired();
 
-      builder.Property(e => e.Name)
+        builder.Property(e => e.Name)
           .HasMaxLength(200)
           .IsRequired();
 

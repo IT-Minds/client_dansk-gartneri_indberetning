@@ -69,7 +69,6 @@ namespace Application.UnitTests
       context.Users.AddRange(
         new User { Id = 1, AccountId = 1, Account = account1, Email= "carrots@carrots.dk", Password  = "Pa$$w0rd", Role = RoleEnum.Client, Name = "CarrotFarm client", Tel = "59284756", Address1 = address1, Address1Id = address1.Id},
         new User { Id = 2, AccountId = 1, Account = account1, Email = "carrotsaccountant@carrots.dk", Password = "Pa$$w0rd", Role = RoleEnum.Accountant, Name = "CarrotFarm accountant", Tel = "47386947", Address1 = address1, Address1Id = address1.Id },
-        new User { Id = 3, Email = "admin@admin.dk", Password = "Pa$$w0rd", Role = RoleEnum.Admin, Name = "Admin", Tel = "34865766" },
         new User { Id = 4, AccountId = 2, Account = account2, Email = "mushroom@mushrooms.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "Mushroom client", Tel = "37489634", Address1 = address2, Address1Id = address2.Id }
       );
 

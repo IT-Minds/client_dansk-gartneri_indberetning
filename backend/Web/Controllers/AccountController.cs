@@ -7,7 +7,7 @@ using Application.Accounts.Queries.GetClientsQuery;
 namespace Web.Controllers
 {
 
-  public class UserController : ApiControllerBase
+  public class AccountController : ApiControllerBase
   {
     [HttpGet]
     public async Task<ActionResult<List<AccountDto>>> GetAllClients()

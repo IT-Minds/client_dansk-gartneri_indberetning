@@ -15,13 +15,6 @@ namespace Infrastructure.Persistence.Configurations
           .WithMany(e => e.Users)
           .HasForeignKey(e => e.AccountId)
           .IsRequired(true);
-
-      builder.HasOne<Address>(e => e.Address1);
-
-      builder.HasOne<Address>(e => e.Address2);
-
-      builder.Property(e=> e.CVRNumber)
-          .IsRequired(); 
     }
   }
 }

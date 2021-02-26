@@ -20,16 +20,16 @@ class Account {
   Id
   Name
   Tel
+  Email
+  Address1
+  Address2
+  CVRNumber
   Users
   DeactivationTime
 }
 
 class User {
   AccountId
-  Address1
-  Address2
-  Tel
-  CVRNumber
 }
 
 enum Role {

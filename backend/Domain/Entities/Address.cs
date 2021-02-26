@@ -1,15 +1,14 @@
 using Domain.Common;
 using Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities
 {
   public class Address
   {
-    public virtual User User { get; set; }
-    public int UserId { get; set; }
-    
+    public int Id { get; set; }
     public string StreetName { get; set; }
-    public string StreetNumber { get; set;}
+    public string StreetNumber { get; set; }
     public string PostCode { get; set; }
     public string City { get; set; }
     public string Country { get; set; }

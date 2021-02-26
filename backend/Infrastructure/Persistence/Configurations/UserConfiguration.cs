@@ -31,6 +31,10 @@ namespace Infrastructure.Persistence.Configurations
           .HasMaxLength(200)
           .IsRequired();
 
+      builder.HasOne<Address>(e => e.Address1);
+
+      builder.HasOne<Address>(e => e.Address2);
+
       builder.Property(e=> e.CVRNumber)
           .IsRequired(); 
     }

@@ -1,6 +1,5 @@
 using Domain.Common;
 using Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities
 {

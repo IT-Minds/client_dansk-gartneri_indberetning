@@ -9,11 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Enums;
 
-namespace Application.Users.Queries.GetClientsQuery
+namespace Application.Accounts.Queries.GetClientsQuery
 {
-  public class GetClientsQuery : IRequest<List<UserDto>>
+  public class GetClientsQuery : IRequest<List<AccountDto>>
   {
-    public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, List<UserDto>>
+    public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, List<AccountDto>>
     {
       private readonly IApplicationDbContext _context;
       private readonly IMapper _mapper;
@@ -23,11 +23,11 @@ namespace Application.Users.Queries.GetClientsQuery
         _context = context;
         _mapper = mapper;
       }
-      public async Task<List<UserDto>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
+      public async Task<List<AccountDto>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
       {
-        var viewModel = await _context.Users
-          .Where(user => user.Role == RoleEnum.Client)
-          .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+        var viewModel = await _context.Accounts
+          .Include(x => x.Users.Where(user => user.Role == RoleEnum.Client))
+          .ProjectTo<AccountDto>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
 
         return viewModel;

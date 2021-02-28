@@ -12,7 +12,6 @@ namespace Web.Controllers
     [HttpGet]
     public async Task<ActionResult<List<AccountDto>>> GetAllClients()
     {
-      return await Mediator.Send(new GetAccountsQuery());
     }
 
   }

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Accounts;
-using Application.Accounts.Queries.GetClientsQuery;
+using Application.Accounts.Queries.GetAccountsQuery;
 
 namespace Web.Controllers
 {
@@ -12,7 +12,7 @@ namespace Web.Controllers
     [HttpGet]
     public async Task<ActionResult<List<AccountDto>>> GetAllClients()
     {
-      return await Mediator.Send(new GetClientsQuery());
+      return await Mediator.Send(new GetAccountsQuery());
     }
 
   }

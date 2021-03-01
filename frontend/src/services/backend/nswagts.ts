@@ -555,6 +555,7 @@ export class HealthClient extends ClientBase implements IHealthClient {
     }
 }
 
+<<<<<<< HEAD
 export class AccountDto implements IAccountDto {
     name?: string | null;
     tel?: string | null;
@@ -597,6 +598,62 @@ export interface IAccountDto {
     name?: string | null;
     tel?: string | null;
     deactivationTime?: Date;
+=======
+export interface IUserClient {
+    getAllClients(): Promise<AccountDto[]>;
+}
+
+export class UserClient extends ClientBase implements IUserClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(configuration: AuthBase, baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        super(configuration);
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getAllClients(): Promise<AccountDto[]> {
+        let url_ = this.baseUrl + "/api/User";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetAllClients(_response));
+        });
+    }
+
+    protected processGetAllClients(response: Response): Promise<AccountDto[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(AccountDto.fromJS(item));
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<AccountDto[]>(<any>null);
+    }
+>>>>>>> 87c46e9 (Create query and controller endpoint to get all clients.)
 }
 
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {
@@ -827,6 +884,50 @@ export class ExampleParentDto implements IExampleParentDto {
 
 export interface IExampleParentDto {
     name?: string | null;
+}
+
+export class AccountDto implements IAccountDto {
+    name?: string | null;
+    tel?: string | null;
+    deactivationTime?: Date;
+
+    constructor(data?: IAccountDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AccountDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AccountDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        return data; 
+    }
+}
+
+export interface IAccountDto {
+    name?: string | null;
+    tel?: string | null;
+    deactivationTime?: Date;
 }
 
 export enum CommandErrorCode {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Persistence.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -26,6 +26,16 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("Address1Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Address2Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CVRNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -34,6 +44,10 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<DateTimeOffset?>("DeactivationTime")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset?>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -52,6 +66,17 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Address1Id")
+                        .IsUnique()
+                        .HasFilter("[Address1Id] IS NOT NULL");
+
+                    b.HasIndex("Address2Id")
+                        .IsUnique()
+                        .HasFilter("[Address2Id] IS NOT NULL");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Accounts");
                 });
 
@@ -61,6 +86,9 @@ namespace Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -83,6 +111,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Addresses");
                 });
@@ -151,15 +181,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Address1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Address2Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CVRNumber")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -190,21 +211,42 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("Address1Id");
-
-                    b.HasIndex("Address2Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Account", b =>
+                {
+                    b.HasOne("Domain.Entities.Address", "Address1")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Account", "Address1Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.Address", "Address2")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Account", "Address2Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Address1");
+
+                    b.Navigation("Address2");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Address", b =>
+                {
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
@@ -226,23 +268,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Address", "Address1")
-                        .WithMany()
-                        .HasForeignKey("Address1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Address", "Address2")
-                        .WithMany()
-                        .HasForeignKey("Address2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Account");
-
-                    b.Navigation("Address1");
-
-                    b.Navigation("Address2");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account", b =>

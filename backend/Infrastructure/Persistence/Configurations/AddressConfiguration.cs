@@ -8,22 +8,20 @@ namespace Infrastructure.Persistence.Configurations
   {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-      builder.HasKey(e => e.Id);
-
       builder.Property(e => e.StreetName)
-          .IsRequired();
+        .IsRequired();
 
       builder.Property(e => e.StreetNumber)
-          .IsRequired();
-      
+        .IsRequired();
+
       builder.Property(e => e.PostCode)
-          .IsRequired();
-      
+        .IsRequired();
+
       builder.Property(e => e.City)
-          .IsRequired();
+        .IsRequired();
 
       builder.Property(e => e.Country)
-          .IsRequired();
+        .IsRequired();
     }
   }
 }

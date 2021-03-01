@@ -11,5 +11,7 @@ namespace Domain.Entities
     public string PostCode { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
+    public int AccountId { get; set; }
+    public virtual Account Account { get; set; }
   }
 }

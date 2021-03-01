@@ -755,12 +755,20 @@ export class AccountDto implements IAccountDto {
     address2Id?: number;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
+    users?: UserDto[] | null;
 
     constructor(data?: IAccountDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
+            }
+            if (data.users) {
+                this.users = [];
+                for (let i = 0; i < data.users.length; i++) {
+                    let item = data.users[i];
+                    this.users[i] = item && !(<any>item).toJSON ? new UserDto(item) : <UserDto>item;
+                }
             }
         }
     }
@@ -774,6 +782,11 @@ export class AccountDto implements IAccountDto {
             this.address2Id = _data["address2Id"] !== undefined ? _data["address2Id"] : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
             this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+            if (Array.isArray(_data["users"])) {
+                this.users = [] as any;
+                for (let item of _data["users"])
+                    this.users!.push(UserDto.fromJS(item));
+            }
         }
     }
 
@@ -793,6 +806,11 @@ export class AccountDto implements IAccountDto {
         data["address2Id"] = this.address2Id !== undefined ? this.address2Id : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
         data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        if (Array.isArray(this.users)) {
+            data["users"] = [];
+            for (let item of this.users)
+                data["users"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -805,6 +823,61 @@ export interface IAccountDto {
     address2Id?: number;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
+    users?: IUserDto[] | null;
+}
+
+export class UserDto implements IUserDto {
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
+
+    constructor(data?: IUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["role"] = this.role !== undefined ? this.role : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserDto {
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
+}
+
+export enum RoleEnum {
+    Admin = 0,
+    Accountant = 1,
+    Client = 2,
 }
 
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {

@@ -555,15 +555,14 @@ export class HealthClient extends ClientBase implements IHealthClient {
     }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> aaddbbb (Rename UserController to AccountController)
 export class AccountDto implements IAccountDto {
     name?: string | null;
+    email?: string | null;
     tel?: string | null;
+    address1Id?: number;
+    address2Id?: number;
+    cvrNumber?: string | null;
     deactivationTime?: Date;
-<<<<<<< HEAD
 
     constructor(data?: IAccountDto) {
         if (data) {
@@ -577,7 +576,11 @@ export class AccountDto implements IAccountDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
+            this.address1Id = _data["address1Id"] !== undefined ? _data["address1Id"] : <any>null;
+            this.address2Id = _data["address2Id"] !== undefined ? _data["address2Id"] : <any>null;
+            this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
             this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
         }
     }
@@ -592,7 +595,11 @@ export class AccountDto implements IAccountDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
+        data["address1Id"] = this.address1Id !== undefined ? this.address1Id : <any>null;
+        data["address2Id"] = this.address2Id !== undefined ? this.address2Id : <any>null;
+        data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
         data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
         return data; 
     }
@@ -600,57 +607,11 @@ export class AccountDto implements IAccountDto {
 
 export interface IAccountDto {
     name?: string | null;
+    email?: string | null;
     tel?: string | null;
-    deactivationTime?: Date;
-=======
-export interface IUserClient {
-    getAllClients(): Promise<AccountDto[]>;
-}
-
-export class UserClient extends ClientBase implements IUserClient {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-=======
->>>>>>> aaddbbb (Rename UserController to AccountController)
-
-    constructor(data?: IAccountDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
-            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AccountDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new AccountDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
-        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
-        return data; 
-    }
->>>>>>> 87c46e9 (Create query and controller endpoint to get all clients.)
-}
-
-export interface IAccountDto {
-    name?: string | null;
-    tel?: string | null;
+    address1Id?: number;
+    address2Id?: number;
+    cvrNumber?: string | null;
     deactivationTime?: Date;
 }
 

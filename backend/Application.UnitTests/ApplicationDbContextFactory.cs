@@ -58,8 +58,8 @@ namespace Application.UnitTests
         address2
       );
 
-      var account1 = new Account {Id = 1, Name = "CarrotFarm account", Email = "carrots@carrots.dk", Tel = "59284756", Address1Id = 1, Address1 = address1, CVRNumber = 10356245};
-      var account2 = new Account {Id = 2, Name = "Mushroom account", Email = "mushroom@mushrooms.dk", Tel = "64756453", Address1Id = 2, Address1 = address2, CVRNumber = 10356457 };
+      var account1 = new Account {Id = 1, Name = "CarrotFarm account", Email = "carrots@carrots.dk", Tel = "59284756", Address1Id = 1, Address1 = address1, CVRNumber = "10356245"};
+      var account2 = new Account {Id = 2, Name = "Mushroom account", Email = "mushroom@mushrooms.dk", Tel = "64756453", Address1Id = 2, Address1 = address2, CVRNumber = "10356457" };
 
       context.Accounts.AddRange(
           account1,
@@ -69,7 +69,7 @@ namespace Application.UnitTests
       context.Users.AddRange(
         new User { Id = 1, AccountId = 1, Account = account1, Email= "carrots@carrots.dk", Password  = "Pa$$w0rd", Role = RoleEnum.Client},
         new User { Id = 2, AccountId = 1, Account = account1, Email = "carrotsaccountant@carrots.dk", Password = "Pa$$w0rd", Role = RoleEnum.Accountant, Name = "CarrotFarm accountant"},
-        new User { Id = 4, AccountId = 2, Account = account2, Email = "mushroom@mushrooms.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "Mushroom client"}
+        new User { Id = 3, AccountId = 2, Account = account2, Email = "mushroom@mushrooms.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "Mushroom client"}
       );
 
       context.SaveChanges();

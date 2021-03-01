@@ -126,6 +126,7 @@ export class ClientBase {
 }
 
 export interface IAccountClient {
+    createChild(command: CreateUserCommand): Promise<number>;
     getAllClients(): Promise<AccountDto[]>;
 }
 
@@ -138,6 +139,46 @@ export class AccountClient extends ClientBase implements IAccountClient {
         super(configuration);
         this.http = http ? http : <any>window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    createChild(command: CreateUserCommand): Promise<number> {
+        let url_ = this.baseUrl + "/api/Account";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processCreateChild(_response));
+        });
+    }
+
+    protected processCreateChild(response: Response): Promise<number> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<number>(<any>null);
     }
 
     getAllClients(): Promise<AccountDto[]> {
@@ -553,6 +594,171 @@ export class HealthClient extends ClientBase implements IHealthClient {
         }
         return Promise.resolve<boolean>(<any>null);
     }
+}
+
+export class CreateUserCommand implements ICreateUserCommand {
+    user?: UserDto | null;
+
+    constructor(data?: ICreateUserCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CreateUserCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUserCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ICreateUserCommand {
+    user?: IUserDto | null;
+}
+
+export class UserDto implements IUserDto {
+    accountId?: number;
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    address1?: AddressDto | null;
+    address2?: AddressDto | null;
+    tel?: string | null;
+    cvrNumber?: number;
+    deactivationTime?: Date | null;
+
+    constructor(data?: IUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.address1 = data.address1 && !(<any>data.address1).toJSON ? new AddressDto(data.address1) : <AddressDto>this.address1; 
+            this.address2 = data.address2 && !(<any>data.address2).toJSON ? new AddressDto(data.address2) : <AddressDto>this.address2; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
+            this.address2 = _data["address2"] ? AddressDto.fromJS(_data["address2"]) : <any>null;
+            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
+            this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["role"] = this.role !== undefined ? this.role : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
+        data["address2"] = this.address2 ? this.address2.toJSON() : <any>null;
+        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
+        data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserDto {
+    accountId?: number;
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    address1?: IAddressDto | null;
+    address2?: IAddressDto | null;
+    tel?: string | null;
+    cvrNumber?: number;
+    deactivationTime?: Date | null;
+}
+
+export enum RoleEnum {
+    Admin = 0,
+    Accountant = 1,
+    Client = 2,
+}
+
+export class AddressDto implements IAddressDto {
+    streetName?: string | null;
+    streetNumber?: string | null;
+    postCode?: string | null;
+    city?: string | null;
+    country?: string | null;
+
+    constructor(data?: IAddressDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.streetName = _data["streetName"] !== undefined ? _data["streetName"] : <any>null;
+            this.streetNumber = _data["streetNumber"] !== undefined ? _data["streetNumber"] : <any>null;
+            this.postCode = _data["postCode"] !== undefined ? _data["postCode"] : <any>null;
+            this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
+            this.country = _data["country"] !== undefined ? _data["country"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AddressDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddressDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["streetName"] = this.streetName !== undefined ? this.streetName : <any>null;
+        data["streetNumber"] = this.streetNumber !== undefined ? this.streetNumber : <any>null;
+        data["postCode"] = this.postCode !== undefined ? this.postCode : <any>null;
+        data["city"] = this.city !== undefined ? this.city : <any>null;
+        data["country"] = this.country !== undefined ? this.country : <any>null;
+        return data; 
+    }
+}
+
+export interface IAddressDto {
+    streetName?: string | null;
+    streetNumber?: string | null;
+    postCode?: string | null;
+    city?: string | null;
+    country?: string | null;
 }
 
 export class AccountDto implements IAccountDto {

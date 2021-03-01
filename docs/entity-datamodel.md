@@ -7,7 +7,7 @@ class AuditableEntity {
   LastModified
 }
 
-abstract class BaseUser {
+interface IUser {
   Id
   Email
   Password
@@ -46,8 +46,8 @@ class Address {
   Country
 }
 
-BaseUser -|> AuditableEntity
-User -|> BaseUser
+User -|> IUser
+User -|> AuditableEntity
 Account -|> AuditableEntity
 Account "1"-->"0..*" User
 User "1"-->"1..2" Address

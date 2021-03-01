@@ -15,7 +15,7 @@ namespace Application.Accounts
     public DateTimeOffset? DeactivationTime { get; set; }
     public void Mapping(Profile profile)
     {
-      profile.CreateMap<User, UserDto>();
+      profile.CreateMap<BaseUser, UserDto>();
     }
   }
 }

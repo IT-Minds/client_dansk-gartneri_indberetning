@@ -14,10 +14,6 @@ namespace Application.Accounts
     public int Address1Id { get; set; }
     public int Address2Id { get; set; }
     public string CVRNumber { get; set; }
-    public DateTimeOffset DeactivationTime { get; set; }
-    public void Mapping(Profile profile)
-    {
-      profile.CreateMap<Account, AccountDto>();
-    }
+    public DateTimeOffset? DeactivationTime { get; set; }
   }
 }

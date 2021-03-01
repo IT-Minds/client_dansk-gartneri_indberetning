@@ -8,8 +8,6 @@ namespace Infrastructure.Persistence.Configurations
   {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-      builder.HasKey(e => e.Id);
-
       builder.Property(e => e.StreetName)
           .IsRequired();
 

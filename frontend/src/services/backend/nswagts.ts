@@ -126,7 +126,7 @@ export class ClientBase {
 }
 
 export interface IAccountClient {
-    createChild(command: CreateUserCommand): Promise<number>;
+    createChild(command: CreateAccountCommand): Promise<number>;
     getAllClients(): Promise<AccountDto[]>;
 }
 
@@ -141,7 +141,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    createChild(command: CreateUserCommand): Promise<number> {
+    createChild(command: CreateAccountCommand): Promise<number> {
         let url_ = this.baseUrl + "/api/Account";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -596,55 +596,53 @@ export class HealthClient extends ClientBase implements IHealthClient {
     }
 }
 
-export class CreateUserCommand implements ICreateUserCommand {
-    user?: UserDto | null;
+export class CreateAccountCommand implements ICreateAccountCommand {
+    account?: CreateAccountDto | null;
 
-    constructor(data?: ICreateUserCommand) {
+    constructor(data?: ICreateAccountCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+            this.account = data.account && !(<any>data.account).toJSON ? new CreateAccountDto(data.account) : <CreateAccountDto>this.account; 
         }
     }
 
     init(_data?: any) {
         if (_data) {
-            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+            this.account = _data["account"] ? CreateAccountDto.fromJS(_data["account"]) : <any>null;
         }
     }
 
-    static fromJS(data: any): CreateUserCommand {
+    static fromJS(data: any): CreateAccountCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateUserCommand();
+        let result = new CreateAccountCommand();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["account"] = this.account ? this.account.toJSON() : <any>null;
         return data; 
     }
 }
 
-export interface ICreateUserCommand {
-    user?: IUserDto | null;
+export interface ICreateAccountCommand {
+    account?: ICreateAccountDto | null;
 }
 
-export class UserDto implements IUserDto {
-    accountId?: number;
+export class CreateAccountDto implements ICreateAccountDto {
     email?: string | null;
-    role?: RoleEnum;
+    password?: string | null;
     name?: string | null;
+    tel?: string | null;
     address1?: AddressDto | null;
     address2?: AddressDto | null;
-    tel?: string | null;
-    cvrNumber?: number;
-    deactivationTime?: Date | null;
+    cvrNumber?: string | null;
 
-    constructor(data?: IUserDto) {
+    constructor(data?: ICreateAccountDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -657,56 +655,44 @@ export class UserDto implements IUserDto {
 
     init(_data?: any) {
         if (_data) {
-            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
+            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
             this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
             this.address2 = _data["address2"] ? AddressDto.fromJS(_data["address2"]) : <any>null;
-            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
-            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
         }
     }
 
-    static fromJS(data: any): UserDto {
+    static fromJS(data: any): CreateAccountDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UserDto();
+        let result = new CreateAccountDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
         data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["role"] = this.role !== undefined ? this.role : <any>null;
+        data["password"] = this.password !== undefined ? this.password : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
         data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
         data["address2"] = this.address2 ? this.address2.toJSON() : <any>null;
-        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
-        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
         return data; 
     }
 }
 
-export interface IUserDto {
-    accountId?: number;
+export interface ICreateAccountDto {
     email?: string | null;
-    role?: RoleEnum;
+    password?: string | null;
     name?: string | null;
+    tel?: string | null;
     address1?: IAddressDto | null;
     address2?: IAddressDto | null;
-    tel?: string | null;
-    cvrNumber?: number;
-    deactivationTime?: Date | null;
-}
-
-export enum RoleEnum {
-    Admin = 0,
-    Accountant = 1,
-    Client = 2,
+    cvrNumber?: string | null;
 }
 
 export class AddressDto implements IAddressDto {
@@ -768,7 +754,7 @@ export class AccountDto implements IAccountDto {
     address1Id?: number;
     address2Id?: number;
     cvrNumber?: string | null;
-    deactivationTime?: Date;
+    deactivationTime?: Date | null;
 
     constructor(data?: IAccountDto) {
         if (data) {
@@ -818,7 +804,7 @@ export interface IAccountDto {
     address1Id?: number;
     address2Id?: number;
     cvrNumber?: string | null;
-    deactivationTime?: Date;
+    deactivationTime?: Date | null;
 }
 
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {

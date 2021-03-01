@@ -8,8 +8,6 @@ namespace Infrastructure.Persistence.Configurations
   {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
-      builder.HasKey(e => e.Id);
-
       builder.Property(e => e.Name)
           .HasMaxLength(200)
           .IsRequired();
@@ -25,10 +23,16 @@ namespace Infrastructure.Persistence.Configurations
 
       builder.HasMany<User>(e => e.Users)
         .WithOne(e => e.Account);
+   
+      builder.HasOne<Address>(e => e.Address1)
+        .WithOne()
+        .HasForeignKey<Account>(e => e.Address1Id)
+        .OnDelete(DeleteBehavior.Restrict);
 
-      builder.HasOne<Address>(e => e.Address1);
-
-      builder.HasOne<Address>(e => e.Address2);
+      builder.HasOne<Address>(e => e.Address2)
+        .WithOne()
+        .HasForeignKey<Account>(e => e.Address2Id)
+        .OnDelete(DeleteBehavior.Restrict);
 
       builder.Property(e => e.CVRNumber)
         .IsRequired();

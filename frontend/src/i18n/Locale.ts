@@ -24,5 +24,6 @@ export interface Locale {
     address1: string;
     address2: string;
     cvrNumber: string;
+    addAccount: string;
   };
 }

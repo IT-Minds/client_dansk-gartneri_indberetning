@@ -1,6 +1,18 @@
-import { Box, Button, Flex, Grid, Heading, IconButton, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Heading,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text
+} from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { BiSearch } from "react-icons/bi";
 
 interface Props {
   value: string;
@@ -14,7 +26,12 @@ const SearchFilterInput: FC<Props> = (props: Props) => {
   }, []);
 
   return (
-    <Input value={props.value} onChange={handleChange} placeholder={t("common.search")}></Input>
+    <InputGroup>
+      <InputLeftElement>
+        <BiSearch opacity="0.4" />
+      </InputLeftElement>
+      <Input value={props.value} onChange={handleChange} placeholder={t("common.search")}></Input>
+    </InputGroup>
   );
 };
 export default SearchFilterInput;

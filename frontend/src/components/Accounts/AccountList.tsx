@@ -82,9 +82,13 @@ const AccountList: FC<Props> = (props: Props) => {
 
   const searchFilter = useCallback(
     (acc: IAccountDto) => {
-      return Object.entries(acc)
-        .filter(([key, value]) => tableKeys.some(tKey => tKey.id == key))
-        .some(([key, value]) => (value + "").toUpperCase().startsWith(searchString.toUpperCase()));
+      return (
+        Object.entries(acc)
+          //Filter away accounts that should not show due to filtering with multiSelectBtn.
+          .filter(([key, value]) => tableKeys.some(tKey => tKey.id == key))
+          //Search for a value that starts with the search string.
+          .some(([key, value]) => (value + "").toUpperCase().startsWith(searchString.toUpperCase()))
+      );
     },
     [searchString, tableKeys]
   );

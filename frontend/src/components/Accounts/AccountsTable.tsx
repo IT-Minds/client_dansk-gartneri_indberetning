@@ -28,14 +28,14 @@ import SearchFilterInput from "./SearchFilterInput";
 interface Props {
   className?: string;
   data: IAccountDto[];
+  searchString: string;
 }
 
-const AccountList: FC<Props> = (props: Props) => {
+const AccountsTable: FC<Props> = (props: Props) => {
   const { t, locale, localeNameMap } = useLocales();
 
   const [sortKey, setSortKey] = useState<keyof IAccountDto>("id");
   const [sortDirection, setSortDirection] = useState("ASC");
-  const [searchString, setSearchString] = useState<string>("");
 
   const allKeyOptions: SelectType[] = [
     { name: t("accounts.id"), id: "id" },
@@ -56,7 +56,7 @@ const AccountList: FC<Props> = (props: Props) => {
     }
   }, []);
 
-  const sortCb = useCallback(
+  const sortComparer = useCallback(
     (a: IAccountDto, b: IAccountDto) => {
       const [c, d] = sortDirection == "ASC" ? [a[sortKey], b[sortKey]] : [b[sortKey], a[sortKey]];
       if (typeof c == "number" && typeof d == "number") {
@@ -88,17 +88,16 @@ const AccountList: FC<Props> = (props: Props) => {
           //Filter away accounts that should not show due to filtering with multiSelectBtn.
           .filter(([key, value]) => tableKeys.some(tKey => tKey.id == key))
           //Search for a value that starts with the search string.
-          .some(([key, value]) => (value + "").toUpperCase().startsWith(searchString.toUpperCase()))
+          .some(([key, value]) =>
+            (value + "").toUpperCase().startsWith(props.searchString.toUpperCase())
+          )
       );
     },
-    [searchString, tableKeys]
+    [props.searchString, tableKeys]
   );
 
   return (
     <>
-      <HStack>
-        <SearchFilterInput onChange={setSearchString} value={searchString} />
-      </HStack>
       <Flex>
         <Flex h="48px" alignItems="center">
           <QueryMultiSelectBtn queryKey="test" options={allKeyOptions} filterCb={filterCb} />
@@ -117,7 +116,7 @@ const AccountList: FC<Props> = (props: Props) => {
           <Tbody>
             {props.data
               .filter(acc => searchFilter(acc))
-              .sort((a: IAccountDto, b: IAccountDto) => sortCb(a, b))
+              .sort((a: IAccountDto, b: IAccountDto) => sortComparer(a, b))
               .map(account => {
                 return (
                   <Tr key={account.id}>
@@ -133,4 +132,4 @@ const AccountList: FC<Props> = (props: Props) => {
     </>
   );
 };
-export default AccountList;
+export default AccountsTable;

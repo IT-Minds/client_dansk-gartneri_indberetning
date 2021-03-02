@@ -748,11 +748,14 @@ export interface IAddressDto {
 }
 
 export class AccountDto implements IAccountDto {
+    id?: number;
     name?: string | null;
     email?: string | null;
     tel?: string | null;
     address1Id?: number;
+    address1?: AddressDto | null;
     address2Id?: number;
+    address2?: AddressDto | null;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
     users?: UserDto[] | null;
@@ -763,6 +766,8 @@ export class AccountDto implements IAccountDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+            this.address1 = data.address1 && !(<any>data.address1).toJSON ? new AddressDto(data.address1) : <AddressDto>this.address1; 
+            this.address2 = data.address2 && !(<any>data.address2).toJSON ? new AddressDto(data.address2) : <AddressDto>this.address2; 
             if (data.users) {
                 this.users = [];
                 for (let i = 0; i < data.users.length; i++) {
@@ -775,11 +780,14 @@ export class AccountDto implements IAccountDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
             this.address1Id = _data["address1Id"] !== undefined ? _data["address1Id"] : <any>null;
+            this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
             this.address2Id = _data["address2Id"] !== undefined ? _data["address2Id"] : <any>null;
+            this.address2 = _data["address2"] ? AddressDto.fromJS(_data["address2"]) : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
             this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
             if (Array.isArray(_data["users"])) {
@@ -799,11 +807,14 @@ export class AccountDto implements IAccountDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["email"] = this.email !== undefined ? this.email : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
         data["address1Id"] = this.address1Id !== undefined ? this.address1Id : <any>null;
+        data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
         data["address2Id"] = this.address2Id !== undefined ? this.address2Id : <any>null;
+        data["address2"] = this.address2 ? this.address2.toJSON() : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
         data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
         if (Array.isArray(this.users)) {
@@ -816,11 +827,14 @@ export class AccountDto implements IAccountDto {
 }
 
 export interface IAccountDto {
+    id?: number;
     name?: string | null;
     email?: string | null;
     tel?: string | null;
     address1Id?: number;
+    address1?: IAddressDto | null;
     address2Id?: number;
+    address2?: IAddressDto | null;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
     users?: IUserDto[] | null;

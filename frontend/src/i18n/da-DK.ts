@@ -11,5 +11,15 @@ export const table: Locale = {
     actions: {
       addNew: "Tilføj et nyt barn"
     }
+  },
+
+  accounts: {
+    id: "Id#",
+    name: "Navn",
+    email: "Email",
+    tel: "Tlf",
+    address1: "Adresse 1",
+    address2: "Adresse 2",
+    cvr: "CVR"
   }
 };

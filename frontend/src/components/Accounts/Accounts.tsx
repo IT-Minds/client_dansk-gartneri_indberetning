@@ -9,12 +9,14 @@ import { genAccountClient } from "services/backend/apiClients";
 import { IAccountDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
-import AccountList from "./AccountList";
+import AccountsTable from "./AccountsTable";
+import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
+  const [searchString, setSearchString] = useState<string>("");
 
   const fetchData = useCallback(async () => {
     try {
@@ -45,7 +47,8 @@ const Accounts: FC = () => {
         <BasicWrapper className="wrapper">
           <Stack spacing={4}>
             <Heading>{t("accounts.accounts")}</Heading>
-            <AccountList data={accounts} />
+            <SearchFilterInput onChange={setSearchString} value={searchString} />
+            <AccountsTable data={accounts} searchString={searchString} />
           </Stack>
         </BasicWrapper>
       }

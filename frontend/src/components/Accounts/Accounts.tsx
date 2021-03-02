@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Grid, Heading, IconButton, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Heading, IconButton, Input, Stack, Text } from "@chakra-ui/react";
 import Header from "components/Header/Header";
 import BasicWrapper from "components/Layouts/BasicWrapper";
 import HeaderLayout from "components/Layouts/HeaderLayout";
+import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useEffect, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
 import { genAccountClient } from "services/backend/apiClients";
@@ -11,6 +12,8 @@ import { logger } from "utils/logger";
 import AccountList from "./AccountList";
 
 const Accounts: FC = () => {
+  const { t } = useLocales();
+
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
 
   const fetchData = useCallback(async () => {
@@ -40,7 +43,10 @@ const Accounts: FC = () => {
       header={<Header />}
       main={
         <BasicWrapper className="wrapper">
-          <AccountList data={accounts} />
+          <Stack spacing={4}>
+            <Heading>{t("accounts.accounts")}</Heading>
+            <AccountList data={accounts} />
+          </Stack>
         </BasicWrapper>
       }
     />

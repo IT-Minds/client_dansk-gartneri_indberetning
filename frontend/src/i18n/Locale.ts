@@ -16,6 +16,7 @@ export interface Locale {
   };
 
   accounts: {
+    accounts: string;
     id: string;
     name: string;
     email: string;

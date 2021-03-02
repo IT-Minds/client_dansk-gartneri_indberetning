@@ -8,10 +8,6 @@ import HeaderLinks from "./HeaderLinks/HeaderLinks";
 const Header: FC = () => {
   return (
     <>
-      <style>
-        @import
-        url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&display=swap');
-      </style>
       <Flex
         justifyContent="space-between"
         shadow="sm"
@@ -20,7 +16,7 @@ const Header: FC = () => {
         pr={[3, 5, 10]}
         bg="gray.700"
         fontFamily="Open Sans Condensed">
-        <Image src="images/icons/logo3.svg" position="relative" pb="15px"></Image>
+        <Image src="images/icons/logo.svg" position="relative" pb="15px"></Image>
         <Flex flexDirection="row" display={["none", null, "flex"]}>
           <HeaderLinks />
           <Spacer w={10} />

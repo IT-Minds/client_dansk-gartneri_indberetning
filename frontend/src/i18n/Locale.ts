@@ -11,6 +11,10 @@ export interface Locale {
     };
   };
 
+  common: {
+    search: string;
+  };
+
   accounts: {
     id: string;
     name: string;
@@ -18,6 +22,6 @@ export interface Locale {
     tel: string;
     address1: string;
     address2: string;
-    cvr: string;
+    cvrNumber: string;
   };
 }

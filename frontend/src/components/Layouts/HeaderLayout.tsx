@@ -8,7 +8,7 @@ interface Props {
 
 const HeaderLayout: FC<Props> = (props: Props) => {
   return (
-    <Grid gridTemplateRows="40px auto">
+    <Grid gridTemplateRows="auto 1fr">
       {props.header}
       {props.main}
     </Grid>

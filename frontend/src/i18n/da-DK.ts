@@ -13,6 +13,10 @@ export const table: Locale = {
     }
   },
 
+  common: {
+    search: "Søg"
+  },
+
   accounts: {
     id: "Id#",
     name: "Navn",
@@ -20,6 +24,6 @@ export const table: Locale = {
     tel: "Tlf",
     address1: "Adresse 1",
     address2: "Adresse 2",
-    cvr: "CVR"
+    cvrNumber: "CVR"
   }
 };

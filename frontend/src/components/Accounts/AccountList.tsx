@@ -4,6 +4,7 @@ import {
   Flex,
   Grid,
   Heading,
+  HStack,
   IconButton,
   Input,
   Table,
@@ -14,10 +15,14 @@ import {
   Thead,
   Tr
 } from "@chakra-ui/react";
+import QueryMultiSelectBtn from "components/Common/QueryMultiSelectBtn";
 import QuerySortBtn, { Direction } from "components/Common/QuerySortBtn";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { AccountDto, IAccountDto } from "services/backend/nswagts";
+import SelectType from "types/SelectType";
+
+import SearchFilterInput from "./SearchFilterInput";
 
 interface Props {
   className?: string;
@@ -29,14 +34,25 @@ const AccountList: FC<Props> = (props: Props) => {
 
   const [sortKey, setSortKey] = useState<keyof IAccountDto>("id");
   const [sortDirection, setSortDirection] = useState("ASC");
-  const [tableKeys, setTableKeys] = useState(["id", "name", "email", "tel", "cvrNumber"]);
-  //Object.keys(new AccountDto())
+  const [searchString, setSearchString] = useState<string>("");
+
+  const allKeyOptions: SelectType[] = [
+    { name: t("accounts.id"), id: "id" },
+    { name: t("accounts.name"), id: "name" },
+    { name: t("accounts.email"), id: "email" },
+    { name: t("accounts.tel"), id: "tel" },
+    { name: t("accounts.cvrNumber"), id: "cvrNumber" }
+  ];
+  const [tableKeys, setTableKeys] = useState<SelectType[]>(allKeyOptions);
 
   const handleSortChange = useCallback((key: string, direction: Direction) => {
-    console.log(key);
-    console.log(direction);
-    setSortKey(key as keyof IAccountDto);
-    setSortDirection(direction);
+    if (direction != null) {
+      setSortKey(key as keyof IAccountDto);
+      setSortDirection(direction);
+    } else {
+      setSortKey("id");
+      setSortDirection("ASC");
+    }
   }, []);
 
   const sortCb = useCallback(
@@ -60,79 +76,52 @@ const AccountList: FC<Props> = (props: Props) => {
     [sortKey, sortDirection]
   );
 
+  const filterCb = useCallback((qkey: string, chosenOptions: SelectType["id"][]) => {
+    setTableKeys(allKeyOptions.filter(e => chosenOptions.includes(e.id)));
+  }, []);
+
+  const searchFilter = useCallback(
+    (acc: IAccountDto) => {
+      return Object.entries(acc)
+        .filter(([key, value]) => tableKeys.some(tKey => tKey.id == key))
+        .some(([key, value]) => (value + "").toUpperCase().startsWith(searchString.toUpperCase()));
+    },
+    [searchString, tableKeys]
+  );
+
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          {tableKeys.map(key => (
-            <Th key={key}>
-              <QuerySortBtn queryKey={key} sortCb={handleSortChange} />
-            </Th>
-          ))}
-        </Tr>
-      </Thead>
-      <Tbody>
-        {props.data
-          .sort((a: IAccountDto, b: IAccountDto) => sortCb(a, b))
-          .map(account => {
-            return (
-              <Tr key={account.id}>
-                {tableKeys.map(key => (
-                  <Td key={key}>{account[key as keyof IAccountDto]}</Td>
-                ))}
-              </Tr>
-            );
-          })}
-      </Tbody>
-    </Table>
+    <>
+      <HStack>
+        <QueryMultiSelectBtn queryKey="test" options={allKeyOptions} filterCb={filterCb} />
+        <SearchFilterInput onChange={setSearchString} value={searchString} />
+      </HStack>
+      <Table>
+        <Thead>
+          <Tr>
+            {tableKeys.map(key => (
+              <Th key={key.id}>
+                <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                {key.name}
+              </Th>
+            ))}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {props.data
+            .filter(acc => searchFilter(acc))
+            .sort((a: IAccountDto, b: IAccountDto) => sortCb(a, b))
+            .map(account => {
+              return (
+                <Tr key={account.id}>
+                  {tableKeys.map(key => (
+                    <Td key={key.id}>{account[key.id.toString() as keyof IAccountDto]}</Td>
+                  ))}
+                </Tr>
+              );
+            })}
+        </Tbody>
+      </Table>
+    </>
   );
 };
 export default AccountList;
-
-/*
-.sort((a: IAccountDto, b: IAccountDto) =>
-            sortDirection == "ASC"
-              ? (a[sortKey as keyof IAccountDto] as any) - (b[sortKey as keyof IAccountDto] as any)
-              : (b[sortKey as keyof IAccountDto] as any) - (a[sortKey as keyof IAccountDto] as any)
-          )
-
-
-<Td>{account.id}</Td>
-                <Td>{account.name}</Td>
-                <Td>{account.email}</Td>
-                <Td>{account.tel}</Td>
-                <Td>{account.cvrNumber}</Td>
-
-
-
-
-
-<Th>
-            {t("accounts.id")}
-            <QuerySortBtn queryKey={"id"} sortCb={handleSortChange} />
-          </Th>
-          <Th>
-            {t("accounts.name")}
-            <QuerySortBtn queryKey="id" sortCb={handleSortChange} />
-          </Th>
-          <Th>
-            {t("accounts.email")}
-            <QuerySortBtn queryKey="id" sortCb={handleSortChange} />
-          </Th>
-          <Th>
-            {t("accounts.tel")}
-            <QuerySortBtn queryKey="id" sortCb={handleSortChange} />
-          </Th>
-          <Th>
-            {t("accounts.cvr")}
-            <QuerySortBtn queryKey="id" sortCb={handleSortChange} />
-          </Th>
-
-
-
-<Th>{t("accounts.address1")}</Th>
-          <Th>{t("accounts.address2")}</Th>
-
-<Td>{account.address1}</Td>
-              <Td>{account.address2}</Td>
-*/

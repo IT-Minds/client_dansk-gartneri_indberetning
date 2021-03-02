@@ -18,6 +18,7 @@ export const table: Locale = {
   },
 
   accounts: {
+    accounts: "Accounts",
     id: "Id#",
     name: "Name",
     email: "Email",

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  chakra,
   Flex,
   Grid,
   Heading,
@@ -96,35 +97,39 @@ const AccountList: FC<Props> = (props: Props) => {
   return (
     <>
       <HStack>
-        <QueryMultiSelectBtn queryKey="test" options={allKeyOptions} filterCb={filterCb} />
         <SearchFilterInput onChange={setSearchString} value={searchString} />
       </HStack>
-      <Table>
-        <Thead>
-          <Tr>
-            {tableKeys.map(key => (
-              <Th key={key.id}>
-                <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
-                {key.name}
-              </Th>
-            ))}
-          </Tr>
-        </Thead>
-        <Tbody>
-          {props.data
-            .filter(acc => searchFilter(acc))
-            .sort((a: IAccountDto, b: IAccountDto) => sortCb(a, b))
-            .map(account => {
-              return (
-                <Tr key={account.id}>
-                  {tableKeys.map(key => (
-                    <Td key={key.id}>{account[key.id.toString() as keyof IAccountDto]}</Td>
-                  ))}
-                </Tr>
-              );
-            })}
-        </Tbody>
-      </Table>
+      <Flex>
+        <Flex h="48px" alignItems="center">
+          <QueryMultiSelectBtn queryKey="test" options={allKeyOptions} filterCb={filterCb} />
+        </Flex>
+        <Table>
+          <Thead>
+            <Tr>
+              {tableKeys.map(key => (
+                <Th key={key.id}>
+                  <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                  {key.name}
+                </Th>
+              ))}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {props.data
+              .filter(acc => searchFilter(acc))
+              .sort((a: IAccountDto, b: IAccountDto) => sortCb(a, b))
+              .map(account => {
+                return (
+                  <Tr key={account.id}>
+                    {tableKeys.map(key => (
+                      <Td key={key.id}>{account[key.id.toString() as keyof IAccountDto]}</Td>
+                    ))}
+                  </Tr>
+                );
+              })}
+          </Tbody>
+        </Table>
+      </Flex>
     </>
   );
 };

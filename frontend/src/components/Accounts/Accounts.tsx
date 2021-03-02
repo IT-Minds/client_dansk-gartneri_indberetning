@@ -2,6 +2,7 @@ import { Box, Button, Flex, Grid, Heading, IconButton, Input, Stack, Text } from
 import Header from "components/Header/Header";
 import BasicWrapper from "components/Layouts/BasicWrapper";
 import HeaderLayout from "components/Layouts/HeaderLayout";
+import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useEffect, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
@@ -14,6 +15,7 @@ import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
+  const { buttonFont } = useColors();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [searchString, setSearchString] = useState<string>("");
@@ -46,7 +48,12 @@ const Accounts: FC = () => {
       main={
         <BasicWrapper className="wrapper">
           <Stack spacing={4}>
-            <Heading>{t("accounts.accounts")}</Heading>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Heading>{t("accounts.accounts")}</Heading>
+              <Button rounded="full" colorScheme="blue" textColor={buttonFont}>
+                {t("accounts.addAccount")}
+              </Button>
+            </Flex>
             <SearchFilterInput onChange={setSearchString} value={searchString} />
             <AccountsTable data={accounts} searchString={searchString} />
           </Stack>

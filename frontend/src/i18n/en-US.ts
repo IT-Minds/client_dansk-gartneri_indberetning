@@ -25,6 +25,7 @@ export const table: Locale = {
     tel: "Tel",
     address1: "Address 1",
     address2: "Address 2",
-    cvrNumber: "CVR"
+    cvrNumber: "CVR",
+    addAccount: "Add account"
   }
 };

@@ -41,19 +41,16 @@ const AccountList: FC<Props> = (props: Props) => {
 
   const sortCb = useCallback(
     (a: IAccountDto, b: IAccountDto) => {
-      const [c, d] = sortDirection == "ASC" ? [a, b] : [b, a];
-      //console.log(sortKey);
-      if (typeof a[sortKey] == "number") {
-        //console.log("number!");
-        return (c[sortKey] as number) - (d[sortKey] as number);
+      const [c, d] = sortDirection == "ASC" ? [a[sortKey], b[sortKey]] : [b[sortKey], a[sortKey]];
+      if (typeof c == "number" && typeof d == "number") {
+        return c - d;
       }
-      if (typeof a[sortKey] == "string") {
-        //console.log("string!");
-        const cValue = (c[sortKey] as string).toUpperCase();
-        const dValue = (d[sortKey] as string).toUpperCase();
-        if (cValue < dValue) {
+      if (typeof c == "string" && typeof d == "string") {
+        const cUpper = (c as string).toUpperCase();
+        const dUpper = (d as string).toUpperCase();
+        if (cUpper < dUpper) {
           return -1;
-        } else if (cValue > dValue) {
+        } else if (cUpper > dUpper) {
           return 1;
         } else {
           return 0;

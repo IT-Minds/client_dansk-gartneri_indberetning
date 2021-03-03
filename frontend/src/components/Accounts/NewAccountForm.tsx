@@ -1,4 +1,14 @@
-import { Button, FormControl, FormLabel, Grid, Input, ModalHeader, Spacer } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Grid,
+  Input,
+  Link,
+  ModalHeader,
+  Spacer
+} from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { genAccountClient } from "services/backend/apiClients";
@@ -77,6 +87,27 @@ const NewAccountForm: FC<Props> = (props: Props) => {
     setPostcode1(e.target.value);
   }, []);
 
+  const handleGetFromCvr = useCallback(() => {
+    fetch("https://cvrapi.dk/api?country=dk&vat=" + cvr)
+      .then(res => res.json())
+      .then(
+        result => {
+          setName(result.name ? result.name : "");
+          setEmail(result.email ? result.email : "");
+          setTel(result.phone ? result.phone : "");
+          setStreet1(result.address ? result.address.split(/[0-9]/)[0].trim() : "");
+          setStreetNum1(
+            result.address ? result.address.substring(result.address.search(/\d/)) : ""
+          );
+          setPostcode1(result.zipcode ? result.zipcode : "");
+          setCity1(result.city ? result.city : "");
+        },
+        error => {
+          console.error("Error when trying to fetch from CVR-registry");
+        }
+      );
+  }, [cvr]);
+
   const { t } = useLocales();
   return (
     <form onSubmit={handleSubmit}>
@@ -95,6 +126,9 @@ const NewAccountForm: FC<Props> = (props: Props) => {
       <FormControl id="cvr" isRequired>
         <FormLabel htmlFor="cvr">{t("accounts.cvrNumber")}</FormLabel>
         <Input value={cvr} onChange={handleCvrChange}></Input>
+        <Button onClick={handleGetFromCvr} variant="ghost" size="xs">
+          Hent info fra CVR-registret
+        </Button>
       </FormControl>
       <Spacer h={5} />
       <ModalHeader p={0} mb={5}>
@@ -117,10 +151,12 @@ const NewAccountForm: FC<Props> = (props: Props) => {
           <FormLabel htmlFor="postCode">{t("accounts.postCode")}</FormLabel>
           <Input value={postcode1} onChange={handlePostCode1Change}></Input>
         </FormControl>
-        <Button colorScheme="green" mr={3} type="submit">
+      </Grid>
+      <Flex justifyContent="flex-end" w="100%" mt={5}>
+        <Button colorScheme="green" type="submit">
           {t("common.add")}
         </Button>
-      </Grid>
+      </Flex>
     </form>
   );
 };

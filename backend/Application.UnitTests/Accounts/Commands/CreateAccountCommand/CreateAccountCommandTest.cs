@@ -19,7 +19,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "carrots@carrots.dk",
-          Password = "pa$$w0rd",
           Name = "Carrot Farm",
           Tel = "56478657",
           Address1 = new AddressDto
@@ -67,7 +66,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
       user.Email.Should().Be(command.account.Email);
       user.AccountId.Should().Be(entity.Id);
       user.Account.Should().Be(entity);
-      user.Password.Should().Be(command.account.Password);
     }
   }
 }

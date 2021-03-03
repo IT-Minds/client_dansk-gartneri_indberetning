@@ -635,7 +635,6 @@ export interface ICreateAccountCommand {
 
 export class CreateAccountDto implements ICreateAccountDto {
     email?: string | null;
-    password?: string | null;
     name?: string | null;
     tel?: string | null;
     address1?: AddressDto | null;
@@ -656,7 +655,6 @@ export class CreateAccountDto implements ICreateAccountDto {
     init(_data?: any) {
         if (_data) {
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
             this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
@@ -675,7 +673,6 @@ export class CreateAccountDto implements ICreateAccountDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["password"] = this.password !== undefined ? this.password : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
         data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
@@ -687,7 +684,6 @@ export class CreateAccountDto implements ICreateAccountDto {
 
 export interface ICreateAccountDto {
     email?: string | null;
-    password?: string | null;
     name?: string | null;
     tel?: string | null;
     address1?: IAddressDto | null;

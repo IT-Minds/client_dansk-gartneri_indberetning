@@ -1,25 +1,34 @@
 import {
   Button,
   Center,
-  Flex,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
   InputRightElement,
-  Stack,
-  Text
+  Stack
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 import { BsLock, BsPerson } from "react-icons/Bs";
 
-interface Props {
-  className?: string;
-}
+const LoginForm: FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-const LoginForm: FC<Props> = (props: Props) => {
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
+
+  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+  }, []);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Stack>
         <FormControl isRequired={true} colorScheme="green">
           <FormLabel htmlFor="email">Email:</FormLabel>
@@ -27,7 +36,7 @@ const LoginForm: FC<Props> = (props: Props) => {
             <InputRightElement>
               <BsPerson />
             </InputRightElement>
-            <Input id="email" type="email"></Input>
+            <Input id="email" type="email" value={email} onChange={handleEmailChange}></Input>
           </InputGroup>
         </FormControl>
         <FormControl isRequired={true}>
@@ -36,7 +45,11 @@ const LoginForm: FC<Props> = (props: Props) => {
             <InputRightElement>
               <BsLock />
             </InputRightElement>
-            <Input id="password" type="password"></Input>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}></Input>
           </InputGroup>
         </FormControl>
         <Button type="submit" colorScheme="blue" w="100%">

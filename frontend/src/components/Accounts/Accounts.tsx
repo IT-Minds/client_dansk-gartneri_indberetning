@@ -16,7 +16,6 @@ import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
-  const { buttonFont } = useColors();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [searchString, setSearchString] = useState<string>("");
@@ -51,7 +50,7 @@ const Accounts: FC = () => {
           <Stack spacing={4}>
             <Flex justifyContent="space-between" alignItems="center">
               <Heading>{t("accounts.accounts")}</Heading>
-              <NewAccountModal />
+              <NewAccountModal onSubmit={fetchData} />
             </Flex>
             <SearchFilterInput onChange={setSearchString} value={searchString} />
             <AccountsTable data={accounts} searchString={searchString} />

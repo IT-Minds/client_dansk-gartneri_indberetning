@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  IconButton,
-  Input,
-  Text
-} from "@chakra-ui/react";
-import { FC, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { Grid, GridItem } from "@chakra-ui/react";
+import { FC, ReactNode } from "react";
 
 interface Props {
   className?: string;

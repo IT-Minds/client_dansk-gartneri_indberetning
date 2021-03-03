@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Application.Accounts;
+using Application.Accounts.Commands.CreateAccountCommand;
 
 namespace Web.Controllers
 {
@@ -9,9 +12,9 @@ namespace Web.Controllers
     private static string TEMP_TOKEN = "abs";
 
     [HttpPost]
-    public ActionResult<string> Login()
+    public async Task<ActionResult<UserTokenDto>> Login([FromBody] LoginCommand command)
     {
-      return TEMP_TOKEN;
+      return await Mediator.Send(command);
     }
 
     [HttpPut]

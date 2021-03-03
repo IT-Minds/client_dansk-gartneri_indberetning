@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using Microsoft.AspNetCore.Http;
-
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Users.Commands.UserLogin
@@ -24,15 +16,14 @@ namespace Application.Users.Commands.UserLogin
     public class LoginCommandHandler : IRequestHandler<LoginCommand, UserTokenDto>
     {
       private readonly IApplicationDbContext _context;
-      private readonly IHttpContextAccessor _httpContextAccessor;
       private readonly IMapper _mapper;
+      private readonly IPasswordHasher _passwordHasher;
       private readonly ITokenService _tokenService;
 
 
-      public LoginCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor, ITokenService tokenService, IMapper mapper)
+      public LoginCommandHandler(IApplicationDbContext context, ITokenService tokenService, IMapper mapper)
       {
         _context = context;
-        _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _tokenService = tokenService;
       }

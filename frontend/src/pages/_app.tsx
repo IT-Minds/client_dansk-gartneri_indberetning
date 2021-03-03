@@ -3,7 +3,7 @@ import "isomorphic-unfetch";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
-import { useAuth } from "hooks/useAuth";
+import { AuthStage, useAuth } from "hooks/useAuth";
 import { usePWA } from "hooks/usePWA";
 import { AppPropsType } from "next/dist/next-server/lib/utils";
 import Head from "next/head";
@@ -14,6 +14,7 @@ import isomorphicEnvSettings, { setEnvSettings } from "utils/envSettings";
 import { logger } from "utils/logger";
 
 import theme from "../theme/theme";
+import LoginPage from "./login";
 
 type Props = {
   envSettings: EnvSettings;
@@ -66,7 +67,11 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
         <ChakraProvider theme={theme}>
           <AuthContext.Provider value={auth}>
             {/* <SignalRContext.Provider value={{ connection }}> */}
-            <Component {...pageProps} />
+            {auth.authStage == AuthStage.AUTHENTICATED ? (
+              <Component {...pageProps} />
+            ) : (
+              <LoginPage />
+            )}
             {/* </SignalRContext.Provider> */}
           </AuthContext.Provider>
         </ChakraProvider>

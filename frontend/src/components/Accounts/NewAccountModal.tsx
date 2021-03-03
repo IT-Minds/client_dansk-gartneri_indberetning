@@ -46,16 +46,17 @@ const NewAccountModal: FC<Props> = (props: Props) => {
           <ModalHeader>{t("accounts.addAccount")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <NewAccountForm />
+            <NewAccountForm onSubmit={onClose} />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="green" mr={3} onClick={onClose}>
-              {t("common.add")}
-            </Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
   );
 };
 export default NewAccountModal;
+/*
+<Button colorScheme="green" mr={3} onClick={onClose}>
+              {t("common.add")}
+            </Button>
+*/

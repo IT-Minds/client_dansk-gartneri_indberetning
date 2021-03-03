@@ -24,7 +24,7 @@ const Accounts: FC = () => {
   const fetchData = useCallback(async () => {
     try {
       const accountClient = await genAccountClient();
-      const data = await accountClient.getAllClients();
+      const data = await accountClient.getAllAccounts();
 
       console.log(data);
 

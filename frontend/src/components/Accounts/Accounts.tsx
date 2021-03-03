@@ -11,6 +11,7 @@ import { IAccountDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
 import AccountsTable from "./AccountsTable";
+import NewAccountModal from "./NewAccountModal";
 import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
@@ -50,9 +51,7 @@ const Accounts: FC = () => {
           <Stack spacing={4}>
             <Flex justifyContent="space-between" alignItems="center">
               <Heading>{t("accounts.accounts")}</Heading>
-              <Button rounded="full" colorScheme="blue" textColor={buttonFont}>
-                {t("accounts.addAccount")}
-              </Button>
+              <NewAccountModal />
             </Flex>
             <SearchFilterInput onChange={setSearchString} value={searchString} />
             <AccountsTable data={accounts} searchString={searchString} />

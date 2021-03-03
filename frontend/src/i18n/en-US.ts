@@ -14,7 +14,8 @@ export const table: Locale = {
   },
 
   common: {
-    search: "Search"
+    search: "Search",
+    add: "Add"
   },
 
   accounts: {
@@ -23,9 +24,15 @@ export const table: Locale = {
     name: "Name",
     email: "Email",
     tel: "Tel",
+    address: "Address",
     address1: "Address 1",
     address2: "Address 2",
     cvrNumber: "CVR",
-    addAccount: "Add account"
+    addAccount: "Add account",
+    street: "Street",
+    streetNum: "Number",
+    postCode: "Zip",
+    city: "City",
+    country: "Country"
   }
 };

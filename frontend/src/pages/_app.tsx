@@ -22,7 +22,7 @@ type Props = {
 const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactElement => {
   // usePWA(); //! OPT IN
 
-  // const auth = useAuth(); //! OPT IN
+  const auth = useAuth();
 
   useEffect(() => {
     if (!__N_SSG) {
@@ -64,11 +64,11 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
       </noscript>
       <I18nProvider table={pageProps.table}>
         <ChakraProvider theme={theme}>
-          {/* <AuthContext.Provider value={auth}> */}
-          {/* <SignalRContext.Provider value={{ connection }}> */}
-          <Component {...pageProps} />
-          {/* </SignalRContext.Provider> */}
-          {/* </AuthContext.Provider> */}
+          <AuthContext.Provider value={auth}>
+            {/* <SignalRContext.Provider value={{ connection }}> */}
+            <Component {...pageProps} />
+            {/* </SignalRContext.Provider> */}
+          </AuthContext.Provider>
         </ChakraProvider>
       </I18nProvider>
     </main>

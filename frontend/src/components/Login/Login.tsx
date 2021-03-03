@@ -1,13 +1,19 @@
 import { Flex, Grid, GridItem, Image } from "@chakra-ui/react";
-import { FC } from "react";
+import { AuthContext } from "contexts/AuthContext";
+import { AuthStage } from "hooks/useAuth";
+import { FC, useCallback, useContext } from "react";
 
 import LoginForm from "./LoginForm";
 
-interface Props {
-  className?: string;
-}
+const Login: FC = props => {
+  const { authStage } = useContext(AuthContext);
 
-const Login: FC<Props> = (props: Props) => {
+  const displayLoginForm = useCallback(() => {
+    if (authStage == AuthStage.UNAUTHENTICATED) {
+      return <LoginForm />;
+    }
+  }, [authStage]);
+
   return (
     <Grid gridTemplateColumns="1fr minmax(400px, 400px) 1fr" h="100vh" alignItems="center">
       <GridItem colStart={2} shadow="lg" maxH="400px">
@@ -15,7 +21,7 @@ const Login: FC<Props> = (props: Props) => {
           <Image src="images/icons/logo.svg" position="relative" right="15px" pb="15px"></Image>
         </Flex>
         <Flex direction="column" justifyContent="center" p={[10]}>
-          <LoginForm />
+          {displayLoginForm()}
         </Flex>
       </GridItem>
     </Grid>

@@ -11,12 +11,8 @@ namespace Domain.Entities
     public string Name { get; set; }
     public string Email { get; set; }
     public string Tel { get; set; }
-
-    public int? Address1Id { get; set; }
-    public virtual Address? Address1 { get; set; }
-    public int? Address2Id { get; set; }
-    public virtual Address? Address2 { get; set; }
-
+    public int? AddressId { get; set; }
+    public virtual Address? Address { get; set; }
     public string CVRNumber { get; set; }
     public virtual ICollection<User> Users { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }

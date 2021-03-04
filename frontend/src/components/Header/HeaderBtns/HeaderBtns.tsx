@@ -10,7 +10,6 @@ const HeaderButtons: FC = () => {
     <HStack spacing={3}>
       <ColorModeBtn />
       <UserBtn />
-      <LocaleBtn />
     </HStack>
   );
 };

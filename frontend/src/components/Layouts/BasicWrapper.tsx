@@ -8,7 +8,7 @@ interface Props {
 
 const BasicWrapper: FC<Props> = (props: Props) => {
   return (
-    <Grid gridTemplateColumns="1fr minmax(400px, 1000px) 1fr">
+    <Grid gridTemplateColumns="1fr minmax(400px, 90vw) 1fr">
       <GridItem colStart={2} w="100%" p={5}>
         {props.children}
       </GridItem>

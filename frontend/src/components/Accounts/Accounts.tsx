@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
+import { Box, Button, chakra, Flex, Heading, HStack, Stack } from "@chakra-ui/react";
 import Header from "components/Header/Header";
 import BasicWrapper from "components/Layouts/BasicWrapper";
 import HeaderLayout from "components/Layouts/HeaderLayout";
@@ -50,9 +50,11 @@ const Accounts: FC = () => {
           <Stack spacing={4}>
             <Flex justifyContent="space-between" alignItems="center">
               <Heading>{t("accounts.accounts")}</Heading>
-              <NewAccountModal onSubmit={fetchData} />
+              <HStack spacing={5}>
+                <SearchFilterInput onChange={setSearchString} value={searchString} />
+                <NewAccountModal onSubmit={fetchData} />
+              </HStack>
             </Flex>
-            <SearchFilterInput onChange={setSearchString} value={searchString} />
             <AccountsTable data={accounts} searchString={searchString} />
           </Stack>
         </BasicWrapper>

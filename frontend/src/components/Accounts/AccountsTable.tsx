@@ -23,7 +23,8 @@ const AccountsTable: FC<Props> = (props: Props) => {
     { name: t("accounts.name"), id: "name" },
     { name: t("accounts.email"), id: "email" },
     { name: t("accounts.tel"), id: "tel" },
-    { name: t("accounts.cvrNumber"), id: "cvrNumber" }
+    { name: t("accounts.cvrNumber"), id: "cvrNumber" },
+    { name: t("accounts.address"), id: "address" }
   ];
   const [tableKeys, setTableKeys] = useState<SelectType[]>(allKeyOptions);
 
@@ -62,6 +63,14 @@ const AccountsTable: FC<Props> = (props: Props) => {
     setTableKeys(allKeyOptions.filter(e => chosenOptions.includes(e.id)));
   }, []);
 
+  const getValueFromKey = useCallback((account: IAccountDto, key: SelectType) => {
+    if (key.id.toString() == "address") {
+      const a = account.address1;
+      return a.streetName + " " + a.streetNumber + ", " + a.postCode + " " + a.city;
+    }
+    return account[key.id.toString() as keyof IAccountDto];
+  }, []);
+
   const searchFilter = useCallback(
     (acc: IAccountDto) => {
       return (
@@ -88,8 +97,10 @@ const AccountsTable: FC<Props> = (props: Props) => {
             <Tr>
               {tableKeys.map(key => (
                 <Th key={key.id}>
-                  <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
-                  {key.name}
+                  <Flex>
+                    <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                    {key.name}
+                  </Flex>
                 </Th>
               ))}
             </Tr>
@@ -102,7 +113,7 @@ const AccountsTable: FC<Props> = (props: Props) => {
                 return (
                   <Tr key={account.id}>
                     {tableKeys.map(key => (
-                      <Td key={key.id}>{account[key.id.toString() as keyof IAccountDto]}</Td>
+                      <Td key={key.id}>{getValueFromKey(account, key)}</Td>
                     ))}
                   </Tr>
                 );

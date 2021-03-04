@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence.Configurations
           .IsRequired();
 
       builder.Property(e => e.Country)
-          .IsRequired();
+        .IsRequired();
     }
   }
 }

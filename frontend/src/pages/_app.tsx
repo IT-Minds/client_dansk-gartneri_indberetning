@@ -14,6 +14,7 @@ import isomorphicEnvSettings, { setEnvSettings } from "utils/envSettings";
 import { logger } from "utils/logger";
 
 import theme from "../theme/theme";
+import AccountsPage from "./accounts";
 import LoginPage from "./login";
 
 type Props = {
@@ -67,11 +68,7 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
         <ChakraProvider theme={theme}>
           <AuthContext.Provider value={auth}>
             {/* <SignalRContext.Provider value={{ connection }}> */}
-            {auth.authStage == AuthStage.AUTHENTICATED ? (
-              <Component {...pageProps} />
-            ) : (
-              <LoginPage />
-            )}
+            {auth.authStage == AuthStage.AUTHENTICATED ? <AccountsPage /> : <LoginPage />}
             {/* </SignalRContext.Provider> */}
           </AuthContext.Provider>
         </ChakraProvider>
@@ -81,3 +78,4 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
 };
 
 export default MyApp;
+/*<Component {...pageProps} />*/

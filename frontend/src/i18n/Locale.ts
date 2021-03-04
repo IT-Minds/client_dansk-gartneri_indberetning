@@ -1,5 +1,6 @@
 export interface Locale {
   locale: string; // !Must not be deleted. Used for providing the locale in the native language
+  flagUrl: string;
 
   example: {
     title: string;

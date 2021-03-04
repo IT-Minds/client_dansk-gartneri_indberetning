@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { genAuthenticationClient } from "services/backend/apiClients";
 import {
   ILoginRequestDto,
+  IUserDto,
   IUserTokenDto,
   LoginCommand,
   LoginRequestDto
@@ -18,22 +19,22 @@ export enum AuthStage {
   UNAUTHENTICATED
 }
 
-type AuthHook<T> = {
+type AuthHook<IUserDto> = {
   authStage: AuthStage;
   login: (loginRequest: ILoginRequestDto) => Promise<boolean>;
   logout: () => void;
-  activeUser: T | null;
+  activeUser: IUserDto | null;
 };
 
-export const useAuth = (): AuthHook<boolean> => {
+export const useAuth = (): AuthHook<IUserDto> => {
   const [authStage, setAuthStage] = useState(AuthStage.CHECKING);
   const [authCounter, setAuthCounter] = useState(0);
-  const [activeUser, setActiveUser] = useState<boolean>(null);
+  const [activeUser, setActiveUser] = useState<IUserDto>(null);
   const router = useRouter();
 
   useEffectAsync(async () => {
     const client = await genAuthenticationClient();
-    const user: boolean = await client.checkAuth().catch(() => null);
+    const user: IUserDto = await client.checkAuth().catch(() => null);
 
     setActiveUser(user);
 

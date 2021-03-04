@@ -224,7 +224,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
 
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
-    checkAuth(): Promise<boolean>;
+    checkAuth(): Promise<UserDto>;
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -278,7 +278,7 @@ export class AuthClient extends ClientBase implements IAuthClient {
         return Promise.resolve<UserTokenDto>(<any>null);
     }
 
-    checkAuth(): Promise<boolean> {
+    checkAuth(): Promise<UserDto> {
         let url_ = this.baseUrl + "/api/Auth";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -296,14 +296,14 @@ export class AuthClient extends ClientBase implements IAuthClient {
         });
     }
 
-    protected processCheckAuth(response: Response): Promise<boolean> {
+    protected processCheckAuth(response: Response): Promise<UserDto> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = UserDto.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -311,7 +311,7 @@ export class AuthClient extends ClientBase implements IAuthClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<boolean>(<any>null);
+        return Promise.resolve<UserDto>(<any>null);
     }
 }
 

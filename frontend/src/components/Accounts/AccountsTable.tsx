@@ -38,9 +38,19 @@ const AccountsTable: FC<Props> = (props: Props) => {
     }
   }, []);
 
+  const genValueFromKey = useCallback((account: IAccountDto, key: string) => {
+    if (key == "address") {
+      const a = account.address1;
+      return a.streetName + " " + a.streetNumber + ", " + a.postCode + " " + a.city;
+    }
+    return account[key as keyof IAccountDto];
+  }, []);
+
   const sortComparer = useCallback(
     (a: IAccountDto, b: IAccountDto) => {
-      const [c, d] = sortDirection == "ASC" ? [a[sortKey], b[sortKey]] : [b[sortKey], a[sortKey]];
+      const aValue = genValueFromKey(a, sortKey);
+      const bValue = genValueFromKey(b, sortKey);
+      const [c, d] = sortDirection == "ASC" ? [aValue, bValue] : [bValue, aValue];
       if (typeof c == "number" && typeof d == "number") {
         return c - d;
       }
@@ -61,14 +71,6 @@ const AccountsTable: FC<Props> = (props: Props) => {
 
   const filterCb = useCallback((qkey: string, chosenOptions: SelectType["id"][]) => {
     setTableKeys(allKeyOptions.filter(e => chosenOptions.includes(e.id)));
-  }, []);
-
-  const getValueFromKey = useCallback((account: IAccountDto, key: SelectType) => {
-    if (key.id.toString() == "address") {
-      const a = account.address1;
-      return a.streetName + " " + a.streetNumber + ", " + a.postCode + " " + a.city;
-    }
-    return account[key.id.toString() as keyof IAccountDto];
   }, []);
 
   const searchFilter = useCallback(
@@ -113,7 +115,7 @@ const AccountsTable: FC<Props> = (props: Props) => {
                 return (
                   <Tr key={account.id}>
                     {tableKeys.map(key => (
-                      <Td key={key.id}>{getValueFromKey(account, key)}</Td>
+                      <Td key={key.id}>{genValueFromKey(account, key.id.toString())}</Td>
                     ))}
                   </Tr>
                 );

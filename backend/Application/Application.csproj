@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Accounts\Commands\LoginCommand\" />
+    <Folder Include="Users\LoginCommand\" />
     <Folder Include="Common\Services\" />
   </ItemGroup>
 

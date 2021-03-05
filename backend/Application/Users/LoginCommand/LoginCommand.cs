@@ -6,7 +6,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Accounts.Commands.CreateAccountCommand
+namespace Application.Users.Commands.CreateAccountCommand
 {
   public class LoginCommand : IRequest<UserTokenDto>
   {

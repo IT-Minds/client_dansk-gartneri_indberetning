@@ -8,7 +8,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Accounts.Commands.CheckAuthCommand
+namespace Application.Users.Commands.CheckAuthCommand
 {
   [Authenticated]
   public class CheckAuthCommand : IRequest<UserDto>

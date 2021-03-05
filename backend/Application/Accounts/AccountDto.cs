@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Application.Common.Mappings;
+using Application.Users;
 using Domain.Entities;
 
 namespace Application.Accounts

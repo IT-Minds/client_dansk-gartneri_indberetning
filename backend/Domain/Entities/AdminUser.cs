@@ -9,11 +9,7 @@ namespace Domain.Entities
     public int Id { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public RoleEnum Role
-    {
-      get => RoleEnum.Admin;
-      set { throw new NotSupportedException("Tried to set the role of an admin."); }
-    }
+    public RoleEnum Role => RoleEnum.Admin;
     public string Name { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
   }

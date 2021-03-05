@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace Application.Users
 {
-  public class UserDto : IAutoMap<User>
+  public class UserDto : IAutoMap<IUser>
   {
     public string Email { get; set; }
     public RoleEnum Role { get; set; }
@@ -14,7 +14,7 @@ namespace Application.Users
     public DateTimeOffset? DeactivationTime { get; set; }
     public void Mapping(Profile profile)
     {
-      profile.CreateMap<User, UserDto>();
+      profile.CreateMap<IUser, UserDto>();
     }
   }
 }

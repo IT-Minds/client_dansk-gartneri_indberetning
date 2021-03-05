@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
 using Application.Accounts.Commands.CreateAccountCommand;
+using Application.Common.Interfaces;
+using Moq;
 using Xunit;
 
 namespace Application.UnitTests.Accounts.Commands.CreateAccount
@@ -11,7 +13,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
   public class CreateAccountCommandTest : CommandTestBase
   {
     [Fact]
-    public async Task Handle_ShouldPersistExampleChild()
+    public async Task Handle_ShouldPersistAccount()
     {
       var command = new CreateAccountCommand
       {
@@ -33,7 +35,10 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         }
       };
 
-      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      var passwordHasherMock = new Mock<IPasswordHasher>();
+      passwordHasherMock.Setup(m => m.Check("password", "password")).Returns((true, false));
+
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context, passwordHasherMock.Object);
 
       var accountsCount = Context.Accounts.Count();
       var usersCount = Context.Users.Count();

@@ -67,9 +67,15 @@ namespace Application.UnitTests
       );
 
       context.Users.AddRange(
-        new User { Id = 1, AccountId = 1, Account = account1, Email= "carrots@carrots.dk", Password  = "Pa$$w0rd", Role = RoleEnum.Client},
+        new User { Id = 1, AccountId = 1, Account = account1, Email= "carrots@carrots.dk", Password  = "Pa$$w0rd", Role = RoleEnum.Client, Name = "CarrotFarm client" },
         new User { Id = 2, AccountId = 1, Account = account1, Email = "carrotsaccountant@carrots.dk", Password = "Pa$$w0rd", Role = RoleEnum.Accountant, Name = "CarrotFarm accountant"},
         new User { Id = 3, AccountId = 2, Account = account2, Email = "mushroom@mushrooms.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "Mushroom client"}
+      );
+
+      context.Admins.AddRange(
+        new AdminUser { Id = 1, Email = "admin1@admin.dk", Password = "Pa$$w0rd", Role = RoleEnum.Admin, Name="Admin"},
+        new AdminUser { Id = 2, Email = "admin2@admin.dk", Password = "Pa$$w0rd", Role = RoleEnum.Admin, Name = "Admin" },
+        new AdminUser { Id = 3, Email = "admin3@admin.dk", Password = "Pa$$w0rd", Role = RoleEnum.Admin, Name = "Admin" }
       );
 
       context.SaveChanges();

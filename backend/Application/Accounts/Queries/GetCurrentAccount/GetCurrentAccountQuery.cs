@@ -30,7 +30,7 @@ namespace Application.Accounts.Queries.GetCurrentAccountQuery
       {
         var viewmodel = await _context.Users
           .Include(u => u.Account)
-          .FirstOrDefaultAsync(u => u.Id.ToString().Equals(_currentUserService.UserId));
+          .FirstOrDefaultAsync(u => u.Id == int.Parse(_currentUserService.UserId));
 
         return _mapper.Map<AccountDto>(viewmodel.Account);
       }

@@ -754,8 +754,6 @@ export class AccountDto implements IAccountDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.address1 = data.address1 && !(<any>data.address1).toJSON ? new AddressDto(data.address1) : <AddressDto>this.address1; 
-            this.address2 = data.address2 && !(<any>data.address2).toJSON ? new AddressDto(data.address2) : <AddressDto>this.address2; 
             if (data.users) {
                 this.users = [];
                 for (let i = 0; i < data.users.length; i++) {

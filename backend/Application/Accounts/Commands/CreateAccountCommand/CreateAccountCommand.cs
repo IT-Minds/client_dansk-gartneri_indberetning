@@ -22,16 +22,31 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
       public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
       {
+        var address1Entity = new Address
+        {
+          AddressLine1 = request.account.Address.AddressLine1,
+          AddressLine2 = request.account.Address.AddressLine2,
+          AddressLine3 = request.account.Address.AddressLine3,
+          AddressLine4 = request.account.Address.AddressLine4,
+        };
+        _context.Addresses.Add(address1Entity);
+        await _context.SaveChangesAsync(cancellationToken);
+
         var accountEntity = new Account
         {
           Name = request.account.Name,
           Email = request.account.Email,
           Tel = request.account.Tel,
-          CVRNumber = request.account.CVRNumber
+          CVRNumber = request.account.CVRNumber,
+          AddressId = address1Entity.Id,
+          Address = address1Entity
         };
 
         _context.Accounts.Add(accountEntity);
         await _context.SaveChangesAsync(cancellationToken);
+
+        address1Entity.AccountId = accountEntity.Id;
+        address1Entity.Account = accountEntity;
 
         var userEntity = new User
         {
@@ -46,20 +61,8 @@ namespace Application.Accounts.Commands.CreateAccountCommand
         _context.Users.Add(userEntity);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var address1Entity = new Address
-        {
-          AddressLine1 = request.account.Address.AddressLine1,
-          AddressLine2 = request.account.Address.AddressLine2,
-          AddressLine3 = request.account.Address.AddressLine3,
-          AddressLine4 = request.account.Address.AddressLine4,
-          AccountId = accountEntity.Id,
-          Account = accountEntity
-        };
-        _context.Addresses.Add(address1Entity);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        accountEntity.Address = address1Entity;
-        accountEntity.AddressId = address1Entity.Id;
+        //accountEntity.Address = address1Entity;
+        //accountEntity.AddressId = address1Entity.Id;
         await _context.SaveChangesAsync(cancellationToken);
 
         return accountEntity.Id;

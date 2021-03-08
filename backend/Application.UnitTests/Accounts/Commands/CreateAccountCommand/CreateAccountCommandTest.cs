@@ -11,7 +11,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
   public class CreateAccountCommandTest : CommandTestBase
   {
     [Fact]
-    public async Task Handle_ShouldPersistExampleChild()
+    public async Task Handle_ShouldPersistAccount()
     {
       var command = new CreateAccountCommand
       {
@@ -22,13 +22,10 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Password = "pa$$w0rd",
           Name = "Carrot Farm",
           Tel = "56478657",
-          Address1 = new AddressDto
+          Address = new AddressDto
           {
-            StreetName = "Carrot Street",
-            StreetNumber = "1",
-            PostCode = "1234",
-            City = "Carrotville",
-            Country = "Denmark"
+            AddressLine1 = "Carrot Street 5",
+            AddressLine2 = "1234 Carrotville"
           },
           CVRNumber = "13243546"
         }
@@ -50,15 +47,12 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
       entity.Name.Should().Be(command.account.Name);
       entity.Tel.Should().Be(command.account.Tel);
       entity.CVRNumber.Should().Be(command.account.CVRNumber);
-      entity.Address1.Should().NotBeNull();
-      entity.Address1.Id.Should().Be(addressCount + 1);
-      entity.Address1.Account.Should().Be(entity);
-      entity.Address1.AccountId.Should().Be(entity.Id);
-      entity.Address1.StreetName.Should().Be(command.account.Address1.StreetName);
-      entity.Address1.StreetNumber.Should().Be(command.account.Address1.StreetNumber);
-      entity.Address1.PostCode.Should().Be(command.account.Address1.PostCode);
-      entity.Address1.City.Should().Be(command.account.Address1.City);
-      entity.Address1.Country.Should().Be(command.account.Address1.Country);
+      entity.Address.Should().NotBeNull();
+      entity.Address.Id.Should().Be(addressCount + 1);
+      entity.Address.Account.Should().Be(entity);
+      entity.Address.AccountId.Should().Be(entity.Id);
+      entity.Address.AddressLine1.Should().Be(command.account.Address.AddressLine1);
+      entity.Address.AddressLine2.Should().Be(command.account.Address.AddressLine2);
       entity.Users.Should().HaveCount(1);
 
       var user = entity.Users.First();

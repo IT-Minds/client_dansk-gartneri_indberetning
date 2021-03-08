@@ -50,16 +50,16 @@ namespace Application.UnitTests
           new ExampleChild { Id = 5, ParentId = 2, Name = "Coffee", Type = ExampleEnum.Oldest }
       );
 
-      var address1 = new Address { Id = 1, StreetName = "Carrot Street", StreetNumber = "5", PostCode = "2200", City = "Carrotville", Country = "Denmark" };
-      var address2 = new Address { Id = 2, StreetName = "Mushroom Avenue", StreetNumber = "7", PostCode = "2200", City = "Mushroom Town", Country = "Denmark" };
+      var address1 = new Address { Id = 1, AddressLine1 = "Carrot Street 5", AddressLine2 = "2200 Carrotville" };
+      var address2 = new Address { Id = 2, AddressLine1= "Mushroom Avenue 7", AddressLine2 = "2200 Mushroom Town" };
 
       context.Addresses.AddRange(
         address1,
         address2
       );
 
-      var account1 = new Account {Id = 1, Name = "CarrotFarm account", Email = "carrots@carrots.dk", Tel = "59284756", Address1Id = 1, Address1 = address1, CVRNumber = "10356245"};
-      var account2 = new Account {Id = 2, Name = "Mushroom account", Email = "mushroom@mushrooms.dk", Tel = "64756453", Address1Id = 2, Address1 = address2, CVRNumber = "10356457" };
+      var account1 = new Account {Id = 1, Name = "CarrotFarm account", Email = "carrots@carrots.dk", Tel = "59284756", AddressId = 1, Address = address1, CVRNumber = "10356245"};
+      var account2 = new Account {Id = 2, Name = "Mushroom account", Email = "mushroom@mushrooms.dk", Tel = "64756453", AddressId = 2, Address = address2, CVRNumber = "10356457" };
 
       context.Accounts.AddRange(
           account1,

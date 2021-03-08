@@ -20,6 +20,10 @@ namespace Application.ExampleChildren.Commands.CreateExampleChild
         .NotNull();
       RuleFor(e => e.account.Password)
         .NotNull();
+      RuleFor(e => e.account.Address)
+        .NotNull();
+      RuleFor(e => e.account.Address.AddressLine1)
+        .NotEmpty();
     }
   }
 }

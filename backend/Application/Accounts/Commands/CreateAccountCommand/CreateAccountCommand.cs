@@ -48,41 +48,18 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
         var address1Entity = new Address
         {
-          StreetName = request.account.Address1.StreetName,
-          StreetNumber = request.account.Address1.StreetNumber,
-          PostCode = request.account.Address1.PostCode,
-          City = request.account.Address1.City,
-          Country = request.account.Address1.Country,
+          AddressLine1 = request.account.Address.AddressLine1,
+          AddressLine2 = request.account.Address.AddressLine2,
+          AddressLine3 = request.account.Address.AddressLine3,
+          AddressLine4 = request.account.Address.AddressLine4,
           AccountId = accountEntity.Id,
           Account = accountEntity
         };
         _context.Addresses.Add(address1Entity);
-
-        Address address2Entity = null;
-        if (request.account.Address2 != null)
-        {
-          address2Entity = new Address
-          {
-            StreetName = request.account.Address2.StreetName,
-            StreetNumber = request.account.Address2.StreetNumber,
-            PostCode = request.account.Address2.PostCode,
-            City = request.account.Address2.City,
-            Country = request.account.Address2.Country,
-            AccountId = accountEntity.Id,
-            Account = accountEntity
-          };
-          _context.Addresses.Add(address2Entity);
-        };
-
         await _context.SaveChangesAsync(cancellationToken);
 
-        accountEntity.Address1 = address1Entity;
-        accountEntity.Address1Id = address1Entity.Id;
-        if (address2Entity != null)
-        {
-          accountEntity.Address2 = address2Entity;
-          accountEntity.Address2Id = address2Entity.Id;
-        }
+        accountEntity.Address = address1Entity;
+        accountEntity.AddressId = address1Entity.Id;
         await _context.SaveChangesAsync(cancellationToken);
 
         return accountEntity.Id;

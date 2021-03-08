@@ -1,4 +1,3 @@
-using Application.Accounts.Queries.GetClientsQuery;
 using AutoMapper;
 using FluentAssertions;
 using Infrastructure.Persistence;
@@ -6,9 +5,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
+using Application.Users;
+using Application.Users.Queries.GetClientsQuery;
 using Xunit;
 
-namespace Application.UnitTests.Accounts.Queries.GetClients
+namespace Application.UnitTests.Users.Queries.GetClients
 {
   [Collection("QueryTests")]
   public class GetClientsQueryTest
@@ -31,7 +32,7 @@ namespace Application.UnitTests.Accounts.Queries.GetClients
 
       var result = await handler.Handle(query, CancellationToken.None);
 
-      result.Should().BeOfType<List<AccountDto>>();
+      result.Should().BeOfType<List<UserDto>>();
       result.Count.Should().Be(2);
     }
   }

@@ -4,7 +4,7 @@ using Domain.Enums;
 using System;
 using AutoMapper;
 
-namespace Application.Accounts
+namespace Application.Users
 {
   public class UserDto : IAutoMap<User>
   {

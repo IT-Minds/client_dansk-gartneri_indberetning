@@ -8,22 +8,10 @@ namespace Infrastructure.Persistence.Configurations
   {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-      builder.HasKey(e => e.Id);
-
-      builder.Property(e => e.StreetName)
-          .IsRequired();
-
-      builder.Property(e => e.StreetNumber)
-          .IsRequired();
-      
-      builder.Property(e => e.PostCode)
-          .IsRequired();
-      
-      builder.Property(e => e.City)
-          .IsRequired();
-
-      builder.Property(e => e.Country)
-          .IsRequired();
+      builder.HasOne<Account>(e => e.Account)
+        .WithOne(e => e.Address)
+        .HasForeignKey<Account>(e => e.Id)
+        .IsRequired();
     }
   }
 }

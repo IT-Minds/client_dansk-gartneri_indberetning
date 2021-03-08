@@ -7,30 +7,6 @@ class AuditableEntity {
   LastModified
 }
 
-<<<<<<< HEAD
-class Account {
-  Id
-  Name
-  Tel
-  Users
-  DeactivationTime
-}
-
-class User {
-  Id
-  AccountId
-  Email
-  Password
-  Role
-  Name
-  Address1
-  Address2
-  Tel
-  CVRNumber
-  DeactivationTime
-}
-
-=======
 interface IUser {
   Id
   Email
@@ -55,7 +31,6 @@ class User {
   AccountId
 }
 
->>>>>>> main
 enum Role {
   Admin
   Accountant
@@ -63,10 +38,6 @@ enum Role {
 }
 
 class Address {
-<<<<<<< HEAD
-  UserId
-=======
->>>>>>> main
   StreetName
   StreetNumber
   PostCode
@@ -74,10 +45,7 @@ class Address {
   Country
 }
 
-<<<<<<< HEAD
-=======
 User -|> IUser
->>>>>>> main
 User -|> AuditableEntity
 Account -|> AuditableEntity
 Account "1"-->"0..*" User

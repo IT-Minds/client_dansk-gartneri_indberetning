@@ -21,8 +21,7 @@ class Account {
   Name
   Tel
   Email
-  Address1
-  Address2
+  Address
   CVRNumber
   Users
   DeactivationTime

@@ -1,17 +1,15 @@
-using Domain.Common;
 using Domain.Enums;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
   public interface IUser
   {
-    public int Id { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public RoleEnum Role { get; set; }
-    public string Name { get; set; }
-    public DateTimeOffset? DeactivationTime { get; set; }
+    int Id { get; set; }
+    string Email { get; set; }
+    string Password { get; set; }
+    RoleEnum Role { get; set; }
+    string Name { get; set; }
+    DateTimeOffset? DeactivationTime { get; set; }
   }
 }

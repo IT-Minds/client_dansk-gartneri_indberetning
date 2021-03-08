@@ -7,26 +7,28 @@ class AuditableEntity {
   LastModified
 }
 
+interface IUser {
+  Id
+  Email
+  Password
+  Role
+  Name
+  DeactivationTime
+}
+
 class Account {
   Id
   Name
   Tel
+  Email
+  Address
+  CVRNumber
   Users
   DeactivationTime
 }
 
 class User {
-  Id
   AccountId
-  Email
-  Password
-  Role
-  Name
-  Address1
-  Address2
-  Tel
-  CVRNumber
-  DeactivationTime
 }
 
 enum Role {
@@ -36,7 +38,6 @@ enum Role {
 }
 
 class Address {
-  UserId
   StreetName
   StreetNumber
   PostCode
@@ -44,6 +45,7 @@ class Address {
   Country
 }
 
+User -|> IUser
 User -|> AuditableEntity
 Account -|> AuditableEntity
 Account "1"-->"0..*" User

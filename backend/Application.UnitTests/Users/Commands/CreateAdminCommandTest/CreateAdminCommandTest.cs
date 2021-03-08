@@ -2,8 +2,6 @@ using System.Linq;
 using FluentAssertions;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Accounts;
-using Application.Accounts.Commands.CreateAccountCommand;
 using Application.Accounts.Commands.CreateAdmin;
 using Application.Common.Interfaces;
 using Application.Users;

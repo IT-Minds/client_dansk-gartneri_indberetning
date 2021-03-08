@@ -10,33 +10,26 @@ namespace Infrastructure.Persistence.Configurations
     {
       builder.HasKey(e => e.Id);
 
-      builder.Property(e => e.AccountId)
-          .IsRequired();
-
-      builder.HasOne<Account>(e => e.Account)
-          .WithMany(e => e.Users)
-          .HasForeignKey(e => e.AccountId)
-          .IsRequired(true);
-
       builder.Property(e => e.Email)
-          .IsRequired();
+        .IsRequired();
 
       builder.HasIndex(e => e.Email)
-          .IsUnique();
+        .IsUnique();
 
       builder.Property(e => e.Role)
-          .IsRequired();
+        .IsRequired();
 
       builder.Property(e => e.Name)
-          .HasMaxLength(200)
-          .IsRequired();
+        .HasMaxLength(200)
+        .IsRequired();
 
-      builder.HasOne<Address>(e => e.Address1);
+      builder.Property(e => e.AccountId)
+        .IsRequired();
 
-      builder.HasOne<Address>(e => e.Address2);
-
-      builder.Property(e=> e.CVRNumber)
-          .IsRequired(); 
+      builder.HasOne<Account>(e => e.Account)
+        .WithMany(e => e.Users)
+        .HasForeignKey(e => e.AccountId)
+        .IsRequired(true);
     }
   }
 }

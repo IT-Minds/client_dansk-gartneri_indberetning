@@ -10,4 +10,14 @@ export interface Locale {
       addNew: string;
     };
   };
+
+  accounts: {
+    id: string;
+    name: string;
+    email: string;
+    tel: string;
+    address1: string;
+    address2: string;
+    cvr: string;
+  };
 }

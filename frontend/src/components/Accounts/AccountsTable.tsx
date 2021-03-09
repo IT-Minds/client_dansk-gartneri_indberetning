@@ -9,12 +9,11 @@ import { AccountFilter } from "types/AccountFilter";
 import SelectType from "types/SelectType";
 
 interface Props {
-  className?: string;
   data: IAccountDto[];
   searchString: string;
 }
 
-const AccountsTable: FC<Props> = (props: Props) => {
+const AccountsTable: FC<Props> = ({ data, searchString }) => {
   const { t, locale, localeNameMap } = useLocales();
 
   const [sortKey, setSortKey] = useState<keyof IAccountDto>("id");
@@ -83,8 +82,8 @@ const AccountsTable: FC<Props> = (props: Props) => {
             </Tr>
           </Thead>
           <Tbody>
-            {props.data
-              .filter(acc => filters.every(f => f.predicate(acc, props.searchString, tableKeys)))
+            {data
+              .filter(acc => filters.every(f => f.predicate(acc, searchString, tableKeys)))
               .sort(sortComparer)
               .map(account => {
                 return (

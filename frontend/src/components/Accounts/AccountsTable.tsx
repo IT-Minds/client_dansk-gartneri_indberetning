@@ -1,9 +1,11 @@
 import { Flex, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { SearchFilter } from "components/Accounts/Filters/AccountFilters";
 import QueryMultiSelectBtn from "components/Common/QueryMultiSelectBtn";
 import QuerySortBtn, { Direction } from "components/Common/QuerySortBtn";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { IAccountDto } from "services/backend/nswagts";
+import { AccountFilter } from "types/AccountFilter";
 import SelectType from "types/SelectType";
 
 interface Props {
@@ -17,6 +19,7 @@ const AccountsTable: FC<Props> = (props: Props) => {
 
   const [sortKey, setSortKey] = useState<keyof IAccountDto>("id");
   const [sortDirection, setSortDirection] = useState("ASC");
+  const [filters, setFilters] = useState<AccountFilter[]>([SearchFilter]);
 
   const allKeyOptions: SelectType[] = [
     { name: t("accounts.id"), id: "id" },
@@ -62,21 +65,6 @@ const AccountsTable: FC<Props> = (props: Props) => {
     setTableKeys(allKeyOptions.filter(e => chosenOptions.includes(e.id)));
   }, []);
 
-  const searchFilter = useCallback(
-    (acc: IAccountDto) => {
-      return (
-        Object.entries(acc)
-          //Filter away accounts that should not show due to filtering with multiSelectBtn.
-          .filter(([key, value]) => tableKeys.some(tKey => tKey.id == key))
-          //Search for a value that starts with the search string.
-          .some(([key, value]) =>
-            (value + "").toUpperCase().startsWith(props.searchString.toUpperCase())
-          )
-      );
-    },
-    [props.searchString, tableKeys]
-  );
-
   return (
     <>
       <Flex>
@@ -96,7 +84,7 @@ const AccountsTable: FC<Props> = (props: Props) => {
           </Thead>
           <Tbody>
             {props.data
-              .filter(searchFilter)
+              .filter(acc => filters.every(f => f.predicate(acc, props.searchString, tableKeys)))
               .sort(sortComparer)
               .map(account => {
                 return (

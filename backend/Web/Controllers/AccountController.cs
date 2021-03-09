@@ -11,13 +11,13 @@ namespace Web.Controllers
   public class AccountController : ApiControllerBase
   {
     [HttpPost]
-    public async Task<ActionResult<int>> CreateChild([FromBody] CreateAccountCommand command)
+    public async Task<ActionResult<int>> CreateAccount([FromBody] CreateAccountCommand command)
     {
       return await Mediator.Send(command);
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<AccountDto>>> GetAllClients()
+    public async Task<ActionResult<List<AccountDto>>> GetAllAccounts()
     {
       return await Mediator.Send(new GetAccountsQuery());
     }

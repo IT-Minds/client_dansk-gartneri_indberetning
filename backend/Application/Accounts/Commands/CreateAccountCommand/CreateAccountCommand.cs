@@ -30,7 +30,6 @@ namespace Application.Accounts.Commands.CreateAccountCommand
           AddressLine4 = request.account.Address.AddressLine4,
         };
         _context.Addresses.Add(address1Entity);
-        await _context.SaveChangesAsync(cancellationToken);
 
         var accountEntity = new Account
         {
@@ -43,7 +42,6 @@ namespace Application.Accounts.Commands.CreateAccountCommand
         };
 
         _context.Accounts.Add(accountEntity);
-        await _context.SaveChangesAsync(cancellationToken);
 
         address1Entity.AccountId = accountEntity.Id;
         address1Entity.Account = accountEntity;

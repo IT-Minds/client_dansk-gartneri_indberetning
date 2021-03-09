@@ -1,9 +1,11 @@
+using System;
 using System.Linq;
 using FluentAssertions;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
 using Application.Accounts.Commands.CreateAccountCommand;
+using Application.Common.Exceptions;
 using Xunit;
 
 namespace Application.UnitTests.Accounts.Commands.CreateAccount
@@ -19,7 +21,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test@test.dk",
-          Password = "pa$$w0rd",
+          Password = "Pa$$w0rd",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto
@@ -55,6 +57,98 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
       user.AccountId.Should().Be(entity.Id);
       user.Account.Should().Be(entity);
       user.Password.Should().Be(command.account.Password);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldFailAccountEmail()
+    {
+      var command1 = new CreateAccountCommand
+      {
+        account = new CreateAccountDto()
+        {
+
+          Email = "test@test.dk",
+          Password = "Password",
+          Name = "test name",
+          Tel = "12345678",
+          Address = new AddressDto
+          {
+            AddressLine1 = "test street 5",
+            AddressLine2 = "1234 test city"
+          },
+          CVRNumber = "13243546"
+        }
+      };
+
+      var command2 = new CreateAccountCommand
+      {
+        account = new CreateAccountDto()
+        {
+
+          Email = "test@test.dk",
+          Password = "Password",
+          Name = "test name",
+          Tel = "12345678",
+          Address = new AddressDto
+          {
+            AddressLine1 = "test street 5",
+            AddressLine2 = "1234 test city"
+          },
+          CVRNumber = "43546578"
+        }
+      };
+
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      await handler.Handle(command1, CancellationToken.None);
+
+      Func<Task> action = async () => await handler.Handle(command2, CancellationToken.None);
+      action.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldFailAccountCVR()
+    {
+      var command1 = new CreateAccountCommand
+      {
+        account = new CreateAccountDto()
+        {
+
+          Email = "test@test.dk",
+          Password = "Password",
+          Name = "test name",
+          Tel = "12345678",
+          Address = new AddressDto
+          {
+            AddressLine1 = "test street 5",
+            AddressLine2 = "1234 test city"
+          },
+          CVRNumber = "13243546"
+        }
+      };
+
+      var command2 = new CreateAccountCommand
+      {
+        account = new CreateAccountDto()
+        {
+
+          Email = "test2@test.dk",
+          Password = "Password",
+          Name = "test name",
+          Tel = "12345678",
+          Address = new AddressDto
+          {
+            AddressLine1 = "test street 5",
+            AddressLine2 = "1234 test city"
+          },
+          CVRNumber = "13243546"
+        }
+      };
+
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      await handler.Handle(command1, CancellationToken.None);
+
+      Func<Task> action = async () => await handler.Handle(command2, CancellationToken.None);
+      action.Should().Throw<ArgumentException>();
     }
   }
 }

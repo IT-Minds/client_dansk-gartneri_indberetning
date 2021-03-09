@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
 using Application.Accounts.Commands.CreateAccountCommand;
-using Application.Common.Exceptions;
 using Xunit;
 
 namespace Application.UnitTests.Accounts.Commands.CreateAccount

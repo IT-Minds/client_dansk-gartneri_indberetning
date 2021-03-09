@@ -50,16 +50,16 @@ namespace Application.UnitTests
           new ExampleChild { Id = 5, ParentId = 2, Name = "Coffee", Type = ExampleEnum.Oldest }
       );
 
-      var address1 = new Address { Id = 1, AddressLine1 = "Carrot Street 5", AddressLine2 = "2200 Carrotville" };
-      var address2 = new Address { Id = 2, AddressLine1= "Mushroom Avenue 7", AddressLine2 = "2200 Mushroom Town" };
+      var address1 = new Address { Id = 1, AddressLine1 = "test1 street 5", AddressLine2 = "2200 test1 city" };
+      var address2 = new Address { Id = 2, AddressLine1 = "test2 street 7", AddressLine2 = "2200 test2 city" };
 
       context.Addresses.AddRange(
         address1,
         address2
       );
 
-      var account1 = new Account {Id = 1, Name = "CarrotFarm account", Email = "carrots@carrots.dk", Tel = "59284756", AddressId = 1, Address = address1, CVRNumber = "10356245"};
-      var account2 = new Account {Id = 2, Name = "Mushroom account", Email = "mushroom@mushrooms.dk", Tel = "64756453", AddressId = 2, Address = address2, CVRNumber = "10356457" };
+      var account1 = new Account { Id = 1, Name = "test1 account", Email = "test1@test1.dk", Tel = "59284756", AddressId = 1, Address = address1, CVRNumber = "10356245" };
+      var account2 = new Account { Id = 2, Name = "test2 account", Email = "test2@test2.dk", Tel = "64756453", AddressId = 2, Address = address2, CVRNumber = "10356457" };
 
       context.Accounts.AddRange(
           account1,
@@ -67,9 +67,9 @@ namespace Application.UnitTests
       );
 
       context.Users.AddRange(
-        new User { Id = 1, AccountId = 1, Account = account1, Email= "carrots@carrots.dk", Password  = "Pa$$w0rd", Role = RoleEnum.Client},
-        new User { Id = 2, AccountId = 1, Account = account1, Email = "carrotsaccountant@carrots.dk", Password = "Pa$$w0rd", Role = RoleEnum.Accountant, Name = "CarrotFarm accountant"},
-        new User { Id = 3, AccountId = 2, Account = account2, Email = "mushroom@mushrooms.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "Mushroom client"}
+        new User { Id = 1, AccountId = 1, Account = account1, Email = "test1@test1.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client },
+        new User { Id = 2, AccountId = 1, Account = account1, Email = "test1accountant@test.dk", Password = "Pa$$w0rd", Role = RoleEnum.Accountant, Name = "test1 accountant" },
+        new User { Id = 3, AccountId = 2, Account = account2, Email = "test2@test2.dk", Password = "Pa$$w0rd", Role = RoleEnum.Client, Name = "test2 client" }
       );
 
       context.SaveChanges();

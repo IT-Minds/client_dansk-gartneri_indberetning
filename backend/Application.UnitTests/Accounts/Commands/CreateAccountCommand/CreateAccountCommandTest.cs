@@ -18,14 +18,14 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         account = new CreateAccountDto()
         {
 
-          Email = "carrots@carrots.dk",
+          Email = "test@test.dk",
           Password = "pa$$w0rd",
-          Name = "Carrot Farm",
-          Tel = "56478657",
+          Name = "test name",
+          Tel = "12345678",
           Address = new AddressDto
           {
-            AddressLine1 = "Carrot Street 5",
-            AddressLine2 = "1234 Carrotville"
+            AddressLine1 = "test street 5",
+            AddressLine2 = "1234 test city"
           },
           CVRNumber = "13243546"
         }

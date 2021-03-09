@@ -96,8 +96,8 @@ const AccountsTable: FC<Props> = (props: Props) => {
           </Thead>
           <Tbody>
             {props.data
-              .filter(acc => searchFilter(acc))
-              .sort((a: IAccountDto, b: IAccountDto) => sortComparer(a, b))
+              .filter(searchFilter)
+              .sort(sortComparer)
               .map(account => {
                 return (
                   <Tr key={account.id}>

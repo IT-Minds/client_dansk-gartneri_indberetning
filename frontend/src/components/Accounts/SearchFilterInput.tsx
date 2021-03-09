@@ -15,14 +15,14 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-const SearchFilterInput: FC<Props> = (props: Props) => {
+const SearchFilterInput: FC<Props> = ({ value, onChange }) => {
   const { t } = useLocales();
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e.target.value);
+    onChange(e.target.value);
   }, []);
 
   const handleClear = useCallback(() => {
-    props.onChange("");
+    onChange("");
   }, []);
 
   return (
@@ -30,7 +30,7 @@ const SearchFilterInput: FC<Props> = (props: Props) => {
       <InputLeftElement>
         <BiSearch opacity="0.4" />
       </InputLeftElement>
-      <Input value={props.value} onChange={handleChange} placeholder={t("common.search")}></Input>
+      <Input value={value} onChange={handleChange} placeholder={t("common.search")}></Input>
       <InputRightElement>
         <IconButton
           aria-label="Clear"

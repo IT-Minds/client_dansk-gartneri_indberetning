@@ -12,7 +12,7 @@ const BasicLayout: FC<Props> = ({ children }) => {
       <GridItem rowSpan={1} colSpan={3}>
         <Header />
       </GridItem>
-      <GridItem colStart={2} w="100%" p={5}>
+      <GridItem colStart={2} p={5}>
         {children}
       </GridItem>
     </Grid>

@@ -739,6 +739,7 @@ export interface IAddressDto {
 }
 
 export class AccountDto implements IAccountDto {
+    id?: number;
     name?: string | null;
     email?: string | null;
     tel?: string | null;
@@ -765,6 +766,7 @@ export class AccountDto implements IAccountDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
@@ -788,6 +790,7 @@ export class AccountDto implements IAccountDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["email"] = this.email !== undefined ? this.email : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
@@ -804,6 +807,7 @@ export class AccountDto implements IAccountDto {
 }
 
 export interface IAccountDto {
+    id?: number;
     name?: string | null;
     email?: string | null;
     tel?: string | null;

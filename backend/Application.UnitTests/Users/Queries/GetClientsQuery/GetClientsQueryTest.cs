@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentAssertions;
 using Infrastructure.Persistence;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
@@ -34,6 +35,25 @@ namespace Application.UnitTests.Users.Queries.GetClients
 
       result.Should().BeOfType<List<UserDto>>();
       result.Count.Should().Be(2);
+    }
+
+    [Fact]
+    public async Task Handle_ReturnsCorrectClientsData()
+    {
+      var query = new GetClientsQuery();
+
+      var handler = new GetClientsQuery.GetClientsQueryHandler(_context, _mapper);
+
+      var result = await handler.Handle(query, CancellationToken.None);
+
+      result.Should().BeOfType<List<UserDto>>();
+
+      result.ForEach(entity =>
+      {
+        entity.Email.Should().NotBeNullOrEmpty();
+        entity.Name.Should().NotBeNullOrEmpty();
+        entity.Role.Should().NotBeNull();
+      });
     }
   }
 }

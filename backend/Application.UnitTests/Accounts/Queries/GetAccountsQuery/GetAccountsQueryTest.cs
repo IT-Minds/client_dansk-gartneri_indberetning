@@ -47,12 +47,14 @@ namespace Application.UnitTests.Accounts.Queries.GetAccounts
 
       result.Should().BeOfType<List<AccountDto>>();
 
-      var entity = result.First();
-      entity.Tel.Should().NotBeNullOrEmpty();
-      entity.Email.Should().NotBeNullOrEmpty();
-      entity.AddressId.Should().BeInRange(1, int.MaxValue);
-      entity.CVRNumber.Should().NotBeNullOrEmpty();
-      entity.Name.Should().NotBeNullOrEmpty();
+      result.ForEach(entity =>
+      {
+        entity.Tel.Should().NotBeNullOrEmpty();
+        entity.Email.Should().NotBeNullOrEmpty();
+        entity.AddressId.Should().BeInRange(1, int.MaxValue);
+        entity.CVRNumber.Should().NotBeNullOrEmpty();
+        entity.Name.Should().NotBeNullOrEmpty();
+      });
     }
   }
 }

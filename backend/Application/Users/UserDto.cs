@@ -12,9 +12,5 @@ namespace Application.Users
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
-    public void Mapping(Profile profile)
-    {
-      profile.CreateMap<User, UserDto>();
-    }
   }
 }

@@ -10,9 +10,5 @@ namespace Application.Accounts
     public string AddressLine2 { get; set; }
     public string AddressLine3 { get; set; }
     public string AddressLine4 { get; set; }
-    public void Mapping(Profile profile)
-    {
-      profile.CreateMap<Address, AddressDto>();
-    }
   }
 }

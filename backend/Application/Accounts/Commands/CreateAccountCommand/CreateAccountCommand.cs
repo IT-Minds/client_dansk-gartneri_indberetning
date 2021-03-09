@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Application.Common.Interfaces;
 using Domain.Entities;
 using Domain.Enums;
@@ -22,6 +24,11 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
       public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
       {
+        if (_context.Accounts.Any(e => e.Email == request.account.Email))
+        {
+          throw new ArgumentException("The provided email address is already used by another account.");
+        }
+
         var address1Entity = new Address
         {
           AddressLine1 = request.account.Address.AddressLine1,

@@ -3,6 +3,7 @@ using AutoMapper;
 using FluentAssertions;
 using Infrastructure.Persistence;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
@@ -33,6 +34,25 @@ namespace Application.UnitTests.Accounts.Queries.GetAccounts
 
       result.Should().BeOfType<List<AccountDto>>();
       result.Count.Should().Be(2);
+    }
+
+    [Fact]
+    public async Task Handle_ReturnsCorrectAccountData()
+    {
+      var query = new GetAccountsQuery();
+
+      var handler = new GetAccountsQuery.GetAccountsQueryHandler(_context, _mapper);
+
+      var result = await handler.Handle(query, CancellationToken.None);
+
+      result.Should().BeOfType<List<AccountDto>>();
+
+      var entity = result.First();
+      entity.Tel.Should().NotBeNullOrEmpty();
+      entity.Email.Should().NotBeNullOrEmpty();
+      entity.AddressId.Should().BeInRange(1, int.MaxValue);
+      entity.CVRNumber.Should().NotBeNullOrEmpty();
+      entity.Name.Should().NotBeNullOrEmpty();
     }
   }
 }

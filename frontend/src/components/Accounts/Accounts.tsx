@@ -1,8 +1,5 @@
 import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
-import Header from "components/Header/Header";
 import BasicLayout from "components/Layouts/BasicLayout";
-import BasicWrapper from "components/Layouts/BasicWrapper";
-import HeaderLayout from "components/Layouts/HeaderLayout";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useReducer, useState } from "react";

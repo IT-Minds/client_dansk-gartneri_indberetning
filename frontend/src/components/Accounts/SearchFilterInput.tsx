@@ -17,13 +17,12 @@ interface Props {
 
 const SearchFilterInput: FC<Props> = ({ value, onChange }) => {
   const { t } = useLocales();
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
+    []
+  );
 
-  const handleClear = useCallback(() => {
-    onChange("");
-  }, []);
+  const handleClear = useCallback(() => onChange(""), []);
 
   return (
     <InputGroup>

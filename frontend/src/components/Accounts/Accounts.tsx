@@ -1,5 +1,6 @@
 import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
 import Header from "components/Header/Header";
+import BasicLayout from "components/Layouts/BasicLayout";
 import BasicWrapper from "components/Layouts/BasicWrapper";
 import HeaderLayout from "components/Layouts/HeaderLayout";
 import { useColors } from "hooks/useColors";
@@ -43,23 +44,18 @@ const Accounts: FC = () => {
   }, [fetchData]);
 
   return (
-    <HeaderLayout
-      header={<Header />}
-      main={
-        <BasicWrapper className="wrapper">
-          <Stack spacing={4}>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Heading>{t("accounts.accounts")}</Heading>
-              <Button rounded="full" colorScheme="blue" textColor={buttonFont}>
-                {t("accounts.addAccount")}
-              </Button>
-            </Flex>
-            <SearchFilterInput onChange={setSearchString} value={searchString} />
-            <AccountsTable data={accounts} searchString={searchString} />
-          </Stack>
-        </BasicWrapper>
-      }
-    />
+    <BasicLayout>
+      <Stack spacing={4}>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading>{t("accounts.accounts")}</Heading>
+          <Button rounded="full" colorScheme="blue" textColor={buttonFont}>
+            {t("accounts.addAccount")}
+          </Button>
+        </Flex>
+        <SearchFilterInput onChange={setSearchString} value={searchString} />
+        <AccountsTable data={accounts} searchString={searchString} />
+      </Stack>
+    </BasicLayout>
   );
 };
 export default Accounts;

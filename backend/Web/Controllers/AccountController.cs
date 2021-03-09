@@ -10,7 +10,7 @@ namespace Web.Controllers
   public class AccountController : ApiControllerBase
   {
     [HttpGet]
-    public async Task<ActionResult<List<AccountDto>>> GetAllClients()
+    public async Task<ActionResult<List<AccountDto>>> GetAllAccounts()
     {
       return await Mediator.Send(new GetAccountsQuery());
     }

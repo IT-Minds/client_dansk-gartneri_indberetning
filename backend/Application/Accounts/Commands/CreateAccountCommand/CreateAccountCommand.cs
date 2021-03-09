@@ -61,8 +61,6 @@ namespace Application.Accounts.Commands.CreateAccountCommand
         _context.Users.Add(userEntity);
         await _context.SaveChangesAsync(cancellationToken);
 
-        //accountEntity.Address = address1Entity;
-        //accountEntity.AddressId = address1Entity.Id;
         await _context.SaveChangesAsync(cancellationToken);
 
         return accountEntity.Id;

@@ -29,6 +29,11 @@ namespace Application.Accounts.Commands.CreateAccountCommand
           throw new ArgumentException("The provided email address is already used by another account.");
         }
 
+        if (_context.Accounts.Any(e => e.CVRNumber == request.account.CVRNumber))
+        {
+          throw new ArgumentException("The provided CVR number is already used by another account.");
+        }
+
         var address1Entity = new Address
         {
           AddressLine1 = request.account.Address.AddressLine1,

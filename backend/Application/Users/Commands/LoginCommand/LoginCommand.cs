@@ -1,12 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Accounts;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Accounts.Commands.CreateAccountCommand
+namespace Application.Users.Commands.Login
 {
   public class LoginCommand : IRequest<UserTokenDto>
   {

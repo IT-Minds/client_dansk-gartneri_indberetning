@@ -22,12 +22,9 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Email = "test@test.dk",
           Name = "test name",
           Tel = "12345678",
-          Address = new AddressDto
-          {
-            AddressLine1 = "test street 5",
-            AddressLine2 = "1234 test city"
-          },
-          CVRNumber = "13243546"
+          CVRNumber = "13243546",
+          AddressLine1 = "test street 5",
+          AddressLine2 = "1234 test city"
         }
       };
 
@@ -45,8 +42,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
       entity.Address.Should().NotBeNull();
       entity.Address.Account.Should().Be(entity);
       entity.Address.AccountId.Should().Be(entity.Id);
-      entity.Address.AddressLine1.Should().Be(command.account.Address.AddressLine1);
-      entity.Address.AddressLine2.Should().Be(command.account.Address.AddressLine2);
       entity.Users.Should().HaveCount(1);
 
       var user = entity.Users.First();
@@ -67,12 +62,9 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Email = "test@test.dk",
           Name = "test name",
           Tel = "12345678",
-          Address = new AddressDto
-          {
-            AddressLine1 = "test street 5",
-            AddressLine2 = "1234 test city"
-          },
-          CVRNumber = "13243546"
+          CVRNumber = "13243546",
+          AddressLine1 = "test street 5",
+          AddressLine2 = "1234 test city"
         }
       };
 
@@ -84,12 +76,9 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Email = "test@test.dk",
           Name = "test name",
           Tel = "12345678",
-          Address = new AddressDto
-          {
-            AddressLine1 = "test street 5",
-            AddressLine2 = "1234 test city"
-          },
-          CVRNumber = "43546578"
+          CVRNumber = "43546578",
+          AddressLine1 = "test street 5",
+          AddressLine2 = "1234 test city"
         }
       };
 
@@ -111,12 +100,9 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Email = "test@test.dk",
           Name = "test name",
           Tel = "12345678",
-          Address = new AddressDto
-          {
-            AddressLine1 = "test street 5",
-            AddressLine2 = "1234 test city"
-          },
-          CVRNumber = "13243546"
+          CVRNumber = "13243546",
+          AddressLine1 = "test street 5",
+          AddressLine2 = "1234 test city"
         }
       };
 
@@ -128,12 +114,9 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
           Email = "test2@test.dk",
           Name = "test name",
           Tel = "12345678",
-          Address = new AddressDto
-          {
-            AddressLine1 = "test street 5",
-            AddressLine2 = "1234 test city"
-          },
-          CVRNumber = "13243546"
+          CVRNumber = "13243546",
+          AddressLine1 = "test street 5",
+          AddressLine2 = "1234 test city"
         }
       };
 

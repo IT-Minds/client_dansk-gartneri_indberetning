@@ -20,7 +20,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test@test.dk",
-          Password = "Pa$$w0rd",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto
@@ -55,7 +54,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
       user.Email.Should().Be(command.account.Email);
       user.AccountId.Should().Be(entity.Id);
       user.Account.Should().Be(entity);
-      user.Password.Should().Be(command.account.Password);
     }
 
     [Fact]
@@ -67,7 +65,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test@test.dk",
-          Password = "Password",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto
@@ -85,7 +82,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test@test.dk",
-          Password = "Password",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto
@@ -113,7 +109,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test@test.dk",
-          Password = "Password",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto
@@ -131,7 +126,6 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         {
 
           Email = "test2@test.dk",
-          Password = "Password",
           Name = "test name",
           Tel = "12345678",
           Address = new AddressDto

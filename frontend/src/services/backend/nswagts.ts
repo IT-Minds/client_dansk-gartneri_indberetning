@@ -871,6 +871,62 @@ export enum RoleEnum {
     Client = 2,
 }
 
+export class AccountDto implements IAccountDto {
+    name?: string | null;
+    email?: string | null;
+    tel?: string | null;
+    addressId?: number;
+    cvrNumber?: string | null;
+    deactivationTime?: Date;
+
+    constructor(data?: IAccountDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
+            this.addressId = _data["addressId"] !== undefined ? _data["addressId"] : <any>null;
+            this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): AccountDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AccountDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["tel"] = this.tel !== undefined ? this.tel : <any>null;
+        data["addressId"] = this.addressId !== undefined ? this.addressId : <any>null;
+        data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        return data; 
+    }
+}
+
+export interface IAccountDto {
+    name?: string | null;
+    email?: string | null;
+    tel?: string | null;
+    addressId?: number;
+    cvrNumber?: string | null;
+    deactivationTime?: Date;
+}
+
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {
     child?: ExampleChildDto | null;
 

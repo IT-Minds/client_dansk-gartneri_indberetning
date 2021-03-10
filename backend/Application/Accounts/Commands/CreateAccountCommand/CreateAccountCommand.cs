@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Application.Common.Interfaces;
 using Domain.Entities;
 using Domain.Enums;
@@ -22,6 +24,16 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
       public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
       {
+        if (_context.Accounts.Any(e => e.Email == request.account.Email))
+        {
+          throw new ArgumentException("The provided email address is already used by another account.");
+        }
+
+        if (_context.Accounts.Any(e => e.CVRNumber == request.account.CVRNumber))
+        {
+          throw new ArgumentException("The provided CVR number is already used by another account.");
+        }
+
         var address1Entity = new Address
         {
           AddressLine1 = request.account.AddressLine1,
@@ -30,7 +42,6 @@ namespace Application.Accounts.Commands.CreateAccountCommand
           AddressLine4 = request.account.AddressLine4,
         };
         _context.Addresses.Add(address1Entity);
-        await _context.SaveChangesAsync(cancellationToken);
 
         var accountEntity = new Account
         {
@@ -43,7 +54,6 @@ namespace Application.Accounts.Commands.CreateAccountCommand
         };
 
         _context.Accounts.Add(accountEntity);
-        await _context.SaveChangesAsync(cancellationToken);
 
         address1Entity.AccountId = accountEntity.Id;
         address1Entity.Account = accountEntity;

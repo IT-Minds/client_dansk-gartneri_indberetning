@@ -15,6 +15,6 @@ namespace Application.Accounts
     public string Tel { get; set; }
     public int AddressId { get; set; }
     public string CVRNumber { get; set; }
-    public DateTimeOffset DeactivationTime { get; set; }
+    public DateTimeOffset? DeactivationTime { get; set; }
   }
 }

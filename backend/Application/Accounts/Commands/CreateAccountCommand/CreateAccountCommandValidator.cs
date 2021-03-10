@@ -1,8 +1,7 @@
 using System.Data;
-using Application.Accounts.Commands.CreateAccountCommand;
 using FluentValidation;
 
-namespace Application.ExampleChildren.Commands.CreateExampleChild
+namespace Application.Accounts.Commands.CreateAccountCommand
 {
   public class CreateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
   {
@@ -17,6 +16,7 @@ namespace Application.ExampleChildren.Commands.CreateExampleChild
         .NotNull()
         .MaximumLength(200);
       RuleFor(e => e.account.Tel)
+        .MinimumLength(8)
         .NotNull();
       RuleFor(e => e.account.AddressLine1)
         .NotEmpty();

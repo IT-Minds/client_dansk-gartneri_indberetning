@@ -1,13 +1,4 @@
-import {
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Grid,
-  Input,
-  ModalHeader,
-  Spacer
-} from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Input, ModalHeader, Spacer } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { genAccountClient } from "services/backend/apiClients";
@@ -79,15 +70,15 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
       </FormControl>
       <FormControl id="email" isRequired>
         <FormLabel htmlFor="email">{t("accounts.email")}</FormLabel>
-        <Input type="email" value={localForm.email || ""} onChange={handleInputChange}></Input>
+        <Input type="email" value={localForm.email} onChange={handleInputChange}></Input>
       </FormControl>
       <FormControl id="tel" isRequired>
         <FormLabel htmlFor="email">{t("accounts.tel")}</FormLabel>
-        <Input type="tel" value={localForm.tel || ""} onChange={handleInputChange}></Input>
+        <Input type="tel" value={localForm.tel} onChange={handleInputChange}></Input>
       </FormControl>
       <FormControl id="cvrNumber" isRequired>
         <FormLabel htmlFor="cvrNumber">{t("accounts.cvrNumber")}</FormLabel>
-        <Input value={localForm.cvrNumber || ""} onChange={handleInputChange}></Input>
+        <Input value={localForm.cvrNumber} onChange={handleInputChange}></Input>
         <Button onClick={handleGetFromCvr} variant="ghost" size="xs">
           Hent info fra CVR-registret
         </Button>
@@ -96,24 +87,22 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
       <ModalHeader p={0} mb={5}>
         {t("accounts.address")}
       </ModalHeader>
-      <Grid gridTemplateColumns="2fr 1fr" gap={2}>
-        <FormControl id="addressLine1">
-          <FormLabel htmlFor="addressLine1">{t("accounts.street")}</FormLabel>
-          <Input value={localForm.addressLine1 || ""} onChange={handleInputChange}></Input>
-        </FormControl>
-        <FormControl id="addressLine2">
-          <FormLabel htmlFor="addressLine2">{t("accounts.streetNum")}</FormLabel>
-          <Input value={localForm.addressLine2 || ""} onChange={handleInputChange}></Input>
-        </FormControl>
-        <FormControl id="addressLine3">
-          <FormLabel htmlFor="addressLine3">{t("accounts.city")}</FormLabel>
-          <Input value={localForm.addressLine3 || ""} onChange={handleInputChange}></Input>
-        </FormControl>
-        <FormControl id="addressLine4">
-          <FormLabel htmlFor="addressLine4">{t("accounts.postCode")}</FormLabel>
-          <Input value={localForm.addressLine4 || ""} onChange={handleInputChange}></Input>
-        </FormControl>
-      </Grid>
+      <FormControl id="addressLine1">
+        <FormLabel htmlFor="addressLine1">{t("accounts.addressLine1")}</FormLabel>
+        <Input value={localForm.addressLine1} onChange={handleInputChange}></Input>
+      </FormControl>
+      <FormControl id="addressLine2">
+        <FormLabel htmlFor="addressLine2">{t("accounts.addressLine2")}</FormLabel>
+        <Input value={localForm.addressLine2} onChange={handleInputChange}></Input>
+      </FormControl>
+      <FormControl id="addressLine3">
+        <FormLabel htmlFor="addressLine3">{t("accounts.addressLine3")}</FormLabel>
+        <Input value={localForm.addressLine3} onChange={handleInputChange}></Input>
+      </FormControl>
+      <FormControl id="addressLine4">
+        <FormLabel htmlFor="addressLine4">{t("accounts.addressLine4")}</FormLabel>
+        <Input value={localForm.addressLine4} onChange={handleInputChange}></Input>
+      </FormControl>
       <Flex justifyContent="flex-end" w="100%" mt={5}>
         <Button colorScheme="green" type="submit">
           {t("common.add")}

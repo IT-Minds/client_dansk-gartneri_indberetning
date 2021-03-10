@@ -53,7 +53,7 @@ namespace Application.Accounts.Commands.CreateAccountCommand
           AccountId = accountEntity.Id,
           Account = accountEntity,
           Email = accountEntity.Email,
-          Password = "Password123",
+          Password = "Password123", //Temporary, should perhaps be auto-generated or something..
           Role = RoleEnum.Client,
           Name = request.account.Name
         };

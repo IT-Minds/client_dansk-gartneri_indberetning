@@ -31,12 +31,12 @@ export class CVRClient implements ICVRClient {
           data.tel = result.phone ? result.phone : "";
           data.addressLine1 = result.address ? result.address : "";
           data.addressLine2 =
-            (result.zipcode ? result.zipcode : "") + result.city ? result.city : "";
+            (result.zipcode ? result.zipcode + " " : "") + (result.city ? result.city : "");
           return data;
         },
         error => {
           console.error("Error when trying to fetch from CVR-registry");
-          return data;
+          return null;
         }
       );
   }

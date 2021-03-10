@@ -879,6 +879,124 @@ export interface ILoginRequestDto {
     password?: string | null;
 }
 
+export class UserTokenDto implements IUserTokenDto {
+    user?: UserDto | null;
+    token?: string | null;
+
+    constructor(data?: IUserTokenDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+            this.token = _data["token"] !== undefined ? _data["token"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserTokenDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserTokenDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["token"] = this.token !== undefined ? this.token : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserTokenDto {
+    user?: IUserDto | null;
+    token?: string | null;
+}
+
+export class LoginCommand implements ILoginCommand {
+    loginDetails?: LoginRequestDto | null;
+
+    constructor(data?: ILoginCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.loginDetails = data.loginDetails && !(<any>data.loginDetails).toJSON ? new LoginRequestDto(data.loginDetails) : <LoginRequestDto>this.loginDetails; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.loginDetails = _data["loginDetails"] ? LoginRequestDto.fromJS(_data["loginDetails"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LoginCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["loginDetails"] = this.loginDetails ? this.loginDetails.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ILoginCommand {
+    loginDetails?: ILoginRequestDto | null;
+}
+
+export class LoginRequestDto implements ILoginRequestDto {
+    email?: string | null;
+    password?: string | null;
+
+    constructor(data?: ILoginRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LoginRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["password"] = this.password !== undefined ? this.password : <any>null;
+        return data; 
+    }
+}
+
+export interface ILoginRequestDto {
+    email?: string | null;
+    password?: string | null;
+}
+
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {
     child?: ExampleChildDto | null;
 

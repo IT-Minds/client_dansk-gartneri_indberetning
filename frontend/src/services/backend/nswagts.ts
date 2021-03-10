@@ -223,7 +223,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
 }
 
 export interface IAuthClient {
-    login(): Promise<string>;
+    login(command: LoginCommand): Promise<UserTokenDto>;
     checkAuth(): Promise<boolean>;
 }
 
@@ -238,13 +238,17 @@ export class AuthClient extends ClientBase implements IAuthClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    login(): Promise<string> {
+    login(command: LoginCommand): Promise<UserTokenDto> {
         let url_ = this.baseUrl + "/api/Auth";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(command);
+
         let options_ = <RequestInit>{
+            body: content_,
             method: "POST",
             headers: {
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             }
         };
@@ -256,14 +260,14 @@ export class AuthClient extends ClientBase implements IAuthClient {
         });
     }
 
-    protected processLogin(response: Response): Promise<string> {
+    protected processLogin(response: Response): Promise<UserTokenDto> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = UserTokenDto.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -271,7 +275,7 @@ export class AuthClient extends ClientBase implements IAuthClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<string>(<any>null);
+        return Promise.resolve<UserTokenDto>(<any>null);
     }
 
     checkAuth(): Promise<boolean> {
@@ -755,6 +759,124 @@ export interface IAccountDto {
     addressId?: number;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
+}
+
+export class UserTokenDto implements IUserTokenDto {
+    user?: UserDto | null;
+    token?: string | null;
+
+    constructor(data?: IUserTokenDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+            this.token = _data["token"] !== undefined ? _data["token"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserTokenDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserTokenDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["token"] = this.token !== undefined ? this.token : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserTokenDto {
+    user?: IUserDto | null;
+    token?: string | null;
+}
+
+export class LoginCommand implements ILoginCommand {
+    loginDetails?: LoginRequestDto | null;
+
+    constructor(data?: ILoginCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.loginDetails = data.loginDetails && !(<any>data.loginDetails).toJSON ? new LoginRequestDto(data.loginDetails) : <LoginRequestDto>this.loginDetails; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.loginDetails = _data["loginDetails"] ? LoginRequestDto.fromJS(_data["loginDetails"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LoginCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["loginDetails"] = this.loginDetails ? this.loginDetails.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ILoginCommand {
+    loginDetails?: ILoginRequestDto | null;
+}
+
+export class LoginRequestDto implements ILoginRequestDto {
+    email?: string | null;
+    password?: string | null;
+
+    constructor(data?: ILoginRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): LoginRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["password"] = this.password !== undefined ? this.password : <any>null;
+        return data; 
+    }
+}
+
+export interface ILoginRequestDto {
+    email?: string | null;
+    password?: string | null;
 }
 
 export class CreateExampleChildCommand implements ICreateExampleChildCommand {

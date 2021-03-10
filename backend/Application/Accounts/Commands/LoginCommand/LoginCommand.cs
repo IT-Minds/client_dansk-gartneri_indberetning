@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Accounts;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Users.Commands.UserLogin
+namespace Application.Accounts.Commands.CreateAccountCommand
 {
   public class LoginCommand : IRequest<UserTokenDto>
   {
@@ -21,10 +20,11 @@ namespace Application.Users.Commands.UserLogin
       private readonly ITokenService _tokenService;
 
 
-      public LoginCommandHandler(IApplicationDbContext context, ITokenService tokenService, IMapper mapper)
+      public LoginCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, ITokenService tokenService, IMapper mapper)
       {
         _context = context;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
         _tokenService = tokenService;
       }
 

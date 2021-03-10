@@ -1,4 +1,4 @@
-export interface ICVRDataDto {
+export interface CVRDataDto {
   name: string;
   email: string;
   tel: string;
@@ -6,44 +6,18 @@ export interface ICVRDataDto {
   addressLine2: string;
 }
 
-export class CVRDataDto implements ICVRDataDto {
-  name: string;
-  email: string;
-  tel: string;
-  addressLine1: string;
-  addressLine2: string;
-}
+export const getDataFromCVR = async (cvr: string): Promise<CVRDataDto> {
+  const url = "https://cvrapi.dk/api?country=dk&vat=";
 
-export interface ICVRClient {
-  getDataFromCVR(cvr: string): Promise<ICVRDataDto>;
-}
+  const result = await fetch(url + cvr);
+  if (!result.ok) throw new Error("Not 2xx response");
+  const data = await result.json();
 
-export class CVRClient implements ICVRClient {
-  getDataFromCVR(cvr: string): Promise<ICVRDataDto> {
-    const url = "https://cvrapi.dk/api?country=dk&vat=";
-    const data = new CVRDataDto();
-    return fetch(url + cvr)
-      .then(res => {
-        if (!res.ok) throw new Error("Not 2xx response");
-        return res.json();
-      })
-      .then(
-        result => {
-          data.name = result.name ? result.name : "";
-          data.email = result.email ? result.email : "";
-          data.tel = result.phone ? result.phone : "";
-          data.addressLine1 = result.address ? result.address : "";
-          data.addressLine2 =
-            (result.zipcode ? result.zipcode + " " : "") + (result.city ? result.city : "");
-          return data;
-        },
-        error => {
-          console.error("Error when trying to fetch from CVR-registry");
-          return null;
-        }
-      )
-      .catch(err => {
-        return null;
-      });
+  return {
+    name: result.name ?? "",
+    email: result.email ?? "",
+    tel: result.phone ?? "",
+    addressLine1: result.address ?? "",
+    addressLine2: `${result.zipcode ?? ""} ${result.city ?? ""}`.trim()
   }
 }

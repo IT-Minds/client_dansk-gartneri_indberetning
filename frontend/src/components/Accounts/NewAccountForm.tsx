@@ -112,14 +112,3 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
   );
 };
 export default NewAccountForm;
-
-/*
-const handleGetFromCvr = useCallback(async () => {
-    const cvrClient = new CVRClient();
-    const result = await cvrClient.getDataFromCVR(localForm.cvrNumber);
-    setLocalAccountForm({ ...localForm, ...result });
-  }, [localForm, formUpdateReform]);
-<Button onClick={handleGetFromCvr} variant="ghost" size="xs">
-          Hent info fra CVR-registret
-        </Button>
-*/

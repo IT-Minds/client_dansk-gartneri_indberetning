@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback } from "react";
-import { getDataFromCVR, CVRDataDto } from "services/cvr/api";
+import { CVRDataDto, getDataFromCVR } from "services/cvr/api";
 
 interface Props {
   cvrNumber: string;

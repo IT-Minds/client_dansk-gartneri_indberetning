@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Users.Commands.CheckAuthCommand;
 using Application.Users;
 using Application.Users.Commands.Login;
 

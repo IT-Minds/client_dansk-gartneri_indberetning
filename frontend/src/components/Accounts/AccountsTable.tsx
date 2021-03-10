@@ -42,8 +42,10 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
 
   const genValueFromKey = useCallback((account: IAccountDto, key: string) => {
     if (key == "address") {
-      const a = account.address1;
-      return a.streetName + " " + a.streetNumber + ", " + a.postCode + " " + a.city;
+      const a = account.address;
+      return `${a.addressLine1 ?? ""} ${a.addressLine2 ?? ""} ${a.addressLine3 ?? ""} ${
+        a.addressLine4 ?? ""
+      }`;
     }
     return account[key as keyof IAccountDto];
   }, []);

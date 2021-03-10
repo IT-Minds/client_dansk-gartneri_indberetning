@@ -33,6 +33,10 @@ export const table: Locale = {
     streetNum: "Nr.",
     postCode: "Postnr.",
     city: "By",
-    country: "Land"
+    country: "Land",
+    addressLine1: "Linje 1",
+    addressLine2: "Linje 2",
+    addressLine3: "Linje 3",
+    addressLine4: "Linje 4"
   }
 };

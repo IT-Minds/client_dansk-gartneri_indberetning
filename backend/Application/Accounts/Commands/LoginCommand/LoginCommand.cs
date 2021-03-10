@@ -35,14 +35,14 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
         if (user == null)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("The provided email could not be found.");
         }
 
         var (verified, needsUpgrade) = _passwordHasher.Check(user.Password, request.LoginDetails.Password);
 
         if (!verified)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("Incorrect password.");
         }
 
         var token = _tokenService.CreateToken(user);

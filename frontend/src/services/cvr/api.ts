@@ -6,7 +6,7 @@ export interface CVRDataDto {
   addressLine2: string;
 }
 
-export const getDataFromCVR = async (cvr: string): Promise<CVRDataDto> {
+export const getDataFromCVR = async (cvr: string): Promise<CVRDataDto> => {
   const url = "https://cvrapi.dk/api?country=dk&vat=";
 
   const result = await fetch(url + cvr);
@@ -14,10 +14,10 @@ export const getDataFromCVR = async (cvr: string): Promise<CVRDataDto> {
   const data = await result.json();
 
   return {
-    name: result.name ?? "",
-    email: result.email ?? "",
-    tel: result.phone ?? "",
-    addressLine1: result.address ?? "",
-    addressLine2: `${result.zipcode ?? ""} ${result.city ?? ""}`.trim()
+    name: data.name ?? "",
+    email: data.email ?? "",
+    tel: data.phone ?? "",
+    addressLine1: data.address ?? "",
+    addressLine2: `${data.zipcode ?? ""} ${data.city ?? ""}`.trim()
   }
 }

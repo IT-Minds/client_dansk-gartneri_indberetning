@@ -2,22 +2,23 @@ import { Button } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback } from "react";
-import { CVRClient, ICVRDataDto } from "services/cvr/api";
+import { getDataFromCVR, CVRDataDto } from "services/cvr/api";
 
 interface Props {
   cvrNumber: string;
-  onClick: (data: ICVRDataDto) => void;
+  onClick: (data: CVRDataDto) => void;
 }
 
 const CvrButton: FC<Props> = ({ cvrNumber, onClick }) => {
   const { t } = useLocales();
   const toast = useToast();
   const handleGetFromCvr = useCallback(async () => {
-    const cvrClient = new CVRClient();
-    const result = await cvrClient.getDataFromCVR(cvrNumber);
-    if (result != null) {
-      onClick(result);
-    } else {
+    try {
+      const result = await getDataFromCVR(cvrNumber);
+      if (result != null) {
+        onClick(result);
+      }
+    } catch {
       toast({
         title: t("accounts.CVR_apiErrorTitle"),
         description: t("accounts.CVR_apiErrorDescription"),

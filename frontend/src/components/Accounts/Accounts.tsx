@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { useColors } from "hooks/useColors";
+=======
+import { Flex, Heading, Stack } from "@chakra-ui/react";
+import Header from "components/Header/Header";
+import BasicWrapper from "components/Layouts/BasicWrapper";
+import HeaderLayout from "components/Layouts/HeaderLayout";
+>>>>>>> 2f3c8f1 (Remove unused imports from account components)
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";

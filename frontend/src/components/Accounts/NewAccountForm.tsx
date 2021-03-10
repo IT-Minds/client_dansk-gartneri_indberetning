@@ -7,13 +7,17 @@ import {
   CreateAccountDto,
   ICreateAccountDto
 } from "services/backend/nswagts";
-import { CVRClient } from "services/cvr/api";
+import { CVRClient, ICVRDataDto } from "services/cvr/api";
+
+import CvrButton from "./CvrButton";
 
 interface Props {
   onSubmit: (e: React.FormEvent) => void;
 }
 
 const NewAccountForm: FC<Props> = ({ onSubmit }) => {
+  const { t } = useLocales();
+
   const [localForm, setLocalAccountForm] = useState<ICreateAccountDto>(
     new CreateAccountDto({
       name: "",
@@ -55,13 +59,11 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
     [localForm]
   );
 
-  const handleGetFromCvr = useCallback(async () => {
-    const cvrClient = new CVRClient();
-    const result = await cvrClient.getDataFromCVR(localForm.cvrNumber);
-    setLocalAccountForm({ ...localForm, ...result });
-  }, [localForm, formUpdateReform]);
+  const handleGetFromCvr = useCallback(
+    (result: ICVRDataDto) => setLocalAccountForm({ ...localForm, ...result }),
+    [localForm]
+  );
 
-  const { t } = useLocales();
   return (
     <form onSubmit={handleSubmit}>
       <FormControl id="name" isRequired>
@@ -79,9 +81,7 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
       <FormControl id="cvrNumber" isRequired>
         <FormLabel htmlFor="cvrNumber">{t("accounts.cvrNumber")}</FormLabel>
         <Input value={localForm.cvrNumber} onChange={handleInputChange}></Input>
-        <Button onClick={handleGetFromCvr} variant="ghost" size="xs">
-          Hent info fra CVR-registret
-        </Button>
+        <CvrButton cvrNumber={localForm.cvrNumber} onClick={handleGetFromCvr} />
       </FormControl>
       <Spacer h={5} />
       <ModalHeader p={0} mb={5}>
@@ -112,3 +112,14 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
   );
 };
 export default NewAccountForm;
+
+/*
+const handleGetFromCvr = useCallback(async () => {
+    const cvrClient = new CVRClient();
+    const result = await cvrClient.getDataFromCVR(localForm.cvrNumber);
+    setLocalAccountForm({ ...localForm, ...result });
+  }, [localForm, formUpdateReform]);
+<Button onClick={handleGetFromCvr} variant="ghost" size="xs">
+          Hent info fra CVR-registret
+        </Button>
+*/

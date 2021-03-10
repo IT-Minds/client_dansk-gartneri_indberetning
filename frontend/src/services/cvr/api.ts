@@ -23,7 +23,10 @@ export class CVRClient implements ICVRClient {
     const url = "https://cvrapi.dk/api?country=dk&vat=";
     const data = new CVRDataDto();
     return fetch(url + cvr)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Not 2xx response");
+        return res.json();
+      })
       .then(
         result => {
           data.name = result.name ? result.name : "";
@@ -38,6 +41,9 @@ export class CVRClient implements ICVRClient {
           console.error("Error when trying to fetch from CVR-registry");
           return null;
         }
-      );
+      )
+      .catch(err => {
+        return null;
+      });
   }
 }

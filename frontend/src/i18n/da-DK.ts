@@ -37,6 +37,9 @@ export const table: Locale = {
     addressLine1: "Linje 1",
     addressLine2: "Linje 2",
     addressLine3: "Linje 3",
-    addressLine4: "Linje 4"
+    addressLine4: "Linje 4",
+    CVR_getFromRegistry: "Hent info fra CVR-registret",
+    CVR_apiErrorTitle: "CVR ikke fundet",
+    CVR_apiErrorDescription: "Kunne ikke finde CVR-nummer i registret"
   }
 };

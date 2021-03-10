@@ -638,8 +638,11 @@ export class CreateAccountDto implements ICreateAccountDto {
     password?: string | null;
     name?: string | null;
     tel?: string | null;
-    address?: AddressDto | null;
     cvrNumber?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    addressLine3?: string | null;
+    addressLine4?: string | null;
 
     constructor(data?: ICreateAccountDto) {
         if (data) {
@@ -647,7 +650,6 @@ export class CreateAccountDto implements ICreateAccountDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.address = data.address && !(<any>data.address).toJSON ? new AddressDto(data.address) : <AddressDto>this.address; 
         }
     }
 
@@ -657,8 +659,11 @@ export class CreateAccountDto implements ICreateAccountDto {
             this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
-            this.address = _data["address"] ? AddressDto.fromJS(_data["address"]) : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
+            this.addressLine1 = _data["addressLine1"] !== undefined ? _data["addressLine1"] : <any>null;
+            this.addressLine2 = _data["addressLine2"] !== undefined ? _data["addressLine2"] : <any>null;
+            this.addressLine3 = _data["addressLine3"] !== undefined ? _data["addressLine3"] : <any>null;
+            this.addressLine4 = _data["addressLine4"] !== undefined ? _data["addressLine4"] : <any>null;
         }
     }
 
@@ -675,8 +680,11 @@ export class CreateAccountDto implements ICreateAccountDto {
         data["password"] = this.password !== undefined ? this.password : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
-        data["address"] = this.address ? this.address.toJSON() : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
+        data["addressLine1"] = this.addressLine1 !== undefined ? this.addressLine1 : <any>null;
+        data["addressLine2"] = this.addressLine2 !== undefined ? this.addressLine2 : <any>null;
+        data["addressLine3"] = this.addressLine3 !== undefined ? this.addressLine3 : <any>null;
+        data["addressLine4"] = this.addressLine4 !== undefined ? this.addressLine4 : <any>null;
         return data; 
     }
 }
@@ -686,52 +694,7 @@ export interface ICreateAccountDto {
     password?: string | null;
     name?: string | null;
     tel?: string | null;
-    address?: IAddressDto | null;
     cvrNumber?: string | null;
-}
-
-export class AddressDto implements IAddressDto {
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    addressLine3?: string | null;
-    addressLine4?: string | null;
-
-    constructor(data?: IAddressDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.addressLine1 = _data["addressLine1"] !== undefined ? _data["addressLine1"] : <any>null;
-            this.addressLine2 = _data["addressLine2"] !== undefined ? _data["addressLine2"] : <any>null;
-            this.addressLine3 = _data["addressLine3"] !== undefined ? _data["addressLine3"] : <any>null;
-            this.addressLine4 = _data["addressLine4"] !== undefined ? _data["addressLine4"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AddressDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddressDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["addressLine1"] = this.addressLine1 !== undefined ? this.addressLine1 : <any>null;
-        data["addressLine2"] = this.addressLine2 !== undefined ? this.addressLine2 : <any>null;
-        data["addressLine3"] = this.addressLine3 !== undefined ? this.addressLine3 : <any>null;
-        data["addressLine4"] = this.addressLine4 !== undefined ? this.addressLine4 : <any>null;
-        return data; 
-    }
-}
-
-export interface IAddressDto {
     addressLine1?: string | null;
     addressLine2?: string | null;
     addressLine3?: string | null;

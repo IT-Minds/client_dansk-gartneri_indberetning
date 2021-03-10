@@ -18,11 +18,7 @@ namespace Application.ExampleChildren.Commands.CreateExampleChild
         .MaximumLength(200);
       RuleFor(e => e.account.Tel)
         .NotNull();
-      RuleFor(e => e.account.Password)
-        .NotNull();
-      RuleFor(e => e.account.Address)
-        .NotNull();
-      RuleFor(e => e.account.Address.AddressLine1)
+      RuleFor(e => e.account.AddressLine1)
         .NotEmpty();
     }
   }

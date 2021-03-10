@@ -24,10 +24,10 @@ namespace Application.Accounts.Commands.CreateAccountCommand
       {
         var address1Entity = new Address
         {
-          AddressLine1 = request.account.Address.AddressLine1,
-          AddressLine2 = request.account.Address.AddressLine2,
-          AddressLine3 = request.account.Address.AddressLine3,
-          AddressLine4 = request.account.Address.AddressLine4,
+          AddressLine1 = request.account.AddressLine1,
+          AddressLine2 = request.account.AddressLine2,
+          AddressLine3 = request.account.AddressLine3,
+          AddressLine4 = request.account.AddressLine4,
         };
         _context.Addresses.Add(address1Entity);
         await _context.SaveChangesAsync(cancellationToken);
@@ -53,7 +53,7 @@ namespace Application.Accounts.Commands.CreateAccountCommand
           AccountId = accountEntity.Id,
           Account = accountEntity,
           Email = accountEntity.Email,
-          Password = request.account.Password,
+          Password = "Password123",
           Role = RoleEnum.Client,
           Name = request.account.Name
         };

@@ -28,12 +28,19 @@ import NewAccountForm from "./NewAccountForm";
 
 interface Props {
   className?: string;
+  onSubmit: () => Promise<void>;
 }
 
 const NewAccountModal: FC<Props> = (props: Props) => {
   const { buttonFont } = useColors();
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleSubmit = useCallback(() => {
+    onClose();
+    props.onSubmit();
+  }, []);
+
   return (
     <>
       <Button rounded="full" colorScheme="blue" textColor={buttonFont} onClick={onOpen}>
@@ -46,7 +53,7 @@ const NewAccountModal: FC<Props> = (props: Props) => {
           <ModalHeader>{t("accounts.addAccount")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <NewAccountForm onSubmit={onClose} />
+            <NewAccountForm onSubmit={handleSubmit} />
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>

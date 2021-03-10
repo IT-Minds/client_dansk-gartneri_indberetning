@@ -14,7 +14,6 @@ import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
-  const { buttonFont } = useColors();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [searchString, setSearchString] = useState<string>("");

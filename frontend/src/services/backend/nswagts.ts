@@ -224,7 +224,6 @@ export class AccountClient extends ClientBase implements IAccountClient {
 
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
-    checkAuth(): Promise<boolean>;
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -276,42 +275,6 @@ export class AuthClient extends ClientBase implements IAuthClient {
             });
         }
         return Promise.resolve<UserTokenDto>(<any>null);
-    }
-
-    checkAuth(): Promise<boolean> {
-        let url_ = this.baseUrl + "/api/Auth";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "PUT",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processCheckAuth(_response));
-        });
-    }
-
-    protected processCheckAuth(response: Response): Promise<boolean> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<boolean>(<any>null);
     }
 }
 
@@ -802,48 +765,13 @@ export interface IUserTokenDto {
     token?: string | null;
 }
 
-export class LoginCommand implements ILoginCommand {
-    loginDetails?: LoginRequestDto | null;
-
-    constructor(data?: ILoginCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-            this.loginDetails = data.loginDetails && !(<any>data.loginDetails).toJSON ? new LoginRequestDto(data.loginDetails) : <LoginRequestDto>this.loginDetails; 
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.loginDetails = _data["loginDetails"] ? LoginRequestDto.fromJS(_data["loginDetails"]) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): LoginCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new LoginCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["loginDetails"] = this.loginDetails ? this.loginDetails.toJSON() : <any>null;
-        return data; 
-    }
-}
-
-export interface ILoginCommand {
-    loginDetails?: ILoginRequestDto | null;
-}
-
-export class LoginRequestDto implements ILoginRequestDto {
+export class UserDto implements IUserDto {
     email?: string | null;
-    password?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
 
-    constructor(data?: ILoginRequestDto) {
+    constructor(data?: IUserDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -855,13 +783,15 @@ export class LoginRequestDto implements ILoginRequestDto {
     init(_data?: any) {
         if (_data) {
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
+            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
         }
     }
 
-    static fromJS(data: any): LoginRequestDto {
+    static fromJS(data: any): UserDto {
         data = typeof data === 'object' ? data : {};
-        let result = new LoginRequestDto();
+        let result = new UserDto();
         result.init(data);
         return result;
     }
@@ -869,55 +799,24 @@ export class LoginRequestDto implements ILoginRequestDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["password"] = this.password !== undefined ? this.password : <any>null;
+        data["role"] = this.role !== undefined ? this.role : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
         return data; 
     }
 }
 
-export interface ILoginRequestDto {
+export interface IUserDto {
     email?: string | null;
-    password?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
 }
 
-export class UserTokenDto implements IUserTokenDto {
-    user?: UserDto | null;
-    token?: string | null;
-
-    constructor(data?: IUserTokenDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
-            this.token = _data["token"] !== undefined ? _data["token"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UserTokenDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserTokenDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
-        data["token"] = this.token !== undefined ? this.token : <any>null;
-        return data; 
-    }
-}
-
-export interface IUserTokenDto {
-    user?: IUserDto | null;
-    token?: string | null;
+export enum RoleEnum {
+    Admin = 0,
+    Accountant = 1,
+    Client = 2,
 }
 
 export class LoginCommand implements ILoginCommand {

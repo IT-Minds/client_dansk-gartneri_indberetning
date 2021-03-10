@@ -1,6 +1,7 @@
 using Application.Accounts;
+using Application.Users;
 
-namespace Application.Accounts
+namespace Application.Users
 {
   public class UserTokenDto
   {

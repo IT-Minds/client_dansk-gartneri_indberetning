@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Application.Accounts;
-using Application.Accounts.Commands.CreateAccountCommand;
+using Application.Users;
+using Application.Users.Commands.Login;
 
 namespace Web.Controllers
 {

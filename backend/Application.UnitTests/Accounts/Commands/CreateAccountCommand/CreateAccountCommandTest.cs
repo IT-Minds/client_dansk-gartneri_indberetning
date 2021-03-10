@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
 using Application.Accounts.Commands.CreateAccountCommand;
+using Application.Common.Interfaces;
+using Moq;
 using Xunit;
 
 namespace Application.UnitTests.Accounts.Commands.CreateAccount
@@ -28,7 +30,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         }
       };
 
-      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context, passwordHasherMock.Object);
 
       var result = await handler.Handle(command, CancellationToken.None);
 
@@ -82,7 +84,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         }
       };
 
-      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context, passwordHasherMock.Object);
       await handler.Handle(command1, CancellationToken.None);
 
       Func<Task> action = async () => await handler.Handle(command2, CancellationToken.None);
@@ -120,7 +122,7 @@ namespace Application.UnitTests.Accounts.Commands.CreateAccount
         }
       };
 
-      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context);
+      var handler = new CreateAccountCommand.CreateAccountCommandHandler(Context, passwordHasherMock.Object);
       await handler.Handle(command1, CancellationToken.None);
 
       Func<Task> action = async () => await handler.Handle(command2, CancellationToken.None);

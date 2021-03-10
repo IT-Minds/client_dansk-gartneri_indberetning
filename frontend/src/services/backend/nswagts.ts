@@ -126,8 +126,8 @@ export class ClientBase {
 }
 
 export interface IAccountClient {
-    createChild(command: CreateAccountCommand): Promise<number>;
-    getAllClients(): Promise<AccountDto[]>;
+    createAccount(command: CreateAccountCommand): Promise<number>;
+    getAllAccounts(): Promise<AccountDto[]>;
 }
 
 export class AccountClient extends ClientBase implements IAccountClient {
@@ -141,7 +141,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    createChild(command: CreateAccountCommand): Promise<number> {
+    createAccount(command: CreateAccountCommand): Promise<number> {
         let url_ = this.baseUrl + "/api/Account";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -159,11 +159,11 @@ export class AccountClient extends ClientBase implements IAccountClient {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processCreateChild(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processCreateAccount(_response));
         });
     }
 
-    protected processCreateChild(response: Response): Promise<number> {
+    protected processCreateAccount(response: Response): Promise<number> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -181,7 +181,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
         return Promise.resolve<number>(<any>null);
     }
 
-    getAllClients(): Promise<AccountDto[]> {
+    getAllAccounts(): Promise<AccountDto[]> {
         let url_ = this.baseUrl + "/api/Account";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -195,11 +195,11 @@ export class AccountClient extends ClientBase implements IAccountClient {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processGetAllClients(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetAllAccounts(_response));
         });
     }
 
-    protected processGetAllClients(response: Response): Promise<AccountDto[]> {
+    protected processGetAllAccounts(response: Response): Promise<AccountDto[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {

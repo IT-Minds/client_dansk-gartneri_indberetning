@@ -9,6 +9,7 @@ import { IAccountDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
 import AccountsTable from "./AccountsTable";
+import NewAccountModal from "./NewAccountModal";
 import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {

@@ -33,5 +33,12 @@ export interface Locale {
     postCode: string;
     city: string;
     country: string;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    addressLine4: string;
+    CVR_getFromRegistry: string;
+    CVR_apiErrorTitle: string;
+    CVR_apiErrorDescription: string;
   };
 }

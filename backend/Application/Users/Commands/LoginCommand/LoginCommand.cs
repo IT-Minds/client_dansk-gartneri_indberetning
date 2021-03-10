@@ -1,12 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Accounts;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Accounts.Commands.CreateAccountCommand
+namespace Application.Users.Commands.Login
 {
   public class LoginCommand : IRequest<UserTokenDto>
   {
@@ -35,14 +36,14 @@ namespace Application.Accounts.Commands.CreateAccountCommand
 
         if (user == null)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("The provided email could not be found.");
         }
 
         var (verified, needsUpgrade) = _passwordHasher.Check(user.Password, request.LoginDetails.Password);
 
         if (!verified)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("Incorrect password.");
         }
 
         var token = _tokenService.CreateToken(user);

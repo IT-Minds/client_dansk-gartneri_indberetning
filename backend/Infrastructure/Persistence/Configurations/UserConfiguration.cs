@@ -24,12 +24,12 @@ namespace Infrastructure.Persistence.Configurations
         .IsRequired();
 
       builder.Property(e => e.AccountId)
-          .IsRequired();
+        .IsRequired();
 
       builder.HasOne<Account>(e => e.Account)
-          .WithMany(e => e.Users)
-          .HasForeignKey(e => e.AccountId)
-          .IsRequired(true);
+        .WithMany(e => e.Users)
+        .HasForeignKey(e => e.AccountId)
+        .IsRequired(true);
     }
   }
 }

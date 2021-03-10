@@ -224,7 +224,10 @@ export class AccountClient extends ClientBase implements IAccountClient {
 
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
+<<<<<<< HEAD
     checkAuth(): Promise<UserDto>;
+=======
+>>>>>>> feature/DGI-24
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -277,6 +280,7 @@ export class AuthClient extends ClientBase implements IAuthClient {
         }
         return Promise.resolve<UserTokenDto>(<any>null);
     }
+<<<<<<< HEAD
 
     checkAuth(): Promise<UserDto> {
         let url_ = this.baseUrl + "/api/Auth";
@@ -313,6 +317,8 @@ export class AuthClient extends ClientBase implements IAuthClient {
         }
         return Promise.resolve<UserDto>(<any>null);
     }
+=======
+>>>>>>> feature/DGI-24
 }
 
 export interface IExampleChildClient {
@@ -641,9 +647,11 @@ export class CreateAccountDto implements ICreateAccountDto {
     email?: string | null;
     name?: string | null;
     tel?: string | null;
-    address1?: AddressDto | null;
-    address2?: AddressDto | null;
     cvrNumber?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    addressLine3?: string | null;
+    addressLine4?: string | null;
 
     constructor(data?: ICreateAccountDto) {
         if (data) {
@@ -651,8 +659,6 @@ export class CreateAccountDto implements ICreateAccountDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.address1 = data.address1 && !(<any>data.address1).toJSON ? new AddressDto(data.address1) : <AddressDto>this.address1; 
-            this.address2 = data.address2 && !(<any>data.address2).toJSON ? new AddressDto(data.address2) : <AddressDto>this.address2; 
         }
     }
 
@@ -661,9 +667,11 @@ export class CreateAccountDto implements ICreateAccountDto {
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
-            this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
-            this.address2 = _data["address2"] ? AddressDto.fromJS(_data["address2"]) : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
+            this.addressLine1 = _data["addressLine1"] !== undefined ? _data["addressLine1"] : <any>null;
+            this.addressLine2 = _data["addressLine2"] !== undefined ? _data["addressLine2"] : <any>null;
+            this.addressLine3 = _data["addressLine3"] !== undefined ? _data["addressLine3"] : <any>null;
+            this.addressLine4 = _data["addressLine4"] !== undefined ? _data["addressLine4"] : <any>null;
         }
     }
 
@@ -679,9 +687,11 @@ export class CreateAccountDto implements ICreateAccountDto {
         data["email"] = this.email !== undefined ? this.email : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
-        data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
-        data["address2"] = this.address2 ? this.address2.toJSON() : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
+        data["addressLine1"] = this.addressLine1 !== undefined ? this.addressLine1 : <any>null;
+        data["addressLine2"] = this.addressLine2 !== undefined ? this.addressLine2 : <any>null;
+        data["addressLine3"] = this.addressLine3 !== undefined ? this.addressLine3 : <any>null;
+        data["addressLine4"] = this.addressLine4 !== undefined ? this.addressLine4 : <any>null;
         return data; 
     }
 }
@@ -690,61 +700,11 @@ export interface ICreateAccountDto {
     email?: string | null;
     name?: string | null;
     tel?: string | null;
-    address1?: IAddressDto | null;
-    address2?: IAddressDto | null;
     cvrNumber?: string | null;
-}
-
-export class AddressDto implements IAddressDto {
-    streetName?: string | null;
-    streetNumber?: string | null;
-    postCode?: string | null;
-    city?: string | null;
-    country?: string | null;
-
-    constructor(data?: IAddressDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.streetName = _data["streetName"] !== undefined ? _data["streetName"] : <any>null;
-            this.streetNumber = _data["streetNumber"] !== undefined ? _data["streetNumber"] : <any>null;
-            this.postCode = _data["postCode"] !== undefined ? _data["postCode"] : <any>null;
-            this.city = _data["city"] !== undefined ? _data["city"] : <any>null;
-            this.country = _data["country"] !== undefined ? _data["country"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): AddressDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddressDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["streetName"] = this.streetName !== undefined ? this.streetName : <any>null;
-        data["streetNumber"] = this.streetNumber !== undefined ? this.streetNumber : <any>null;
-        data["postCode"] = this.postCode !== undefined ? this.postCode : <any>null;
-        data["city"] = this.city !== undefined ? this.city : <any>null;
-        data["country"] = this.country !== undefined ? this.country : <any>null;
-        return data; 
-    }
-}
-
-export interface IAddressDto {
-    streetName?: string | null;
-    streetNumber?: string | null;
-    postCode?: string | null;
-    city?: string | null;
-    country?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    addressLine3?: string | null;
+    addressLine4?: string | null;
 }
 
 export class AccountDto implements IAccountDto {
@@ -752,28 +712,15 @@ export class AccountDto implements IAccountDto {
     name?: string | null;
     email?: string | null;
     tel?: string | null;
-    address1Id?: number;
-    address1?: AddressDto | null;
-    address2Id?: number;
-    address2?: AddressDto | null;
+    addressId?: number;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
-    users?: UserDto[] | null;
 
     constructor(data?: IAccountDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
-            }
-            this.address1 = data.address1 && !(<any>data.address1).toJSON ? new AddressDto(data.address1) : <AddressDto>this.address1; 
-            this.address2 = data.address2 && !(<any>data.address2).toJSON ? new AddressDto(data.address2) : <AddressDto>this.address2; 
-            if (data.users) {
-                this.users = [];
-                for (let i = 0; i < data.users.length; i++) {
-                    let item = data.users[i];
-                    this.users[i] = item && !(<any>item).toJSON ? new UserDto(item) : <UserDto>item;
-                }
             }
         }
     }
@@ -784,17 +731,9 @@ export class AccountDto implements IAccountDto {
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
             this.tel = _data["tel"] !== undefined ? _data["tel"] : <any>null;
-            this.address1Id = _data["address1Id"] !== undefined ? _data["address1Id"] : <any>null;
-            this.address1 = _data["address1"] ? AddressDto.fromJS(_data["address1"]) : <any>null;
-            this.address2Id = _data["address2Id"] !== undefined ? _data["address2Id"] : <any>null;
-            this.address2 = _data["address2"] ? AddressDto.fromJS(_data["address2"]) : <any>null;
+            this.addressId = _data["addressId"] !== undefined ? _data["addressId"] : <any>null;
             this.cvrNumber = _data["cvrNumber"] !== undefined ? _data["cvrNumber"] : <any>null;
             this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
-            if (Array.isArray(_data["users"])) {
-                this.users = [] as any;
-                for (let item of _data["users"])
-                    this.users!.push(UserDto.fromJS(item));
-            }
         }
     }
 
@@ -811,17 +750,9 @@ export class AccountDto implements IAccountDto {
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["email"] = this.email !== undefined ? this.email : <any>null;
         data["tel"] = this.tel !== undefined ? this.tel : <any>null;
-        data["address1Id"] = this.address1Id !== undefined ? this.address1Id : <any>null;
-        data["address1"] = this.address1 ? this.address1.toJSON() : <any>null;
-        data["address2Id"] = this.address2Id !== undefined ? this.address2Id : <any>null;
-        data["address2"] = this.address2 ? this.address2.toJSON() : <any>null;
+        data["addressId"] = this.addressId !== undefined ? this.addressId : <any>null;
         data["cvrNumber"] = this.cvrNumber !== undefined ? this.cvrNumber : <any>null;
         data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
-        if (Array.isArray(this.users)) {
-            data["users"] = [];
-            for (let item of this.users)
-                data["users"].push(item.toJSON());
-        }
         return data; 
     }
 }
@@ -831,13 +762,50 @@ export interface IAccountDto {
     name?: string | null;
     email?: string | null;
     tel?: string | null;
-    address1Id?: number;
-    address1?: IAddressDto | null;
-    address2Id?: number;
-    address2?: IAddressDto | null;
+    addressId?: number;
     cvrNumber?: string | null;
     deactivationTime?: Date | null;
-    users?: IUserDto[] | null;
+}
+
+export class UserTokenDto implements IUserTokenDto {
+    user?: UserDto | null;
+    token?: string | null;
+
+    constructor(data?: IUserTokenDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+            this.token = _data["token"] !== undefined ? _data["token"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserTokenDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserTokenDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        data["token"] = this.token !== undefined ? this.token : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserTokenDto {
+    user?: IUserDto | null;
+    token?: string | null;
 }
 
 export class UserDto implements IUserDto {
@@ -892,47 +860,6 @@ export enum RoleEnum {
     Admin = 0,
     Accountant = 1,
     Client = 2,
-}
-
-export class UserTokenDto implements IUserTokenDto {
-    user?: UserDto | null;
-    token?: string | null;
-
-    constructor(data?: IUserTokenDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
-            this.token = _data["token"] !== undefined ? _data["token"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UserTokenDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserTokenDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
-        data["token"] = this.token !== undefined ? this.token : <any>null;
-        return data; 
-    }
-}
-
-export interface IUserTokenDto {
-    user?: IUserDto | null;
-    token?: string | null;
 }
 
 export class LoginCommand implements ILoginCommand {

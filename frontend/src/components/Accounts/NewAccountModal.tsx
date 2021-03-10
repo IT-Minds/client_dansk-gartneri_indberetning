@@ -1,14 +1,5 @@
 import {
-  Box,
   Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Grid,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,13 +7,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spacer,
-  Text,
   useDisclosure
 } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback } from "react";
 
 import NewAccountForm from "./NewAccountForm";
 
@@ -62,8 +51,3 @@ const NewAccountModal: FC<Props> = (props: Props) => {
   );
 };
 export default NewAccountModal;
-/*
-<Button colorScheme="green" mr={3} onClick={onClose}>
-              {t("common.add")}
-            </Button>
-*/

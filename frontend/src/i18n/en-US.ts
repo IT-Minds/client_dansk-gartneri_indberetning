@@ -34,6 +34,13 @@ export const table: Locale = {
     streetNum: "Number",
     postCode: "Zip",
     city: "City",
-    country: "Country"
+    country: "Country",
+    addressLine1: "Line 1",
+    addressLine2: "Line 2",
+    addressLine3: "Line 3",
+    addressLine4: "Line 4",
+    CVR_getFromRegistry: "Get info from CVR-registry",
+    CVR_apiErrorTitle: "CVR not found",
+    CVR_apiErrorDescription: "Could not find CVR number in the registry"
   }
 };

@@ -4,7 +4,7 @@ using Domain.Enums;
 using System;
 using AutoMapper;
 
-namespace Application.Accounts
+namespace Application.Users
 {
   public class UserDto : IAutoMap<User>
   {
@@ -12,9 +12,5 @@ namespace Application.Accounts
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
-    public void Mapping(Profile profile)
-    {
-      profile.CreateMap<User, UserDto>();
-    }
   }
 }

@@ -28,7 +28,7 @@ namespace Application.Accounts.Commands.CreateAdmin
         var userEntity = new AdminUser
         {
           Email = request.user.Email,
-          Password = _passwordHasher.Hash(request.user.Password), //temporary
+          Password = _passwordHasher.Hash(request.user.Password),
           Role = RoleEnum.Admin,
           Name = request.user.Name
         };

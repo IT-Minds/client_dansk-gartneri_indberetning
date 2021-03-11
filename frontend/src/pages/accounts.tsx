@@ -1,7 +1,5 @@
 import { Text } from "@chakra-ui/react";
 import Accounts from "components/Accounts/Accounts";
-import Demo from "components/Demo/Demo";
-import BasicWrapper from "components/GridLayouts/BasicWrapper";
 import { Locale } from "i18n/Locale";
 // import { runTimeTable } from "i18n/runtimeTable";
 import { GetStaticProps, NextPage } from "next";

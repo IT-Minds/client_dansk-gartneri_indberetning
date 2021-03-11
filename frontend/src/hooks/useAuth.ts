@@ -42,7 +42,7 @@ export const useAuth = (): AuthHook<IUserDto> => {
   }, [authCounter]);
 
   const login = useCallback(async (loginRequest: ILoginRequestDto) => {
-    console.log(loginRequest);
+    console.debug(loginRequest);
     const client = await genAuthenticationClient();
 
     const user: IUserTokenDto = await client

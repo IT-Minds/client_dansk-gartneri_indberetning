@@ -7,7 +7,6 @@ import {
   CreateAccountDto,
   ICreateAccountDto
 } from "services/backend/nswagts";
-import { ICVRDataDto } from "services/cvr/api";
 
 import CvrButton from "./CvrButton";
 

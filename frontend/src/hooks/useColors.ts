@@ -7,11 +7,13 @@ export const useColors = () => {
   const activeBg = useColorModeValue("yellow.200", "yellow.700");
   const menuBg = useColorModeValue("gray.100", "gray.700");
   const buttonFont = useColorModeValue("white", "black");
+  const headerBg = "gray.700";
 
   return {
     hoverBg,
     menuBg,
     activeBg,
-    buttonFont
+    buttonFont,
+    headerBg
   };
 };

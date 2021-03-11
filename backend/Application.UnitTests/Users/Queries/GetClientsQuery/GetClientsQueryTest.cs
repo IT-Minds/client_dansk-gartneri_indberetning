@@ -1,4 +1,3 @@
-using Application.Accounts.Queries.GetAccountsQuery;
 using AutoMapper;
 using FluentAssertions;
 using Infrastructure.Persistence;
@@ -7,17 +6,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Accounts;
+using Application.Users;
+using Application.Users.Queries.GetClientsQuery;
 using Xunit;
 
-namespace Application.UnitTests.Accounts.Queries.GetAccounts
+namespace Application.UnitTests.Users.Queries.GetClients
 {
   [Collection("QueryTests")]
-  public class GetAccountsQueryTest
+  public class GetClientsQueryTest
   {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetAccountsQueryTest(QueryTestFixture fixture)
+    public GetClientsQueryTest(QueryTestFixture fixture)
     {
       _context = fixture.Context;
       _mapper = fixture.Mapper;
@@ -26,34 +27,32 @@ namespace Application.UnitTests.Accounts.Queries.GetAccounts
     [Fact]
     public async Task Handle_ReturnsCorrectVmAndClientsCount()
     {
-      var query = new GetAccountsQuery();
+      var query = new GetClientsQuery();
 
-      var handler = new GetAccountsQuery.GetAccountsQueryHandler(_context, _mapper);
+      var handler = new GetClientsQuery.GetClientsQueryHandler(_context, _mapper);
 
       var result = await handler.Handle(query, CancellationToken.None);
 
-      result.Should().BeOfType<List<AccountDto>>();
+      result.Should().BeOfType<List<UserDto>>();
       result.Count.Should().Be(2);
     }
 
     [Fact]
-    public async Task Handle_ReturnsCorrectAccountData()
+    public async Task Handle_ReturnsCorrectClientsData()
     {
-      var query = new GetAccountsQuery();
+      var query = new GetClientsQuery();
 
-      var handler = new GetAccountsQuery.GetAccountsQueryHandler(_context, _mapper);
+      var handler = new GetClientsQuery.GetClientsQueryHandler(_context, _mapper);
 
       var result = await handler.Handle(query, CancellationToken.None);
 
-      result.Should().BeOfType<List<AccountDto>>();
+      result.Should().BeOfType<List<UserDto>>();
 
       result.ForEach(entity =>
       {
-        entity.Tel.Should().NotBeNullOrEmpty();
         entity.Email.Should().NotBeNullOrEmpty();
-        entity.AddressId.Should().BeInRange(1, int.MaxValue);
-        entity.CVRNumber.Should().NotBeNullOrEmpty();
         entity.Name.Should().NotBeNullOrEmpty();
+        entity.Role.Should().NotBeNull();
       });
     }
   }

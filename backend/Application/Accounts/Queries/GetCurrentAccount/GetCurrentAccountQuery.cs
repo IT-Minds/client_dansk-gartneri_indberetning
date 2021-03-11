@@ -28,11 +28,12 @@ namespace Application.Accounts.Queries.GetCurrentAccountQuery
       }
       public async Task<AccountDto> Handle(GetCurrentAccountQuery request, CancellationToken cancellationToken)
       {
-        var viewmodel = await _context.Users
-          .Include(u => u.Account)
-          .FirstOrDefaultAsync(u => u.Id == int.Parse(_currentUserService.UserId));
+        var viewmodel = await _context.Accounts
+          .Include(a => a.Users)
+          .ProjectTo<AccountDto>(_mapper.ConfigurationProvider)
+          .FirstOrDefaultAsync(a => a.Users.Any(u => u.Id == int.Parse(_currentUserService.UserId)));
 
-        return _mapper.Map<AccountDto>(viewmodel.Account);
+        return viewmodel;
       }
     }
   }

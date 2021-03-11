@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Application.Users;
 using Application.Users.Commands.CheckAuthCommand;
-using Application.Users.Commands.CreateAccountCommand;
+using Application.Users;
+using Application.Users.Commands.Login;
 
 namespace Web.Controllers
 {
 
   public class AuthController : ApiControllerBase
   {
-    private static string TEMP_TOKEN = "abs";
-
     [HttpPost]
     public async Task<ActionResult<UserTokenDto>> Login([FromBody] LoginCommand command)
     {

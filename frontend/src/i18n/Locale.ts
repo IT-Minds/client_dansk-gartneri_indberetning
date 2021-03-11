@@ -41,4 +41,12 @@ export interface Locale {
     CVR_apiErrorTitle: string;
     CVR_apiErrorDescription: string;
   };
+
+  login: {
+    email: string;
+    password: string;
+    login: string;
+    forgotPassword: string;
+    invalidMsg: string;
+  };
 }

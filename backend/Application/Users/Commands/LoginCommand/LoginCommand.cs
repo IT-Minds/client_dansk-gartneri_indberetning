@@ -6,7 +6,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Users.Commands.CreateAccountCommand
+namespace Application.Users.Commands.Login
 {
   public class LoginCommand : IRequest<UserTokenDto>
   {
@@ -35,14 +35,14 @@ namespace Application.Users.Commands.CreateAccountCommand
 
         if (user == null)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("The provided email could not be found.");
         }
 
         var (verified, needsUpgrade) = _passwordHasher.Check(user.Password, request.LoginDetails.Password);
 
         if (!verified)
         {
-          throw new ArgumentException("Invalid credentials.");
+          throw new ArgumentException("Incorrect password.");
         }
 
         var token = _tokenService.CreateToken(user);

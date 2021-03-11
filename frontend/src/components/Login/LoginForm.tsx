@@ -7,18 +7,22 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Stack
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
+import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useState } from "react";
 import { BsLock, BsPerson } from "react-icons/Bs";
 import { LoginRequestDto } from "services/backend/nswagts";
 
 const LoginForm: FC = () => {
+  const { t } = useLocales();
   const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -29,14 +33,15 @@ const LoginForm: FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      login(
+      const res = await login(
         new LoginRequestDto({
           email: email,
           password: password
         })
       );
+      setLoginSuccess(res);
     },
     [email, password, login]
   );
@@ -46,7 +51,7 @@ const LoginForm: FC = () => {
       <form onSubmit={handleSubmit}>
         <Stack w="100%">
           <FormControl isRequired={true} colorScheme="green">
-            <FormLabel htmlFor="email">Email:</FormLabel>
+            <FormLabel htmlFor="email">{t("login.email")}</FormLabel>
             <InputGroup>
               <InputRightElement>
                 <BsPerson />
@@ -55,7 +60,7 @@ const LoginForm: FC = () => {
             </InputGroup>
           </FormControl>
           <FormControl isRequired={true}>
-            <FormLabel htmlFor="password">Password:</FormLabel>
+            <FormLabel htmlFor="password">{t("login.password")}</FormLabel>
             <InputGroup>
               <InputRightElement>
                 <BsLock />
@@ -68,10 +73,11 @@ const LoginForm: FC = () => {
             </InputGroup>
           </FormControl>
           <Button type="submit" colorScheme="blue" w="100%">
-            Log ind
+            {t("login.login")}
           </Button>
+          {!loginSuccess && <Center color="red">{t("login.invalidMsg")}</Center>}
           <Center textColor="blue.400" mt={2}>
-            Glemt kodeord?
+            {t("login.forgotPassword")}
           </Center>
         </Stack>
       </form>

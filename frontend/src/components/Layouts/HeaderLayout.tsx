@@ -1,16 +1,16 @@
 import { Grid } from "@chakra-ui/react";
+import Header from "components/Header/Header";
 import { FC, ReactNode } from "react";
 
 interface Props {
-  header: ReactNode;
-  main: ReactNode;
+  children?: ReactNode;
 }
 
-const HeaderLayout: FC<Props> = (props: Props) => {
+const HeaderLayout: FC<Props> = ({ children }) => {
   return (
     <Grid gridTemplateRows="auto 1fr">
-      {props.header}
-      {props.main}
+      <Header />
+      {children}
     </Grid>
   );
 };

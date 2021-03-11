@@ -1,4 +1,5 @@
 using Application.Accounts;
+using Application.Users;
 
 namespace Application.Users
 {

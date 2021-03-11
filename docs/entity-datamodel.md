@@ -7,7 +7,7 @@ class AuditableEntity {
   LastModified
 }
 
-abstract class BaseUser {
+interface IUser {
   Id
   Email
   Password
@@ -21,8 +21,7 @@ class Account {
   Name
   Tel
   Email
-  Address1
-  Address2
+  Address
   CVRNumber
   Users
   DeactivationTime
@@ -35,7 +34,7 @@ class User {
 enum Role {
   Admin
   Accountant
-  Customer
+  Client
 }
 
 class Address {
@@ -46,8 +45,8 @@ class Address {
   Country
 }
 
-BaseUser -|> AuditableEntity
-User -|> BaseUser
+User -|> IUser
+User -|> AuditableEntity
 Account -|> AuditableEntity
 Account "1"-->"0..*" User
 User "1"-->"1..2" Address

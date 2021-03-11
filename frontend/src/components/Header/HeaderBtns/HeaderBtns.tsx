@@ -8,6 +8,7 @@ import UserBtn from "./UserBtn";
 const HeaderButtons: FC = () => {
   return (
     <HStack spacing={3}>
+      <LocaleBtn />
       <ColorModeBtn />
       <UserBtn />
     </HStack>

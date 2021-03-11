@@ -7,7 +7,7 @@ import {
   CreateAccountDto,
   ICreateAccountDto
 } from "services/backend/nswagts";
-import { ICVRDataDto } from "services/cvr/api";
+import { CVRDataDto } from "services/cvr/api";
 
 import CvrButton from "./CvrButton";
 
@@ -60,7 +60,7 @@ const NewAccountForm: FC<Props> = ({ onSubmit }) => {
   );
 
   const handleGetFromCvr = useCallback(
-    (result: ICVRDataDto) => setLocalAccountForm({ ...localForm, ...result }),
+    (result: CVRDataDto) => setLocalAccountForm({ ...localForm, ...result }),
     [localForm]
   );
 

@@ -19,5 +19,5 @@ export const getDataFromCVR = async (cvr: string): Promise<CVRDataDto> => {
     tel: data.phone ?? "",
     addressLine1: data.address ?? "",
     addressLine2: `${data.zipcode ?? ""} ${data.city ?? ""}`.trim()
-  }
-}
+  };
+};

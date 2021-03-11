@@ -7,7 +7,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Stack
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
 import { FC, useCallback, useContext, useState } from "react";
@@ -19,6 +20,7 @@ const LoginForm: FC = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -29,14 +31,15 @@ const LoginForm: FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      login(
+      const res = await login(
         new LoginRequestDto({
           email: email,
           password: password
         })
       );
+      setLoginSuccess(res);
     },
     [email, password, login]
   );
@@ -70,6 +73,7 @@ const LoginForm: FC = () => {
           <Button type="submit" colorScheme="blue" w="100%">
             Log ind
           </Button>
+          {!loginSuccess && <Center color="red">Fejl i email eller password. Prøv igen.</Center>}
           <Center textColor="blue.400" mt={2}>
             Glemt kodeord?
           </Center>

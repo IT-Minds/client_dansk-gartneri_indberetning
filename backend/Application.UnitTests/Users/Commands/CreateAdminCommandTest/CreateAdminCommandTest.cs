@@ -22,7 +22,7 @@ namespace Application.UnitTests.Users.Commands.CreateAdmin
         {
 
           Email = "admin@admin.dk",
-          Password = "password123",
+          Password = "Password123",
           Name = "admin"
         }
       };

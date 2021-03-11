@@ -90,7 +90,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
                 <Th key={key.id}>
                   <Flex>
                     <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
-                    {key.name}
+                    {t(`accounts.${key.id}`)}
                   </Flex>
                 </Th>
               ))}

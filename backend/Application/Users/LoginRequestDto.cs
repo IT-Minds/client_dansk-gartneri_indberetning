@@ -1,4 +1,4 @@
-namespace Application.Accounts
+namespace Application.Users
 {
   public class LoginRequestDto
   {

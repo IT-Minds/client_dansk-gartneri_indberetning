@@ -1,8 +1,5 @@
-import { Box, Button, chakra, Flex, Heading, HStack, Stack } from "@chakra-ui/react";
-import Header from "components/Header/Header";
-import BasicWrapper from "components/Layouts/BasicWrapper";
-import HeaderLayout from "components/Layouts/HeaderLayout";
-import { useColors } from "hooks/useColors";
+import { Box, Flex, Heading, HStack, Stack } from "@chakra-ui/react";
+import BasicLayout from "components/Layouts/BasicLayout";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
@@ -43,23 +40,20 @@ const Accounts: FC = () => {
   }, [fetchData]);
 
   return (
-    <HeaderLayout
-      header={<Header />}
-      main={
-        <BasicWrapper className="wrapper">
-          <Stack spacing={4}>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Heading>{t("accounts.accounts")}</Heading>
-              <HStack spacing={5}>
-                <SearchFilterInput onChange={setSearchString} value={searchString} />
-                <NewAccountModal onSubmit={fetchData} />
-              </HStack>
-            </Flex>
-            <AccountsTable data={accounts} searchString={searchString} />
-          </Stack>
-        </BasicWrapper>
-      }
-    />
+    <BasicLayout>
+      <Stack spacing={4}>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading>{t("accounts.accounts")}</Heading>
+          <HStack spacing={5}>
+            <Box>
+              <SearchFilterInput onChange={setSearchString} value={searchString} />
+            </Box>
+            <NewAccountModal onSubmit={fetchData} />
+          </HStack>
+        </Flex>
+        <AccountsTable data={accounts} searchString={searchString} />
+      </Stack>
+    </BasicLayout>
   );
 };
 export default Accounts;

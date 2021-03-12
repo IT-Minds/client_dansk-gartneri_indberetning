@@ -47,7 +47,7 @@ const AdminTable: FC<Props> = ({ data, tableKeyIds }) => {
                   <Menu>
                     <MenuButton as={IconButton} icon={<FiChevronDown />} isRound={true} />
                     <MenuList>
-                      <MenuItem>Slet</MenuItem>
+                      <MenuItem>{t("actions.delete")}</MenuItem>
                     </MenuList>
                   </Menu>
                 </Td>

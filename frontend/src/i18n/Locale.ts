@@ -44,4 +44,8 @@ export interface Locale {
   admins: {
     admins: string;
   };
+
+  actions: {
+    delete: string;
+  };
 }

@@ -45,5 +45,9 @@ export const table: Locale = {
 
   admins: {
     admins: "Admins"
+  },
+
+  actions: {
+    delete: "Delete"
   }
 };

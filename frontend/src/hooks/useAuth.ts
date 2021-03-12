@@ -45,23 +45,17 @@ export const useAuth = (): AuthHook<IUserDto> => {
     console.log(loginRequest);
     const client = await genAuthenticationClient();
 
-    const user: IUserTokenDto = await client
-      .login(
-        new LoginCommand({
-          loginDetails: loginRequest
-        })
-      )
-      .catch(() => null);
+      const user: string = await client.login().catch(() => null);
 
-    if (!user) {
-      return false;
-    }
-    setAuthStage(AuthStage.CHECKING);
-    setCookie(user.token);
-    setAuthToken(user.token);
-    setAuthCounter(c => c + 1);
-    return true;
-  }, []);
+      if (!user) {
+        return false;
+      }
+      setAuthStage(AuthStage.CHECKING);
+      setCookie(user);
+      setAuthToken(user);
+      setAuthCounter(c => c + 1);
+      return true;
+    }, []);
 
   const logout = useCallback(() => {
     setAuthStage(AuthStage.CHECKING);

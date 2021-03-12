@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Accounts;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;

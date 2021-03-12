@@ -12,7 +12,7 @@ import {
 import { AuthContext } from "contexts/AuthContext";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useState } from "react";
-import { BsLock, BsPerson } from "react-icons/Bs";
+import { BsLock, BsPerson } from "react-icons/bs";
 import { LoginRequestDto } from "services/backend/nswagts";
 
 const LoginForm: FC = () => {

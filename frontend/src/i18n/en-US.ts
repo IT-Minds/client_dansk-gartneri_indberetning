@@ -41,5 +41,9 @@ export const table: Locale = {
     CVR_getFromRegistry: "Get info from CVR-registry",
     CVR_apiErrorTitle: "CVR not found",
     CVR_apiErrorDescription: "Could not find CVR number in the registry"
+  },
+
+  admins: {
+    admins: "Admins"
   }
 };

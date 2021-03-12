@@ -41,5 +41,9 @@ export const table: Locale = {
     CVR_getFromRegistry: "Hent info fra CVR-registret",
     CVR_apiErrorTitle: "CVR ikke fundet",
     CVR_apiErrorDescription: "Kunne ikke finde CVR-nummer i registret"
+  },
+
+  admins: {
+    admins: "Administratorer"
   }
 };

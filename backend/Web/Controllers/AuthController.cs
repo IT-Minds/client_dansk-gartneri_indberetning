@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users;
@@ -12,6 +13,13 @@ namespace Web.Controllers
     public async Task<ActionResult<UserTokenDto>> Login([FromBody] LoginCommand command)
     {
       return await Mediator.Send(command);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<UserDto>> CheckAuth()
+    {
+      throw new NotImplementedException();
+      return null;
     }
   }
 }

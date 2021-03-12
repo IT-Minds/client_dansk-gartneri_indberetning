@@ -15,7 +15,7 @@ export enum AuthStage {
 
 type AuthHook<T> = {
   authStage: AuthStage;
-  login: () => Promise<boolean>;
+  login: (loginRequest: ILoginRequestDto) => Promise<boolean>;
   logout: () => void;
   activeUser: T | null;
 };

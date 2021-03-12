@@ -48,7 +48,7 @@ const Accounts: FC = () => {
             <Box>
               <SearchFilterInput onChange={setSearchString} value={searchString} />
             </Box>
-          <NewAccountModal onSubmit={fetchData} />
+            <NewAccountModal onSubmit={fetchData} />
           </HStack>
         </Flex>
         <AccountsTable data={accounts} searchString={searchString} />

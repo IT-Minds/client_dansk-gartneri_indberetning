@@ -89,7 +89,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
               {tableKeys.map(key => (
                 <Th key={key.id}>
                   <Flex>
-                  <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                    <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
                     {t(`accounts.${key.id}`)}
                   </Flex>
                 </Th>

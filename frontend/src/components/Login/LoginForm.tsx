@@ -7,8 +7,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Stack,
-  Text
+  Stack
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
 import { useLocales } from "hooks/useLocales";

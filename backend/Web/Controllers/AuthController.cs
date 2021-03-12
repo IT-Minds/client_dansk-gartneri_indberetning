@@ -19,7 +19,6 @@ namespace Web.Controllers
     public async Task<ActionResult<UserDto>> CheckAuth()
     {
       throw new NotImplementedException();
-      return null;
     }
   }
 }

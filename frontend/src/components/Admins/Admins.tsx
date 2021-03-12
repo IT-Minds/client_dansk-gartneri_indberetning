@@ -10,7 +10,7 @@ import AdminTable from "./AdminTable";
 const Admins: FC = () => {
   const { t } = useLocales();
 
-  const [admins, dispatchAccounts] = useReducer(ListReducer<IUserDto>("id"), []);
+  const [admins, dispatchAdmins] = useReducer(ListReducer<IUserDto>("id"), []);
 
   const fetchData = useCallback(async () => {
     //Add logic to fetch data.

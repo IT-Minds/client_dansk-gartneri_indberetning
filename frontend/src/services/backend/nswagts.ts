@@ -596,6 +596,58 @@ export class HealthClient extends ClientBase implements IHealthClient {
     }
 }
 
+export interface IUserClient {
+    getAllAdmins(): Promise<UserDto>;
+}
+
+export class UserClient extends ClientBase implements IUserClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(configuration: AuthBase, baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        super(configuration);
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getAllAdmins(): Promise<UserDto> {
+        let url_ = this.baseUrl + "/api/User";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetAllAdmins(_response));
+        });
+    }
+
+    protected processGetAllAdmins(response: Response): Promise<UserDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserDto>(<any>null);
+    }
+}
+
 export class CreateAccountCommand implements ICreateAccountCommand {
     account?: CreateAccountDto | null;
 
@@ -985,6 +1037,64 @@ export class ExampleParentDto implements IExampleParentDto {
 
 export interface IExampleParentDto {
     name?: string | null;
+}
+
+export class UserDto implements IUserDto {
+    id?: number;
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
+
+    constructor(data?: IUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["role"] = this.role !== undefined ? this.role : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
+        return data; 
+    }
+}
+
+export interface IUserDto {
+    id?: number;
+    email?: string | null;
+    role?: RoleEnum;
+    name?: string | null;
+    deactivationTime?: Date | null;
+}
+
+export enum RoleEnum {
+    Admin = 0,
+    Accountant = 1,
+    Client = 2,
 }
 
 export enum CommandErrorCode {

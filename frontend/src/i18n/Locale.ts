@@ -57,4 +57,12 @@ export interface Locale {
   actions: {
     delete: string;
   };
+
+  password: {
+    dontMatch: string;
+    tooShort: string;
+    missingUppercase: string;
+    missingLowercase: string;
+    missingNumber: string;
+  };
 }

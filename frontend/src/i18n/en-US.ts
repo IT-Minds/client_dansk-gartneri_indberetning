@@ -58,5 +58,13 @@ export const table: Locale = {
 
   actions: {
     delete: "Delete"
+  },
+
+  password: {
+    dontMatch: "De to passwords er ikke ens.",
+    tooShort: "Skal være på minds 8 karakterer.",
+    missingUppercase: "Skal have mindst ét stort bogstav.",
+    missingLowercase: "Skal have mindst ét lille bogstav.",
+    missingNumber: "Skal have mindst ét tal."
   }
 };

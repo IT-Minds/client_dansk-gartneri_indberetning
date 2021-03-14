@@ -23,14 +23,6 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState<string>("");
   const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
 
-  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
-
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -55,7 +47,11 @@ const LoginForm: FC = () => {
               <InputRightElement>
                 <BsPerson />
               </InputRightElement>
-              <Input id="email" type="email" value={email} onChange={handleEmailChange}></Input>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}></Input>
             </InputGroup>
           </FormControl>
           <FormControl isRequired={true}>
@@ -68,7 +64,7 @@ const LoginForm: FC = () => {
                 id="password"
                 type="password"
                 value={password}
-                onChange={handlePasswordChange}></Input>
+                onChange={e => setPassword(e.target.value)}></Input>
             </InputGroup>
           </FormControl>
           <Button type="submit" colorScheme="blue" w="100%">

@@ -7,13 +7,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Stack,
-  Text
+  Stack
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useState } from "react";
-import { BsLock, BsPerson } from "react-icons/Bs";
+import { BsLock, BsPerson } from "react-icons/bs";
 import { LoginRequestDto } from "services/backend/nswagts";
 
 const LoginForm: FC = () => {
@@ -23,14 +22,6 @@ const LoginForm: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
-
-  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -56,7 +47,11 @@ const LoginForm: FC = () => {
               <InputRightElement>
                 <BsPerson />
               </InputRightElement>
-              <Input id="email" type="email" value={email} onChange={handleEmailChange}></Input>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}></Input>
             </InputGroup>
           </FormControl>
           <FormControl isRequired={true}>
@@ -69,7 +64,7 @@ const LoginForm: FC = () => {
                 id="password"
                 type="password"
                 value={password}
-                onChange={handlePasswordChange}></Input>
+                onChange={e => setPassword(e.target.value)}></Input>
             </InputGroup>
           </FormControl>
           <Button type="submit" colorScheme="blue" w="100%">

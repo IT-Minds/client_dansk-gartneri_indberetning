@@ -1529,64 +1529,6 @@ export interface IExampleParentDto {
     name?: string | null;
 }
 
-export class UserDto implements IUserDto {
-    id?: number;
-    email?: string | null;
-    role?: RoleEnum;
-    name?: string | null;
-    deactivationTime?: Date | null;
-
-    constructor(data?: IUserDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
-            this.role = _data["role"] !== undefined ? _data["role"] : <any>null;
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.deactivationTime = _data["deactivationTime"] ? new Date(_data["deactivationTime"].toString()) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UserDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["email"] = this.email !== undefined ? this.email : <any>null;
-        data["role"] = this.role !== undefined ? this.role : <any>null;
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["deactivationTime"] = this.deactivationTime ? this.deactivationTime.toISOString() : <any>null;
-        return data; 
-    }
-}
-
-export interface IUserDto {
-    id?: number;
-    email?: string | null;
-    role?: RoleEnum;
-    name?: string | null;
-    deactivationTime?: Date | null;
-}
-
-export enum RoleEnum {
-    Admin = 0,
-    Accountant = 1,
-    Client = 2,
-}
-
 export enum CommandErrorCode {
     AbstractComparisonValidator = 0,
     AsyncPredicateValidator = 1,

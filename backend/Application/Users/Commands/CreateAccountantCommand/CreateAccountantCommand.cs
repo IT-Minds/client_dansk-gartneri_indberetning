@@ -16,7 +16,8 @@ namespace Application.Users.Commands.CreateAccountantCommand
   [Authorize(Role = RoleEnum.Admin)]
   public class CreateAccountantCommand : IRequest<int>
   {
-    public UserDto AccountantDto;
+    public UserAccountIdDto AccountantDto;
+
     public class CreateAccountantCommandHandler : IRequestHandler<CreateAccountantCommand, int>
     {
       private readonly IApplicationDbContext _context;

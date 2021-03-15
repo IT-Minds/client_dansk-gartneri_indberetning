@@ -8,8 +8,6 @@ namespace Application.Users.Commands.CreateAccountantCommand
     {
       RuleFor(e => e.AccountantDto)
         .NotNull();
-      RuleFor(e => e.AccountantDto.AccountId)
-        .NotEmpty();
       RuleFor(e => e.AccountantDto.Email)
         .NotEmpty()
         .EmailAddress();

@@ -17,7 +17,7 @@ namespace Application.UnitTests.Users.Commands.CreateAccountant
     {
       var command = new CreateAccountantCommand
       {
-        AccountantDto = new UserDto()
+        AccountantDto = new UserAccountIdDto()
         {
 
           Name = "test name",
@@ -45,7 +45,7 @@ namespace Application.UnitTests.Users.Commands.CreateAccountant
     {
       var command = new CreateAccountantCommand
       {
-        AccountantDto = new UserDto()
+        AccountantDto = new UserAccountIdDto()
         {
 
           Name = "test name",
@@ -65,7 +65,7 @@ namespace Application.UnitTests.Users.Commands.CreateAccountant
     {
       var command = new CreateAccountantCommand
       {
-        AccountantDto = new UserDto()
+        AccountantDto = new UserAccountIdDto()
         {
 
           Name = "test name",

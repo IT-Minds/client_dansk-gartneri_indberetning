@@ -68,7 +68,11 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
         <ChakraProvider theme={theme}>
           <AuthContext.Provider value={auth}>
             {/* <SignalRContext.Provider value={{ connection }}> */}
-            {auth.authStage == AuthStage.AUTHENTICATED ? <AccountsPage /> : <LoginPage />}
+            {auth.authStage == AuthStage.AUTHENTICATED ? (
+              <Component {...pageProps} />
+            ) : (
+              <LoginPage />
+            )}
             {/* </SignalRContext.Provider> */}
           </AuthContext.Provider>
         </ChakraProvider>
@@ -78,4 +82,3 @@ const MyApp = ({ Component, pageProps, __N_SSG }: AppPropsType & Props): ReactEl
 };
 
 export default MyApp;
-/*<Component {...pageProps} />*/

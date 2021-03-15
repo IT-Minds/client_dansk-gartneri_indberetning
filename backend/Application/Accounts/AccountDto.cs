@@ -14,7 +14,9 @@ namespace Application.Accounts
     public string Email { get; set; }
     public string Tel { get; set; }
     public int AddressId { get; set; }
+    public Address Address { get; set; }
     public string CVRNumber { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
+    public ICollection<UserDto> Users { get; set; }
   }
 }

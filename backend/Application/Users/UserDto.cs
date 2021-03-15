@@ -13,5 +13,6 @@ namespace Application.Users
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
+    public int AccountId { get; set; }
   }
 }

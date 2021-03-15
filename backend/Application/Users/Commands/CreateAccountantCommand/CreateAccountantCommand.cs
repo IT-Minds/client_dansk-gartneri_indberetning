@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Security;
 using AutoMapper;
@@ -15,19 +16,14 @@ namespace Application.Users.Commands.CreateAccountantCommand
   [Authorize(Role = RoleEnum.Admin)]
   public class CreateAccountantCommand : IRequest<int>
   {
-    public CreateAccountantDto AccountantDto;
+    public UserDto AccountantDto;
     public class CreateAccountantCommandHandler : IRequestHandler<CreateAccountantCommand, int>
     {
       private readonly IApplicationDbContext _context;
-      private readonly ICurrentUserService _userAuthService;
-      private readonly IMapper _mapper;
 
-
-      public CreateAccountantCommandHandler(IApplicationDbContext context, ICurrentUserService userAuthService, IMapper mapper)
+      public CreateAccountantCommandHandler(IApplicationDbContext context)
       {
         _context = context;
-        _userAuthService = userAuthService;
-        _mapper = mapper;
       }
 
       public async Task<int> Handle(CreateAccountantCommand request, CancellationToken cancellationToken)
@@ -36,7 +32,7 @@ namespace Application.Users.Commands.CreateAccountantCommand
 
         if (account == null)
         {
-          throw new ArgumentException("The provided account id does not correspond to any existing account.");
+          throw new NotFoundException("The provided account id does not correspond to any existing account.");
         }
 
         if (_context.Accounts.Any(e => e.Email == request.AccountantDto.Email) || _context.Users.Any(e => e.Email == request.AccountantDto.Email))

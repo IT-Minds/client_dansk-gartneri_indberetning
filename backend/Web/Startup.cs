@@ -1,3 +1,4 @@
+using System;
 using Application;
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.Hubs;
@@ -17,6 +18,8 @@ using System.Linq;
 using System.Text;
 using Application.Common.Options;
 using Application.Security;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Web.DocumentProcessors;
@@ -55,7 +58,7 @@ namespace Web
                   });
       });
 
-      services.AddApplication();
+      services.AddApplication(Configuration);
       services.AddInfrastructure(Configuration, Environment);
 
       services.AddHttpContextAccessor();
@@ -130,6 +133,16 @@ namespace Web
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
       }
+
+      /*
+      GlobalConfiguration.Configuration
+        .UseSqlServerStorage(
+          Configuration.GetConnectionString("DefaultConnection"),
+          new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
+      */
+
+      app.UseHangfireDashboard();
+      app.UseHangfireServer();
 
       //TODO Handle cors
       app.UseCors("AllowAll");

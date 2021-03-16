@@ -7,7 +7,7 @@ import { genUserClient } from "services/backend/apiClients";
 import { UpdatePasswordCommand, UpdatePasswordDto } from "services/backend/nswagts";
 
 interface Props {
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit?: (e: React.FormEvent) => void;
 }
 
 const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
@@ -41,9 +41,6 @@ const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
           type="password"
           value={pwState.pw1}
           onChange={e => setPwState({ ...pwState, ...{ pw1: e.target.value } })}></Input>
-        {pwState.errors.map((err, i) => (
-          <FormErrorMessage key={i}>{err.errorMsg}</FormErrorMessage>
-        ))}
       </FormControl>
       <FormControl id="passwordRepeat" isRequired isInvalid={!pwState.pw2Valid}>
         <FormLabel htmlFor="password">{t("users.repeatPassword")}</FormLabel>
@@ -51,6 +48,11 @@ const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
           type="password"
           value={pwState.pw2}
           onChange={e => setPwState({ ...pwState, ...{ pw2: e.target.value } })}></Input>
+      </FormControl>
+      <FormControl isInvalid={!pwState.pw1Valid || !pwState.pw2Valid}>
+        {pwState.errors.map((err, i) => (
+          <FormErrorMessage key={i}>{err.errorMsg}</FormErrorMessage>
+        ))}
         <FormErrorMessage>{t("password.dontMatch")}</FormErrorMessage>
       </FormControl>
       <Flex justifyContent="flex-end" w="100%" mt={5}>

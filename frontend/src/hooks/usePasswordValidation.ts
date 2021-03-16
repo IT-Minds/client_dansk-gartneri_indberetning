@@ -28,19 +28,19 @@ export const usePasswordValidation = () => {
   const rules: PasswordRule[] = [
     {
       predicate: pw => pw.length >= 8,
-      errorMsg: t("password.tooShort")
+      errorMsg: t("password.tooShort") as string
     },
     {
       predicate: pw => new RegExp("[A-Z]+").test(pw),
-      errorMsg: t("password.missingUppercase")
+      errorMsg: t("password.missingUppercase") as string
     },
     {
       predicate: pw => new RegExp("[a-z]+").test(pw),
-      errorMsg: t("password.missingLowercase")
+      errorMsg: t("password.missingLowercase") as string
     },
     {
       predicate: pw => new RegExp("[0-9]+").test(pw),
-      errorMsg: t("password.missingNumber")
+      errorMsg: t("password.missingNumber") as string
     }
   ];
 
@@ -58,8 +58,6 @@ export const usePasswordValidation = () => {
         pw2Valid: pwState.pw1 == pwState.pw2
       }
     };
-    //newState.pw1Valid = newState.errors.length == 0;
-    //newState.pw2Valid = newState.pw1 == newState.pw2;
     setPwState(newState);
 
     return newState.pw1Valid && newState.pw2Valid;

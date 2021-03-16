@@ -6,8 +6,9 @@ using AutoMapper;
 
 namespace Application.Users
 {
-  public class UserDto : IAutoMap<User>
+  public class UserDto : IAutoMap<IUser>
   {
+    public int Id { get; set; }
     public string Email { get; set; }
     public RoleEnum Role { get; set; }
     public string Name { get; set; }

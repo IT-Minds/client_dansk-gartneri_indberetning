@@ -33,10 +33,7 @@ namespace Application.UnitTests.Users.Commands.UpdatePasswordCommandTest
       var command = new UpdatePasswordCommand()
       {
         Id = 1,
-        PasswordDto = new UpdatePasswordDto
-        {
-          Password = "NewPassword123"
-        }
+        NewPassword = "NewPassword123"
       };
 
       var handler = new UpdatePasswordCommand.UpdatePasswordCommandHandler(Context, CurrentUserServiceMock.Object);
@@ -46,7 +43,7 @@ namespace Application.UnitTests.Users.Commands.UpdatePasswordCommandTest
       var entity = Context.Users.Find(command.Id);
 
       entity.Should().NotBeNull();
-      entity.Password.Should().Be(command.PasswordDto.Password);
+      entity.Password.Should().Be(command.NewPassword);
     }
 
     [Fact]
@@ -55,10 +52,7 @@ namespace Application.UnitTests.Users.Commands.UpdatePasswordCommandTest
       var command = new UpdatePasswordCommand()
       {
         Id = 1,
-        PasswordDto = new UpdatePasswordDto
-        {
-          Password = "NewPassword123"
-        }
+        NewPassword = "NewPassword123"
       };
 
       var handler = new UpdatePasswordCommand.UpdatePasswordCommandHandler(Context, CurrentUserServiceMock2.Object);
@@ -74,10 +68,7 @@ namespace Application.UnitTests.Users.Commands.UpdatePasswordCommandTest
       var command = new UpdatePasswordCommand()
       {
         Id = 99,
-        PasswordDto = new UpdatePasswordDto
-        {
-          Password = "NewPassword123"
-        }
+        NewPassword = "NewPassword123"
       };
 
       var handler = new UpdatePasswordCommand.UpdatePasswordCommandHandler(Context, CurrentUserServiceMock2.Object);

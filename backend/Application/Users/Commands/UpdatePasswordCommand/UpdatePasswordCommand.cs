@@ -15,7 +15,7 @@ namespace Application.Users.Commands.UpdatePassword
   {
     [JsonIgnore]
     public int Id { get; set; }
-    public UpdatePasswordDto PasswordDto { get; set; }
+    public string NewPassword { get; set; }
 
 
     public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand>
@@ -43,7 +43,7 @@ namespace Application.Users.Commands.UpdatePassword
           throw new NotFoundException(nameof(User), request.Id);
         }
 
-        userEntity.Password = request.PasswordDto.Password;
+        userEntity.Password = request.NewPassword;
 
         _context.Users.Update(userEntity);
         await _context.SaveChangesAsync(cancellationToken);

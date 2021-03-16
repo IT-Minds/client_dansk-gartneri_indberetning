@@ -1045,7 +1045,7 @@ export interface IExampleParentDto {
 }
 
 export class UpdatePasswordCommand implements IUpdatePasswordCommand {
-    passwordDto?: UpdatePasswordDto | null;
+    newPassword?: string | null;
 
     constructor(data?: IUpdatePasswordCommand) {
         if (data) {
@@ -1053,13 +1053,12 @@ export class UpdatePasswordCommand implements IUpdatePasswordCommand {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.passwordDto = data.passwordDto && !(<any>data.passwordDto).toJSON ? new UpdatePasswordDto(data.passwordDto) : <UpdatePasswordDto>this.passwordDto; 
         }
     }
 
     init(_data?: any) {
         if (_data) {
-            this.passwordDto = _data["passwordDto"] ? UpdatePasswordDto.fromJS(_data["passwordDto"]) : <any>null;
+            this.newPassword = _data["newPassword"] !== undefined ? _data["newPassword"] : <any>null;
         }
     }
 
@@ -1072,49 +1071,13 @@ export class UpdatePasswordCommand implements IUpdatePasswordCommand {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["passwordDto"] = this.passwordDto ? this.passwordDto.toJSON() : <any>null;
+        data["newPassword"] = this.newPassword !== undefined ? this.newPassword : <any>null;
         return data; 
     }
 }
 
 export interface IUpdatePasswordCommand {
-    passwordDto?: IUpdatePasswordDto | null;
-}
-
-export class UpdatePasswordDto implements IUpdatePasswordDto {
-    password?: string | null;
-
-    constructor(data?: IUpdatePasswordDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.password = _data["password"] !== undefined ? _data["password"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UpdatePasswordDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdatePasswordDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["password"] = this.password !== undefined ? this.password : <any>null;
-        return data; 
-    }
-}
-
-export interface IUpdatePasswordDto {
-    password?: string | null;
+    newPassword?: string | null;
 }
 
 export enum CommandErrorCode {

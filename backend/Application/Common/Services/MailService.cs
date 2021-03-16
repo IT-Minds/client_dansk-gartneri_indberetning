@@ -18,8 +18,39 @@ namespace Application.Common.Services
     }
     public async Task SendEmailAsync(MailRequestDto mailRequest)
     {
-      //To be implemented in DGI-49
-      throw new NotImplementedException();
+      MailAddress to = new MailAddress(mailRequest.ToEmail);
+      MailAddress from = new MailAddress(_mailOptions.Mail);
+
+      MailMessage message = new MailMessage(from, to);
+      message.Subject = mailRequest.Subject;
+      message.Body = mailRequest.Body;
+
+      SmtpClient client = new SmtpClient(_mailOptions.Host, _mailOptions.Port)
+      {
+        Credentials = new NetworkCredential(_mailOptions.Mail, _mailOptions.Password),
+        EnableSsl = true
+      };
+
+      try
+      {
+        client.Send(message);
+      }
+      catch (SmtpException ex)
+      {
+        Console.WriteLine(ex.ToString());
+      }
+    }
+
+    public void TestSendEmail()
+    {
+      var mail = new MailRequestDto
+      {
+        ToEmail = _mailOptions.Mail,
+        Subject = "Test mail from Dansk Gartneri",
+        Body = "Hello world from mailService"
+      };
+
+      SendEmailAsync(mail);
     }
   }
 }

@@ -19,7 +19,7 @@ using System.Text;
 using Application.Common.Options;
 using Application.Security;
 using Hangfire;
-using Hangfire.SqlServer;
+using Hangfire.Dashboard;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Web.DocumentProcessors;
@@ -134,16 +134,6 @@ namespace Web
         app.UseHsts();
       }
 
-      /*
-      GlobalConfiguration.Configuration
-        .UseSqlServerStorage(
-          Configuration.GetConnectionString("DefaultConnection"),
-          new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
-      */
-
-      app.UseHangfireDashboard();
-      app.UseHangfireServer();
-
       //TODO Handle cors
       app.UseCors("AllowAll");
 
@@ -161,6 +151,8 @@ namespace Web
 
       app.UseAuthentication();
       app.UseAuthorization();
+
+      app.UseHangfireDashboard();
 
       app.UseEndpoints(endpoints =>
       {

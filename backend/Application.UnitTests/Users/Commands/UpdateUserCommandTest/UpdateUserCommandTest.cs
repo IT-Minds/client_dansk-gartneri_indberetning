@@ -17,7 +17,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
       var command = new UpdateUserCommand
       {
         Id = 1,
-        User = new UserAccountIdDto()
+        User = new UserDto()
         {
           Name = "TestUpdate",
           Email = "TestEmail",
@@ -43,7 +43,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
       var command = new UpdateUserCommand
       {
         Id = 99,
-        User = new UserAccountIdDto()
+        User = new UserDto()
         {
           Name = "TestUpdate",
           Email = "TestEmail",
@@ -63,7 +63,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
       var command = new UpdateUserCommand
       {
         Id = 1,
-        User = new UserAccountIdDto()
+        User = new UserDto()
         {
           Name = "TestUpdate",
           Email = "test2@test2.dk", //Already used by user defined in ApplicationDbContextFactory

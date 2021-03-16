@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Security;
-using Application.ExampleChildren;
-using Domain.Entities;
 using Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Application.Users.Commands.UpdateUserCommand
@@ -19,7 +16,7 @@ namespace Application.Users.Commands.UpdateUserCommand
   {
     [JsonIgnore]
     public int Id { get; set; }
-    public UserAccountIdDto User { get; set; }
+    public UserDto User { get; set; }
 
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>

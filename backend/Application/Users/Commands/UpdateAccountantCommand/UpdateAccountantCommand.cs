@@ -2,14 +2,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Common.Security;
 using Application.ExampleChildren;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Application.Users.Commands.UpdateAccountantCommand
 {
+  [Authorize(Role = RoleEnum.Admin)]
   public class UpdateAccountantCommand : IRequest
   {
     [JsonIgnore]
@@ -35,16 +38,25 @@ namespace Application.Users.Commands.UpdateAccountantCommand
           throw new NotFoundException(nameof(User), request.Id);
         }
 
-        if (!await _context.ExampleParents.AnyAsync(e => e.Id == request.Accountant.ParentId, cancellationToken))
+        if (!await _context.Accounts.AnyAsync(e => e.Id == request.Accountant.AccountId, cancellationToken))
         {
-          throw new NotFoundException(nameof(ExampleParent), request.Child.ParentId);
+          throw new NotFoundException(nameof(Account), request.Accountant.AccountId);
         }
 
-        exampleEntity.Name = request.Child.Name;
-        exampleEntity.Type = request.Child.Type;
-        exampleEntity.ParentId = request.Child.ParentId;
+        var newAccountEntity = await _context.Accounts.FindAsync(request.Accountant.AccountId);
 
-        _context.ExampleChildren.Update(exampleEntity);
+        if (newAccountEntity == null)
+        {
+          throw new NotFoundException(nameof(Account), request.Accountant.AccountId);
+        }
+
+        accountantEntity.Name = request.Accountant.Name;
+        accountantEntity.Email = request.Accountant.Email;
+        accountantEntity.AccountId = request.Accountant.AccountId;
+        accountantEntity.Account = newAccountEntity;
+        accountantEntity.DeactivationTime = request.Accountant.DeactivationTime;
+
+        _context.Users.Update(accountantEntity);
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

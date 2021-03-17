@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -7,11 +6,6 @@ using Application.Common.Interfaces;
 using Application.Common.Options;
 using Application.Mails;
 using Microsoft.Extensions.Options;
-//using System.Net;
-//using System.Net.Mail;
-//using MailKit.Security;
-//using MimeKit;
-//using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace Application.Common.Services
 {
@@ -24,29 +18,30 @@ namespace Application.Common.Services
     }
     public async Task SendEmailAsync(MailRequestDto mailRequest)
     {
-      
       MailAddress to = new MailAddress(mailRequest.ToEmail);
-      MailAddress from = new MailAddress("from@example.com");
+      MailAddress from = new MailAddress(_mailOptions.Mail);
 
       MailMessage message = new MailMessage(from, to);
       message.Subject = mailRequest.Subject;
       message.Body = mailRequest.Body;
+      message.IsBodyHtml = true;
+      AlternateView htmlView = AlternateView.CreateAlternateViewFromString(mailRequest.Body, null, "text/html");
+
+      //Add two logo images as attached resources to mails.
+      LinkedResource logoResource = new LinkedResource("./Resources/logo.png");
+      LinkedResource altLogoResource = new LinkedResource("./Resources/logo_alt.png");
+      logoResource.ContentId = "logo";
+      altLogoResource.ContentId = "altLogo";
+      htmlView.LinkedResources.Add(logoResource);
+      htmlView.LinkedResources.Add(altLogoResource);
+
+      message.AlternateViews.Add(htmlView);
 
       SmtpClient client = new SmtpClient(_mailOptions.Host, _mailOptions.Port)
       {
-        Credentials = new NetworkCredential(_mailOptions.Mail, _mailOptions.Password),
-        EnableSsl = true, //true?
+        Credentials = new NetworkCredential(_mailOptions.Username, _mailOptions.Password),
+        EnableSsl = true
       };
-      /*
-      SmtpClient client = new SmtpClient();
-      client.UseDefaultCredentials = false;
-      client.Credentials = new NetworkCredential(_mailOptions.Mail, _mailOptions.Password);
-      client.Host = _mailOptions.Host;
-      client.Port = _mailOptions.Port;
-      client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-      client.PickupDirectoryLocation = "c:\\Temp\\mail\\";
-      client.EnableSsl = false;
-      */
 
       try
       {
@@ -56,49 +51,18 @@ namespace Application.Common.Services
       {
         Console.WriteLine(ex.ToString());
       }
-      
-      /*
-      var email = new MimeMessage();
-      email.Sender = MailboxAddress.Parse(_mailOptions.Mail);
-      email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
-      email.Subject = mailRequest.Subject;
-      var builder = new BodyBuilder();
-      if (mailRequest.Attachments != null)
-      {
-        byte[] fileBytes;
-        foreach (var file in mailRequest.Attachments)
-        {
-          if (file.Length > 0)
-          {
-            using (var ms = new MemoryStream())
-            {
-              file.CopyTo(ms);
-              fileBytes = ms.ToArray();
-            }
-            builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
-          }
-        }
-      }
-      builder.HtmlBody = mailRequest.Body;
-      email.Body = builder.ToMessageBody();
-      using var smtp = new SmtpClient();
-      smtp.Connect(_mailOptions.Host, _mailOptions.Port, SecureSocketOptions.StartTls);
-      smtp.Authenticate(_mailOptions.Mail, _mailOptions.Password);
-      await smtp.SendAsync(email);
-      smtp.Disconnect(true);
-      */
     }
 
-    public void TestSendEmail()
+    public async Task TestSendEmail()
     {
       var mail = new MailRequestDto
       {
-        ToEmail = "4aa05eab54-030844@inbox.mailtrap.io",
+        ToEmail = "4aa05eab54-030844@inbox.mailtrap.io", //Mailtrap inbox
         Subject = "Test mail from Dansk Gartneri",
-        Body = "Hello world from mailService"
+        Body = "<img src=cid:logo><p>Hello world from mailService</p><img src=cid:altLogo>"
       };
 
-      SendEmailAsync(mail);
+      await SendEmailAsync(mail);
     }
   }
 }

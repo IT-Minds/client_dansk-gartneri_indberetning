@@ -1,5 +1,6 @@
 using System;
-using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Common.Options;
@@ -24,38 +25,31 @@ namespace Application.Common.Services
     }
     public async Task SendEmailAsync(MailRequestDto mailRequest)
     {
-      
       MailAddress to = new MailAddress(mailRequest.ToEmail);
-      MailAddress from = new MailAddress("from@example.com");
+      MailAddress from = new MailAddress(_mailOptions.Mail);
 
       MailMessage message = new MailMessage(from, to);
       message.Subject = mailRequest.Subject;
       message.Body = mailRequest.Body;
       message.IsBodyHtml = true;
       AlternateView htmlView = AlternateView.CreateAlternateViewFromString(mailRequest.Body, null, "text/html");
-      LinkedResource logo = new LinkedResource("../RazorEmails/Views/Shared/images/logo.png");
-      LinkedResource altLogo = new LinkedResource("../RazorEmails/Views/Shared/images/logo_alt.png");
-      LinkedResource topborder = new LinkedResource("../RazorEmails/Views/Shared/images/top_full_border.png");
-      LinkedResource bottomborder = new LinkedResource("../RazorEmails/Views/Shared/images/bottom_full_border.png");
-      LinkedResource dots = new LinkedResource("../RazorEmails/Views/Shared/images/dots.png");
-      logo.ContentId = "logo";
-      altLogo.ContentId = "altLogo";
-      topborder.ContentId = "topborder";
-      bottomborder.ContentId = "bottomborder";
-      dots.ContentId = "dots";
-      htmlView.LinkedResources.Add(logo);
-      htmlView.LinkedResources.Add(altLogo);
-      htmlView.LinkedResources.Add(topborder);
-      htmlView.LinkedResources.Add(bottomborder);
-      htmlView.LinkedResources.Add(dots);
+
+      //Add two logo images as attached resources to mails.
+      LinkedResource logoResource = new LinkedResource("./Resources/logo.png");
+      LinkedResource altLogoResource = new LinkedResource("./Resources/logo_alt.png");
+      logoResource.ContentId = "logo";
+      altLogoResource.ContentId = "altLogo";
+      htmlView.LinkedResources.Add(logoResource);
+      htmlView.LinkedResources.Add(altLogoResource);
+
       message.AlternateViews.Add(htmlView);
 
       SmtpClient client = new SmtpClient(_mailOptions.Host, _mailOptions.Port)
       {
-        Credentials = new NetworkCredential(_mailOptions.Mail, _mailOptions.Password),
-        EnableSsl = true,
+        Credentials = new NetworkCredential(_mailOptions.Username, _mailOptions.Password),
+        EnableSsl = true
       };
-      
+
       try
       {
         client.Send(message);
@@ -64,27 +58,18 @@ namespace Application.Common.Services
       {
         Console.WriteLine(ex.ToString());
       }
-      
     }
 
     public async Task TestSendEmail()
     {
-      /*
-      string FilePath = Directory.GetCurrentDirectory() + "./my-new-message.html";
-      StreamReader str = new StreamReader(FilePath);
-      string MailText = str.ReadToEnd();
-      str.Close();
-     */
-
-      var activateUserModel = new ActivateUserEmailViewModel("testurl");
-
+      var activateUserModel = new ActivateUserEmailViewModel("http://danskgartneri.dk");
       var mail = new MailRequestDto
       {
-        ToEmail = "4aa05eab54-030844@inbox.mailtrap.io",
+        ToEmail = "4aa05eab54-030844@inbox.mailtrap.io", //Mailtrap inbox
         Subject = "Test mail from Dansk Gartneri",
         Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
         //Body = MailText
-    };
+      };
 
       await SendEmailAsync(mail);
     }

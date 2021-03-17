@@ -24,19 +24,38 @@ namespace Application.Common.Services
     }
     public async Task SendEmailAsync(MailRequestDto mailRequest)
     {
+      
       MailAddress to = new MailAddress(mailRequest.ToEmail);
-      MailAddress from = new MailAddress(_mailOptions.Mail);
+      MailAddress from = new MailAddress("from@example.com");
 
       MailMessage message = new MailMessage(from, to);
       message.Subject = mailRequest.Subject;
       message.Body = mailRequest.Body;
+      message.IsBodyHtml = true;
+      AlternateView htmlView = AlternateView.CreateAlternateViewFromString(mailRequest.Body, null, "text/html");
+      LinkedResource logo = new LinkedResource("../RazorEmails/Views/Shared/images/logo.png");
+      LinkedResource altLogo = new LinkedResource("../RazorEmails/Views/Shared/images/logo_alt.png");
+      LinkedResource topborder = new LinkedResource("../RazorEmails/Views/Shared/images/top_full_border.png");
+      LinkedResource bottomborder = new LinkedResource("../RazorEmails/Views/Shared/images/bottom_full_border.png");
+      LinkedResource dots = new LinkedResource("../RazorEmails/Views/Shared/images/dots.png");
+      logo.ContentId = "logo";
+      altLogo.ContentId = "altLogo";
+      topborder.ContentId = "topborder";
+      bottomborder.ContentId = "bottomborder";
+      dots.ContentId = "dots";
+      htmlView.LinkedResources.Add(logo);
+      htmlView.LinkedResources.Add(altLogo);
+      htmlView.LinkedResources.Add(topborder);
+      htmlView.LinkedResources.Add(bottomborder);
+      htmlView.LinkedResources.Add(dots);
+      message.AlternateViews.Add(htmlView);
 
       SmtpClient client = new SmtpClient(_mailOptions.Host, _mailOptions.Port)
       {
         Credentials = new NetworkCredential(_mailOptions.Mail, _mailOptions.Password),
-        EnableSsl = true
+        EnableSsl = true,
       };
-
+      
       try
       {
         client.Send(message);
@@ -45,27 +64,29 @@ namespace Application.Common.Services
       {
         Console.WriteLine(ex.ToString());
       }
+      
     }
 
-    public void TestSendEmail()
+    public async Task TestSendEmail()
     {
+      /*
       string FilePath = Directory.GetCurrentDirectory() + "./my-new-message.html";
       StreamReader str = new StreamReader(FilePath);
       string MailText = str.ReadToEnd();
       str.Close();
-
+     */
 
       var activateUserModel = new ActivateUserEmailViewModel("testurl");
 
       var mail = new MailRequestDto
       {
-        ToEmail = _mailOptions.Mail,
+        ToEmail = "4aa05eab54-030844@inbox.mailtrap.io",
         Subject = "Test mail from Dansk Gartneri",
-        //Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
-        Body = "hej hej"
+        Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
+        //Body = MailText
     };
 
-      SendEmailAsync(mail);
+      await SendEmailAsync(mail);
     }
   }
 }

@@ -14,6 +14,7 @@ namespace Web.Services
   public class TokenService : ITokenService
   {
     private const double EXPIRE_HOURS = 4.0;
+    private const double SSO_EXPIRE_DAYS = 7.0;
     private readonly TokenOptions _options;
     public TokenService(IOptions<TokenOptions> options)
     {
@@ -31,6 +32,23 @@ namespace Web.Services
       {
         Subject = new ClaimsIdentity(claims),
         Expires = DateTime.UtcNow.AddHours(EXPIRE_HOURS),
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+      };
+      var token = tokenHandler.CreateToken(descriptor);
+      return tokenHandler.WriteToken(token);
+    }
+
+    public string CreateSSOToken(IUser user)
+    {
+      var claims = new List<Claim>();
+      claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+
+      var key = Encoding.ASCII.GetBytes(_options.Secret);
+      var tokenHandler = new JwtSecurityTokenHandler();
+      var descriptor = new SecurityTokenDescriptor
+      {
+        Subject = new ClaimsIdentity(claims),
+        Expires = DateTime.UtcNow.AddHours(SSO_EXPIRE_DAYS),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
       var token = tokenHandler.CreateToken(descriptor);

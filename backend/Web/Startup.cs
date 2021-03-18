@@ -26,6 +26,8 @@ using Web.DocumentProcessors;
 using Web.Filters;
 using Web.Hubs;
 using Web.Services;
+using Web.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web
 {
@@ -46,16 +48,20 @@ namespace Web
     {
       services.Configure<HashingOptions>(Configuration.GetSection(HashingOptions.Hashing));
       services.Configure<TokenOptions>(Configuration.GetSection(TokenOptions.Tokens));
+      services.Configure<MailOptions>(Configuration.GetSection(MailOptions.MailSettings));
+      services.Configure<SuperUserOptions>(Configuration.GetSection(SuperUserOptions.SuperUser));
 
+      var corsOptions = Configuration.GetSection(CorsOptions.Cors).Get<CorsOptions>();
       services.AddCors(options =>
       {
-        options.AddPolicy("AllowAll",
-                  builder =>
-                  {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
-                  });
+        options.AddPolicy("AllowSecure",
+          builder =>
+          {
+            builder.WithOrigins(corsOptions.Origins);
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+            builder.AllowCredentials();
+          });
       });
 
       services.AddApplication(Configuration);
@@ -98,6 +104,7 @@ namespace Web
       services.AddScoped<IExampleHubService, ExampleHubService>();
       services.AddScoped<ITokenService, TokenService>();
       services.AddScoped<IPasswordHasher, PasswordHasher>();
+      services.AddScoped<SuperAdminService>();
       services.AddSignalR();
 
       var key = Encoding.ASCII.GetBytes("VERY_SECRET_SECRET");
@@ -121,7 +128,7 @@ namespace Web
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, SuperAdminService superAdminService)
     {
       if (env.IsDevelopment())
       {
@@ -134,8 +141,20 @@ namespace Web
         app.UseHsts();
       }
 
-      //TODO Handle cors
-      app.UseCors("AllowAll");
+      using (context)
+      {
+        context.Database.AutoTransactionsEnabled = true;
+        context.Database.Migrate();
+
+        // if (env.IsDevelopment() && !env.IsEnvironment("Test") && seedOptions.Value.SeedSampleData)
+        // {
+        //   SampleData.SeedSampleData(context);
+        // }
+
+        superAdminService.SetupSuperUser();
+      }
+
+      app.UseCors("AllowSecure");
 
       app.UseSerilogRequestLogging();
       app.UseHealthChecks("/health");

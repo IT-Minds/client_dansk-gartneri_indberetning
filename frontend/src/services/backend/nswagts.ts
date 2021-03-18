@@ -638,9 +638,8 @@ export class HealthClient extends ClientBase implements IHealthClient {
 }
 
 export interface IUserClient {
-    getAllAdmins(): Promise<UserDto[]>;
-    createAndAddAccountant(command: CreateAccountantCommand): Promise<number>;
-    updateUser(id: number, command: UpdateUserCommand): Promise<FileResponse>;
+    getAllAdmins(): Promise<UserDto>;
+    updatePassword(id: number, command: UpdatePasswordCommand): Promise<FileResponse>;
 }
 
 export class UserClient extends ClientBase implements IUserClient {
@@ -694,20 +693,47 @@ export class UserClient extends ClientBase implements IUserClient {
         return Promise.resolve<UserDto[]>(<any>null);
     }
 
-    createAndAddAccountant(command: CreateAccountantCommand): Promise<number> {
-        let url_ = this.baseUrl + "/api/User";
+    updatePassword(id: number, command: UpdatePasswordCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/User/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
 
         let options_ = <RequestInit>{
             body: content_,
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/octet-stream"
             }
         };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processUpdatePassword(_response));
+        });
+    }
+
+    protected processUpdatePassword(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
+    }
+}
 
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
@@ -1616,111 +1642,40 @@ export interface IExampleParentDto {
     name?: string | null;
 }
 
-export class CreateAccountantCommand implements ICreateAccountantCommand {
-    accountantDto?: UserAccountIdDto | null;
+export class UpdatePasswordCommand implements IUpdatePasswordCommand {
+    newPassword?: string | null;
 
-    constructor(data?: ICreateAccountantCommand) {
+    constructor(data?: IUpdatePasswordCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
-            this.accountantDto = data.accountantDto && !(<any>data.accountantDto).toJSON ? new UserAccountIdDto(data.accountantDto) : <UserAccountIdDto>this.accountantDto; 
         }
     }
 
     init(_data?: any) {
         if (_data) {
-            this.accountantDto = _data["accountantDto"] ? UserAccountIdDto.fromJS(_data["accountantDto"]) : <any>null;
+            this.newPassword = _data["newPassword"] !== undefined ? _data["newPassword"] : <any>null;
         }
     }
 
-    static fromJS(data: any): CreateAccountantCommand {
+    static fromJS(data: any): UpdatePasswordCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateAccountantCommand();
+        let result = new UpdatePasswordCommand();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["accountantDto"] = this.accountantDto ? this.accountantDto.toJSON() : <any>null;
+        data["newPassword"] = this.newPassword !== undefined ? this.newPassword : <any>null;
         return data; 
     }
 }
 
-export interface ICreateAccountantCommand {
-    accountantDto?: IUserAccountIdDto | null;
-}
-
-export class UserAccountIdDto extends UserDto implements IUserAccountIdDto {
-    accountId?: number;
-
-    constructor(data?: IUserAccountIdDto) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UserAccountIdDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserAccountIdDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IUserAccountIdDto extends IUserDto {
-    accountId?: number;
-}
-
-export class UpdateUserCommand implements IUpdateUserCommand {
-    user?: UserDto | null;
-
-    constructor(data?: IUpdateUserCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
-        }
-    }
-
-    static fromJS(data: any): UpdateUserCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateUserCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["user"] = this.user ? this.user.toJSON() : <any>null;
-        return data; 
-    }
-}
-
-export interface IUpdateUserCommand {
-    user?: IUserDto | null;
+export interface IUpdatePasswordCommand {
+    newPassword?: string | null;
 }
 
 export enum CommandErrorCode {

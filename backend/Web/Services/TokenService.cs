@@ -19,11 +19,12 @@ namespace Web.Services
     {
       _options = options.Value;
     }
-    public string CreateToken(User user)
+    public string CreateToken(IUser user)
     {
       var claims = new List<Claim>();
       claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
       claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
+
       var key = Encoding.ASCII.GetBytes(_options.Secret);
       var tokenHandler = new JwtSecurityTokenHandler();
       var descriptor = new SecurityTokenDescriptor

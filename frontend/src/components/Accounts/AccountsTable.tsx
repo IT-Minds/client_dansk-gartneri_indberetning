@@ -8,6 +8,9 @@ import { IAccountDto } from "services/backend/nswagts";
 import { AccountFilter } from "types/AccountFilter";
 import SelectType from "types/SelectType";
 
+import ChangeAccountantModal from "./ChangeAccountant/ChangeAccountantModal";
+import NewAccountModal from "./NewAccountModal";
+
 interface Props {
   data: IAccountDto[];
   searchString: string;
@@ -94,6 +97,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
                   </Flex>
                 </Th>
               ))}
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -106,6 +110,9 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
                     {tableKeys.map(key => (
                       <Td key={key.id}>{genValueFromKey(account, key.id.toString())}</Td>
                     ))}
+                    <Td>
+                      <ChangeAccountantModal account={account} />
+                    </Td>
                   </Tr>
                 );
               })}

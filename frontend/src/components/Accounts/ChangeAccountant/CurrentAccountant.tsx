@@ -10,14 +10,21 @@ interface Props {
 const CurrentAccountant: FC<Props> = ({ account }) => {
   const { t } = useLocales();
   const accountant = account.users.find(u => u.role == RoleEnum.Accountant);
+
   return (
     <Stack>
-      <Text>
-        {t("accounts.name")}: {accountant.name}
-      </Text>
-      <Text>
-        {t("accounts.email")}: {accountant.email}
-      </Text>
+      {accountant ? (
+        <>
+          <Text>
+            {t("accounts.name")}: {accountant.name}
+          </Text>
+          <Text>
+            {t("accounts.email")}: {accountant.email}
+          </Text>
+        </>
+      ) : (
+        <Text>Ingen revisor er tilknyttet denne kunde.</Text>
+      )}
     </Stack>
   );
 };

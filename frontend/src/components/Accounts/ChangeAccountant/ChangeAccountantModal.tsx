@@ -1,5 +1,7 @@
 import {
   Button,
+  Divider,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,43 +9,52 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   useDisclosure
 } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
+import Head from "next/head";
 import { FC, useCallback } from "react";
+import { IAccountDto } from "services/backend/nswagts";
 
 import AddNewAccountantForm from "./AddNewAccountantForm";
 import CurrentAccountant from "./CurrentAccountant";
 
 interface Props {
-  className?: string;
-  onSubmit: () => Promise<void>;
+  account: IAccountDto;
+  onSubmit?: () => Promise<void>;
 }
 
-const ChangeAccountantModal: FC<Props> = (props: Props) => {
+const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
   const { buttonFont } = useColors();
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = useCallback(() => {
     onClose();
-    props.onSubmit();
+    onSubmit();
   }, []);
 
   return (
     <>
       <Button rounded="full" colorScheme="blue" textColor={buttonFont} onClick={onOpen}>
-        {t("accounts.addAccount")}
+        Revisor
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{t("accounts.addAccount")}</ModalHeader>
+          <ModalHeader>Rediger revisor</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <NewAccountForm onSubmit={handleSubmit} />
+            <Stack spacing={5}>
+              <Heading size="sm">Revisor:</Heading>
+              <CurrentAccountant account={account} />
+              <Divider />
+              <Heading size="md">Tilføj ny revisor</Heading>
+              <AddNewAccountantForm account={account} />
+            </Stack>
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>

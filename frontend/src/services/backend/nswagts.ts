@@ -638,7 +638,9 @@ export class HealthClient extends ClientBase implements IHealthClient {
 }
 
 export interface IUserClient {
-    getAllAdmins(): Promise<UserDto>;
+    getAllAdmins(): Promise<UserDto[]>;
+    createAndAddAccountant(command: CreateAccountantCommand): Promise<number>;
+    updateUser(id: number, command: UpdateUserCommand): Promise<FileResponse>;
 }
 
 export class UserClient extends ClientBase implements IUserClient {
@@ -652,7 +654,7 @@ export class UserClient extends ClientBase implements IUserClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getAllAdmins(): Promise<UserDto> {
+    getAllAdmins(): Promise<UserDto[]> {
         let url_ = this.baseUrl + "/api/User";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -670,14 +672,18 @@ export class UserClient extends ClientBase implements IUserClient {
         });
     }
 
-    protected processGetAllAdmins(response: Response): Promise<UserDto> {
+    protected processGetAllAdmins(response: Response): Promise<UserDto[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserDto.fromJS(item));
+            }
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -685,7 +691,88 @@ export class UserClient extends ClientBase implements IUserClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<UserDto>(<any>null);
+        return Promise.resolve<UserDto[]>(<any>null);
+    }
+
+    createAndAddAccountant(command: CreateAccountantCommand): Promise<number> {
+        let url_ = this.baseUrl + "/api/User";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processCreateAndAddAccountant(_response));
+        });
+    }
+
+    protected processCreateAndAddAccountant(response: Response): Promise<number> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<number>(<any>null);
+    }
+
+    updateUser(id: number, command: UpdateUserCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/User/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processUpdateUser(_response));
+        });
+    }
+
+    protected processUpdateUser(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
     }
 }
 
@@ -1527,6 +1614,113 @@ export class ExampleParentDto implements IExampleParentDto {
 
 export interface IExampleParentDto {
     name?: string | null;
+}
+
+export class CreateAccountantCommand implements ICreateAccountantCommand {
+    accountantDto?: UserAccountIdDto | null;
+
+    constructor(data?: ICreateAccountantCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.accountantDto = data.accountantDto && !(<any>data.accountantDto).toJSON ? new UserAccountIdDto(data.accountantDto) : <UserAccountIdDto>this.accountantDto; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.accountantDto = _data["accountantDto"] ? UserAccountIdDto.fromJS(_data["accountantDto"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CreateAccountantCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateAccountantCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountantDto"] = this.accountantDto ? this.accountantDto.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ICreateAccountantCommand {
+    accountantDto?: IUserAccountIdDto | null;
+}
+
+export class UserAccountIdDto extends UserDto implements IUserAccountIdDto {
+    accountId?: number;
+
+    constructor(data?: IUserAccountIdDto) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UserAccountIdDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserAccountIdDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IUserAccountIdDto extends IUserDto {
+    accountId?: number;
+}
+
+export class UpdateUserCommand implements IUpdateUserCommand {
+    user?: UserDto | null;
+
+    constructor(data?: IUpdateUserCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.user = data.user && !(<any>data.user).toJSON ? new UserDto(data.user) : <UserDto>this.user; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdateUserCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdateUserCommand {
+    user?: IUserDto | null;
 }
 
 export enum CommandErrorCode {

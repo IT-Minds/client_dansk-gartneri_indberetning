@@ -66,7 +66,6 @@ namespace Application.Common.Services
         ToEmail = "4aa05eab54-030844@inbox.mailtrap.io", //Mailtrap inbox
         Subject = "Test mail from Dansk Gartneri",
         Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
-        //Body = MailText
       };
 
       await SendEmailAsync(mail);

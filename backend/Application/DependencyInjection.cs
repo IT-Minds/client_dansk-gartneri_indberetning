@@ -29,10 +29,6 @@ namespace Application
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
       services.AddTransient<IMailService, MailService>();
       services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
-      /*
-      services.AddTransient<IRazorViewEngine, RazorViewEngine>();
-      services.AddTransient<IRazorPageFactoryProvider, Raz>();
-      */
       services.AddRazorPages();
 
       services.AddHangfire(configuration => configuration

@@ -1,11 +1,11 @@
 using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Common.Options;
 using Application.Mails;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Net.Mail;
 using RazorEmail.Services;
 using RazorEmails.Interfaces;
 using RazorEmails.Views.Emails.ActivateUserEmail;

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Options;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 namespace Web.Services
@@ -44,28 +44,12 @@ namespace Web.Services
 
     public async Task<string> CreateSSOToken(IUser user)
     {
-      var tokenHandler = new JwtSecurityTokenHandler();
-
-      //Check if the user is already assigned a SSO token that is not expired yet.
-      var res = await _context.ssoTokens
-        .Where(t => t.UserId == user.Id)
-        .FirstOrDefaultAsync();
-
-      if (res != null)
-      {
-        var t = tokenHandler.ReadToken(res.Token);
-        if (t.ValidTo.CompareTo(DateTime.Now) > 0)
-        {
-          throw new SecurityTokenException("This user is already issued a SSO token that is not yet expired.");
-        }
-      }
-      
-
       var claims = new List<Claim>();
       claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
       //Give the token a unique identifier
       claims.Add(new Claim("jti", Guid.NewGuid().ToString()));
 
+      var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.ASCII.GetBytes(_options.Secret);
       var descriptor = new SecurityTokenDescriptor
       {
@@ -74,53 +58,48 @@ namespace Web.Services
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
       var token = tokenHandler.CreateToken(descriptor);
-      var tokenstring = tokenHandler.WriteToken(token);
 
-      //Persist token
-      var tokenEntity = new SSOToken
+      //Save token to persisted user
+      var userEntity = await _context.Users.FindAsync(user.Id);
+      if (userEntity == null)
       {
-        UserId = 
-        Id = token.Id,
-        Token = tokenstring
-      };
-      _context.ssoTokens.Add(tokenEntity);
+        throw new NotFoundException(nameof(User), user.Id);
+      }
+
+      userEntity.SSOTokenId = token.Id;
       _context.SaveChanges();
 
-      return tokenstring;
+      return tokenHandler.WriteToken(token);
     }
 
-    public async Task<bool> ValidateSSOToken(string tokenstring)
+    public async Task<IUser> ValidateSSOToken(string token)
     {
       var tokenHandler = new JwtSecurityTokenHandler();
-      //var token = tokenHandler.ReadToken(tokenstring);
-
       var key = Encoding.ASCII.GetBytes(_options.Secret);
 
-      try
+      tokenHandler.ValidateToken(token, new TokenValidationParameters
       {
-        tokenHandler.ValidateToken(tokenstring, new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(key),
-          ValidateIssuer = false,
-          ValidateAudience = false
-        }, out SecurityToken validatedToken);
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+      }, out SecurityToken validatedToken);
 
-        var persistedTokenEntity = await _context.ssoTokens.FindAsync(validatedToken.Id);
+      var user = await _context.Users.FindAsync(((JwtSecurityToken)validatedToken).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
 
-        if (persistedTokenEntity == null)
-        {
-          return false;
-        }
-
-        _context.ssoTokens.Remove(persistedTokenEntity);
-        _context.SaveChanges();
-        return true;
-      }
-      catch
+      if (user == null)
       {
-        return false;
+        throw new NotFoundException("The token is issued to a user id that is not found.");
       }
+
+      if (user.SSOTokenId != validatedToken.Id)
+      {
+        throw new SecurityTokenException("The provided token does not correspond to the token currently issued to the user.");
+      }
+
+      user.SSOTokenId = null;
+      _context.SaveChanges();
+      return user;
     }
 
   }

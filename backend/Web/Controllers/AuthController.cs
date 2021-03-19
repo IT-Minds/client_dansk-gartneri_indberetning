@@ -1,17 +1,23 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users.Commands.CheckAuthCommand;
 using Application.Users;
 using Application.Users.Commands.Login;
-using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.Options;
+using Web.Options;
 
 namespace Web.Controllers
 {
 
   public class AuthController : ApiControllerBase
   {
+    private readonly CorsOptions _corsOptions;
+
+    public AuthController(IOptions<CorsOptions> corsOptions)
+    {
+      _corsOptions = corsOptions.Value;
+    }
+
     [HttpPost]
     public async Task<ActionResult<UserTokenDto>> Login([FromBody] LoginCommand command)
     {
@@ -25,11 +31,10 @@ namespace Web.Controllers
       return result;
     }
 
-    [HttpPost("activate")]
-    public void ActivateUser([FromQuery] string token)
+    [HttpGet("activate")]
+    public IActionResult ActivateUser([FromQuery] string token)
     {
-      HttpContext.Response.Headers.Add(new KeyValuePair<string, StringValues>("token", token));
-      HttpContext.Response.Redirect("http://localhost:3000/accounts");
+      return Redirect(_corsOptions.Origins[0] +  "/activateUser?token=" + token);
     }
   }
 }

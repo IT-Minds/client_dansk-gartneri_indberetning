@@ -262,7 +262,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
     checkAuth(): Promise<UserDto>;
-    activateUser(token?: string | null | undefined): Promise<void>;
+    activateUser(token?: string | null | undefined): Promise<FileResponse>;
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -352,15 +352,16 @@ export class AuthClient extends ClientBase implements IAuthClient {
         return Promise.resolve<UserDto>(<any>null);
     }
 
-    activateUser(token?: string | null | undefined): Promise<void> {
+    activateUser(token?: string | null | undefined): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Auth/activate?";
         if (token !== undefined && token !== null)
             url_ += "token=" + encodeURIComponent("" + token) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
-            method: "POST",
+            method: "GET",
             headers: {
+                "Accept": "application/octet-stream"
             }
         };
 
@@ -371,19 +372,20 @@ export class AuthClient extends ClientBase implements IAuthClient {
         });
     }
 
-    protected processActivateUser(response: Response): Promise<void> {
+    protected processActivateUser(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<void>(<any>null);
+        return Promise.resolve<FileResponse>(<any>null);
     }
 }
 

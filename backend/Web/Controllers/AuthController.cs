@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users.Commands.CheckAuthCommand;
 using Application.Users;
 using Application.Users.Commands.Login;
+using Microsoft.Extensions.Primitives;
 
 namespace Web.Controllers
 {
@@ -21,6 +23,13 @@ namespace Web.Controllers
     {
       var result = await Mediator.Send(new CheckAuthCommand());
       return result;
+    }
+
+    [HttpPost("activate")]
+    public void ActivateUser([FromQuery] string token)
+    {
+      HttpContext.Response.Headers.Add(new KeyValuePair<string, StringValues>("token", token));
+      HttpContext.Response.Redirect("http://localhost:3000/accounts");
     }
   }
 }

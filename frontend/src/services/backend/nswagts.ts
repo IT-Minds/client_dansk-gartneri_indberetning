@@ -262,6 +262,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
     checkAuth(): Promise<UserDto>;
+    activateUser(token?: string | null | undefined): Promise<void>;
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -349,6 +350,40 @@ export class AuthClient extends ClientBase implements IAuthClient {
             });
         }
         return Promise.resolve<UserDto>(<any>null);
+    }
+
+    activateUser(token?: string | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Auth/activate?";
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processActivateUser(_response));
+        });
+    }
+
+    protected processActivateUser(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(<any>null);
     }
 }
 

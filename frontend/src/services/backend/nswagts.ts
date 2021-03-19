@@ -262,7 +262,7 @@ export class AccountClient extends ClientBase implements IAccountClient {
 export interface IAuthClient {
     login(command: LoginCommand): Promise<UserTokenDto>;
     checkAuth(): Promise<UserDto>;
-    activateUser(token?: string | null | undefined): Promise<FileResponse>;
+    redirectToActivation(token?: string | null | undefined): Promise<FileResponse>;
 }
 
 export class AuthClient extends ClientBase implements IAuthClient {
@@ -352,7 +352,7 @@ export class AuthClient extends ClientBase implements IAuthClient {
         return Promise.resolve<UserDto>(<any>null);
     }
 
-    activateUser(token?: string | null | undefined): Promise<FileResponse> {
+    redirectToActivation(token?: string | null | undefined): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Auth/activate?";
         if (token !== undefined && token !== null)
             url_ += "token=" + encodeURIComponent("" + token) + "&";
@@ -368,11 +368,11 @@ export class AuthClient extends ClientBase implements IAuthClient {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processActivateUser(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processRedirectToActivation(_response));
         });
     }
 
-    protected processActivateUser(response: Response): Promise<FileResponse> {
+    protected processRedirectToActivation(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {

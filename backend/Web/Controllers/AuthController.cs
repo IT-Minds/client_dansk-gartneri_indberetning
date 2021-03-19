@@ -32,7 +32,7 @@ namespace Web.Controllers
     }
 
     [HttpGet("activate")]
-    public IActionResult ActivateUser([FromQuery] string token)
+    public IActionResult RedirectToActivation([FromQuery] string token)
     {
       return Redirect(_corsOptions.Origins[0] +  "/activateUser?token=" + token);
     }

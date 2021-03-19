@@ -54,7 +54,7 @@ namespace Web.Services
       var descriptor = new SecurityTokenDescriptor
       {
         Subject = new ClaimsIdentity(claims),
-        Expires = DateTime.UtcNow.AddHours(SSO_EXPIRE_DAYS),
+        Expires = DateTime.UtcNow.AddDays(SSO_EXPIRE_DAYS),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
       var token = tokenHandler.CreateToken(descriptor);

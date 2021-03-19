@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,6 @@ namespace Application.Users.Commands.Login
       private readonly IPasswordHasher _passwordHasher;
       private readonly ITokenService _tokenService;
 
-
       public LoginCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, ITokenService tokenService, IMapper mapper)
       {
         _context = context;
@@ -30,8 +30,14 @@ namespace Application.Users.Commands.Login
 
       public async Task<UserTokenDto> Handle(LoginCommand request, CancellationToken cancellationToken)
       {
-        var user = await _context.Users
-          .FirstOrDefaultAsync(x => x.Email.Equals(request.LoginDetails.Email));
+        IUser user = await _context.Users
+          .FirstOrDefaultAsync(x => x.Email.Equals(request.LoginDetails.Email.ToLower()));
+
+        if (user == null)
+        {
+          user = await _context.Admins
+          .FirstOrDefaultAsync(x => x.Email.Equals(request.LoginDetails.Email.ToLower()));
+        }
 
         if (user == null)
         {

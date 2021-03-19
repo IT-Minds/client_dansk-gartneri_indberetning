@@ -21,8 +21,7 @@ namespace Application.Mails.Commands.SendTestMailCommand
 
       public async Task<Unit> Handle(SendTestMailCommand request, CancellationToken cancellationToken)
       {
-        //BackgroundJob.Enqueue(() => _mailService.TestSendEmail());
-        _mailService.TestSendEmail();
+        BackgroundJob.Enqueue(() => _mailService.TestSendEmail());
 
         return Unit.Value;
       }

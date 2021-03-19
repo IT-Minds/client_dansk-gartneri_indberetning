@@ -31,10 +31,10 @@ namespace Web.Controllers
       return result;
     }
 
-    [HttpGet("activate")]
-    public IActionResult RedirectToActivation([FromQuery] string token)
+    [HttpGet("resetPassword")]
+    public IActionResult RedirectToResetPassword([FromQuery] string token)
     {
-      return Redirect(_corsOptions.Origins[0] +  "/activateUser?token=" + token);
+      return Redirect(_corsOptions.Origins[0] +  "/resetPassword?token=" + token);
     }
   }
 }

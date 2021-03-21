@@ -637,8 +637,63 @@ export class HealthClient extends ClientBase implements IHealthClient {
     }
 }
 
+export interface IMailClient {
+    sendTestMail(command: SendTestMailCommand): Promise<FileResponse>;
+}
+
+export class MailClient extends ClientBase implements IMailClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(configuration: AuthBase, baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        super(configuration);
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    sendTestMail(command: SendTestMailCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Mail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processSendTestMail(_response));
+        });
+    }
+
+    protected processSendTestMail(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
+    }
+}
+
 export interface IUserClient {
     getAllAdmins(): Promise<UserDto>;
+    updatePassword(id: number, command: UpdatePasswordCommand): Promise<FileResponse>;
 }
 
 export class UserClient extends ClientBase implements IUserClient {
@@ -686,6 +741,47 @@ export class UserClient extends ClientBase implements IUserClient {
             });
         }
         return Promise.resolve<UserDto>(<any>null);
+    }
+
+    updatePassword(id: number, command: UpdatePasswordCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/User/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processUpdatePassword(_response));
+        });
+    }
+
+    protected processUpdatePassword(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
     }
 }
 
@@ -1527,6 +1623,72 @@ export class ExampleParentDto implements IExampleParentDto {
 
 export interface IExampleParentDto {
     name?: string | null;
+}
+
+export class SendTestMailCommand implements ISendTestMailCommand {
+
+    constructor(data?: ISendTestMailCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+    }
+
+    static fromJS(data: any): SendTestMailCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new SendTestMailCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        return data; 
+    }
+}
+
+export interface ISendTestMailCommand {
+}
+
+export class UpdatePasswordCommand implements IUpdatePasswordCommand {
+    newPassword?: string | null;
+
+    constructor(data?: IUpdatePasswordCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.newPassword = _data["newPassword"] !== undefined ? _data["newPassword"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdatePasswordCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdatePasswordCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["newPassword"] = this.newPassword !== undefined ? this.newPassword : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdatePasswordCommand {
+    newPassword?: string | null;
 }
 
 export enum CommandErrorCode {

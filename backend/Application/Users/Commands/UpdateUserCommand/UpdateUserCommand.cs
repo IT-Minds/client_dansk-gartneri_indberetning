@@ -44,9 +44,6 @@ namespace Application.Users.Commands.UpdateUserCommand
 
         userEntity.Name = request.User.Name ?? userEntity.Name;
         userEntity.Email = request.User.Email ?? userEntity.Email;
-        userEntity.DeactivationTime = request.User.DeactivationTime ?? userEntity.DeactivationTime;
-
-        //Should the users account and accountants also be deactivated, if the user of the request is a 'client'?
 
         _context.Users.Update(userEntity);
         await _context.SaveChangesAsync(cancellationToken);

@@ -1,19 +1,21 @@
-using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users;
 using Application.Users.Commands.DeactivateUserCommand;
+using Application.Users.Commands.UpdatePassword;
 using Application.Users.Commands.UpdateUserCommand;
+using Application.Users.Queries.GetAdminsQuery;
 
 namespace Web.Controllers
 {
 
   public class UserController : ApiControllerBase
   {
-    [HttpGet]
-    public async Task<ActionResult<UserDto>> GetAllAdmins()
+    [HttpGet("admins")]
+    public async Task<ActionResult<List<UserDto>>> GetAllAdmins()
     {
-      throw new NotImplementedException();
+      return await Mediator.Send(new GetAdminsQuery());
     }
 
     [HttpPut("{id}")]
@@ -33,6 +35,14 @@ namespace Web.Controllers
         Id = id
       });
 
+      return NoContent();
+    }
+
+    [HttpPut("changePassword/{id}")]
+    public async Task<ActionResult> UpdatePassword([FromRoute] int id, [FromBody] UpdatePasswordCommand command)
+    {
+      command.Id = id;
+      await Mediator.Send(command);
       return NoContent();
     }
   }

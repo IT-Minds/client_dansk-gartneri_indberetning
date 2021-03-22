@@ -42,7 +42,7 @@ namespace Web.Services
       return tokenHandler.WriteToken(token);
     }
 
-    public async Task<string> CreateSSOToken(IUser user)
+    public async Task<(string, string)> CreateSSOToken(IUser user)
     {
       var claims = new List<Claim>();
       claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
@@ -58,21 +58,12 @@ namespace Web.Services
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
       var token = tokenHandler.CreateToken(descriptor);
+      var writtenToken = tokenHandler.WriteToken(token);
 
-      //Save token to persisted user
-      var userEntity = await _context.Users.FindAsync(user.Id);
-      if (userEntity == null)
-      {
-        throw new NotFoundException(nameof(User), user.Id);
-      }
-
-      userEntity.SSOTokenId = token.Id;
-      _context.SaveChanges();
-
-      return tokenHandler.WriteToken(token);
+      return (token.Id, writtenToken);
     }
 
-    public async Task<IUser> ValidateSSOToken(string token)
+    public async Task<int> ValidateSSOToken(string token)
     {
       var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.ASCII.GetBytes(_options.Secret);
@@ -85,22 +76,9 @@ namespace Web.Services
         ValidateAudience = false
       }, out SecurityToken validatedToken);
 
-      var user = await _context.Users.FindAsync(((JwtSecurityToken)validatedToken).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+      var userId = int.Parse(((JwtSecurityToken) validatedToken).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
 
-      if (user == null)
-      {
-        throw new NotFoundException("The token is issued to a user id that is not found.");
-      }
-
-      if (user.SSOTokenId != validatedToken.Id)
-      {
-        throw new SecurityTokenException("The provided token does not correspond to the token currently issued to the user.");
-      }
-
-      user.SSOTokenId = null;
-      _context.SaveChanges();
-      return user;
+      return userId;
     }
-
   }
 }

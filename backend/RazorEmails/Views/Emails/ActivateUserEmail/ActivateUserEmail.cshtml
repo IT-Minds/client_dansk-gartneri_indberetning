@@ -7,9 +7,9 @@
     ViewData["buttonUrl"] = Model.Url;
 
   <tr>
-    <td style="padding: 30px; background-color: #ffffff;">
-      <h1 style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">@Model.Header</h1>
-      <p style="margin:0;">@Model.Section</p>
+    <td class="mailSection">
+      <h1>@Model.Header</h1>
+      <p>@Model.Section</p>
       @await Html.PartialAsync("EmailButton", new EmailButtonViewModel("Aktiver din konto", Model.Url))
     </td>
   </tr>

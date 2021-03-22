@@ -65,6 +65,10 @@ export const table: Locale = {
     tooShort: "Skal være på minds 8 karakterer.",
     missingUppercase: "Skal have mindst ét stort bogstav.",
     missingLowercase: "Skal have mindst ét lille bogstav.",
-    missingNumber: "Skal have mindst ét tal."
+    missingNumber: "Skal have mindst ét tal.",
+    changeSuccessTitle: "Password updatet",
+    changeSuccessText: "Your password has been updated.",
+    changeFailTitle: "Error",
+    changeFailText: "Something went wrong, please try again."
   }
 };

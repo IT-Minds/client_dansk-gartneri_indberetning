@@ -64,5 +64,9 @@ export interface Locale {
     missingUppercase: string;
     missingLowercase: string;
     missingNumber: string;
+    changeSuccessTitle: string;
+    changeSuccessText: string;
+    changeFailTitle: string;
+    changeFailText: string;
   };
 }

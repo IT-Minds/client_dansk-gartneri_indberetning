@@ -27,7 +27,7 @@ namespace Web.Controllers
       return NoContent();
     }
 
-    [HttpPut("deactivate/{id}")]
+    [HttpPut("{id}/deactivate")]
     public async Task<ActionResult> DeactivateUser([FromRoute] int id)
     {
       await Mediator.Send(new DeactivateUserCommand
@@ -38,7 +38,7 @@ namespace Web.Controllers
       return NoContent();
     }
 
-    [HttpPut("changePassword/{id}")]
+    [HttpPut("{id}/changePassword")]
     public async Task<ActionResult> UpdatePassword([FromRoute] int id, [FromBody] UpdatePasswordCommand command)
     {
       command.Id = id;

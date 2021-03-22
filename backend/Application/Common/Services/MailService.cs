@@ -60,7 +60,12 @@ namespace Application.Common.Services
 
     public async Task TestSendEmail()
     {
-      var activateUserModel = new ActivateUserEmailViewModel("http://danskgartneri.dk");
+      var activateUserModel = new ActivateUserEmailViewModel()
+      {
+        Header = "Header 1 here",
+        Section = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
+        Url = "http://danskgartneri.dk"
+      };
       var mail = new MailRequestDto
       {
         ToEmail = "4aa05eab54-030844@inbox.mailtrap.io", //Mailtrap inbox

@@ -1,3 +1,5 @@
+using System;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users.Commands.CheckAuthCommand;
@@ -34,6 +36,11 @@ namespace Web.Controllers
     [HttpGet("resetPassword")]
     public IActionResult RedirectToResetPassword([FromQuery] string token)
     {
+      if (!Regex.IsMatch(token, "/^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$/"))
+      {
+        throw new ArgumentException("The provided argument was not a valid token");
+      }
+
       return Redirect(_corsOptions.Origins[0] +  "/resetPassword?token=" + token);
     }
   }

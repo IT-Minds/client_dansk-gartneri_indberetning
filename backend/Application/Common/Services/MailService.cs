@@ -63,7 +63,7 @@ namespace Application.Common.Services
       var activateUserModel = new ActivateUserEmailViewModel()
       {
         Header = "Header 1 here",
-        Section = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
+        Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
         Url = "http://danskgartneri.dk"
       };
       var mail = new MailRequestDto

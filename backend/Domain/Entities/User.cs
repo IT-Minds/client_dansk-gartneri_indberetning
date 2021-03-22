@@ -1,6 +1,5 @@
 using Domain.Enums;
 using System;
-using Newtonsoft.Json;
 using Domain.Common;
 
 namespace Domain.Entities
@@ -15,7 +14,6 @@ namespace Domain.Entities
     public DateTimeOffset? DeactivationTime { get; set; }
     public int AccountId { get; set; }
     public virtual Account Account { get; set; }
-    [JsonIgnore]
     public string SSOTokenId { get; set; }
   }
 }

@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using Domain.Common;
 using Domain.Enums;
 
@@ -13,7 +12,6 @@ namespace Domain.Entities
     public RoleEnum Role { get; set; }
     public string Name { get; set; }
     public DateTimeOffset? DeactivationTime { get; set; }
-    [JsonIgnore]
     public string SSOTokenId { get; set; }
   }
 }

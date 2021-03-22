@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210319093530_UserSSOToken")]
-    partial class UserSSOToken
+    [Migration("20210322100250_ssoTokenFix")]
+    partial class ssoTokenFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,6 +132,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
+
+                    b.Property<string>("SSOTokenId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

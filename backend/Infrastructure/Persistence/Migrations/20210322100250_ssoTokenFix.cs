@@ -2,13 +2,19 @@
 
 namespace Infrastructure.Persistence.Migrations
 {
-    public partial class UserSSOToken : Migration
+    public partial class ssoTokenFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "SSOTokenId",
                 table: "Users",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "SSOTokenId",
+                table: "Admins",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -18,6 +24,10 @@ namespace Infrastructure.Persistence.Migrations
             migrationBuilder.DropColumn(
                 name: "SSOTokenId",
                 table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "SSOTokenId",
+                table: "Admins");
         }
     }
 }

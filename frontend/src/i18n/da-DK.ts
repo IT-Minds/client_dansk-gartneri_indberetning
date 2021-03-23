@@ -80,6 +80,10 @@ export const table: Locale = {
     addSuccessTitle: "Revisor tilføjet",
     addSuccessText: "En mail med invitation til systemet er sendt til revisor.",
     addErrorTitle: "Tilføjelse mislykket",
-    addErrorText: "Der skete en fejl. Prøv eventuelt igen."
+    addErrorText: "Der skete en fejl. Prøv eventuelt igen.",
+    deleteSuccessTitle: "Revisor fjernet",
+    deleteSuccessText: "Revisoren er nu fjernet og deaktiveret.",
+    deleteErrorTitle: "Deaktivering mislykket",
+    deleteErrorText: "Der skete en fejl. Prøv eventuelt igen."
   }
 };

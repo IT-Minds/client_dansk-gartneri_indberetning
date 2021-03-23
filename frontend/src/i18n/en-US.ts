@@ -80,6 +80,10 @@ export const table: Locale = {
     addSuccessTitle: "Accountant added",
     addSuccessText: "An email has been sent to the accountant with an invite to the system.",
     addErrorTitle: "An error occured",
-    addErrorText: "Addition unsuccesfull. Please try again later."
+    addErrorText: "Addition unsuccesfull. Please try again later.",
+    deleteSuccessTitle: "Accountant unassigned",
+    deleteSuccessText: "The accountant has been unassigned and deactivated.",
+    deleteErrorTitle: "Unassignment failed",
+    deleteErrorText: "Something went wrong. Please try again later."
   }
 };

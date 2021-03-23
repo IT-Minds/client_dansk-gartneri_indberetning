@@ -79,5 +79,9 @@ export interface Locale {
     addSuccessText: string;
     addErrorTitle: string;
     addErrorText: string;
+    deleteSuccessTitle: string;
+    deleteSuccessText: string;
+    deleteErrorTitle: string;
+    deleteErrorText: string;
   };
 }

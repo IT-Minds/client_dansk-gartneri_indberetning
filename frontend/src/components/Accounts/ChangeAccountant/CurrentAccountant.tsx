@@ -15,30 +15,33 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
   const toast = useToast();
   const { fetchData } = useContext(AccountsContext);
 
-  const handleDelete = useCallback(async (e: React.MouseEvent) => {
-    try {
-      const userClient = await genUserClient();
-      await userClient.deactivateUser(accountant.id);
-      toast({
-        title: t("accountant.addSuccessTitle"),
-        description: t("accountant.addSuccessText"),
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left"
-      });
-      fetchData();
-    } catch {
-      toast({
-        title: t("accountant.addErrorTitle"),
-        description: t("accountant.addErrorText"),
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left"
-      });
-    }
-  }, []);
+  const handleDelete = useCallback(
+    async (e: React.MouseEvent) => {
+      try {
+        const userClient = await genUserClient();
+        await userClient.deactivateUser(accountant.id);
+        toast({
+          title: t("accountant.deleteSuccessTitle"),
+          description: t("accountant.deleteSuccessText"),
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+        await fetchData();
+      } catch {
+        toast({
+          title: t("accountant.deleteErrorTitle"),
+          description: t("accountant.deleteErrorText"),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+      }
+    },
+    [accountant]
+  );
 
   return (
     <Stack>

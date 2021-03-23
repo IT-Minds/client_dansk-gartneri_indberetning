@@ -30,16 +30,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
   const [sortDirection, setSortDirection] = useState("ASC");
   const [filters, setFilters] = useState<AccountFilter[]>([SearchFilter]);
 
-  const allKeyOptions: SelectType[] = [
-    { name: t("accounts.id"), id: "id" },
-    { name: t("accounts.name"), id: "name" },
-    { name: t("accounts.email"), id: "email" },
-    { name: t("accounts.tel"), id: "tel" },
-    { name: t("accounts.cvrNumber"), id: "cvrNumber" },
-    { name: t("accounts.address"), id: "address" },
-    { name: t("accounts.accountant"), id: "accountant" }
-  ];
-  const allTableColumns: AccountsTableKey[] = [
+  const allTableKeys: AccountsTableKey[] = [
     { name: t("accounts.id"), id: "id", sortable: true },
     { name: t("accounts.name"), id: "name", sortable: true },
     { name: t("accounts.email"), id: "email", sortable: true },
@@ -48,7 +39,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
     { name: t("accounts.address"), id: "address", sortable: false },
     { name: t("accounts.accountant"), id: "accountant", sortable: false }
   ];
-  const [tableKeys, setTableKeys] = useState<SelectType[]>(allKeyOptions);
+  const [tableKeys, setTableKeys] = useState<AccountsTableKey[]>(allTableKeys);
 
   const handleSortChange = useCallback((key: string, direction: Direction) => {
     if (direction != null) {
@@ -101,14 +92,20 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
   );
 
   const filterCb = useCallback((qkey: string, chosenOptions: SelectType["id"][]) => {
-    setTableKeys(allKeyOptions.filter(e => chosenOptions.includes(e.id)));
+    setTableKeys(allTableKeys.filter(e => chosenOptions.includes(e.id)));
   }, []);
 
   return (
     <>
       <Flex>
         <Flex h="48px" alignItems="center">
-          <QueryMultiSelectBtn queryKey="test" options={allKeyOptions} filterCb={filterCb} />
+          <QueryMultiSelectBtn
+            queryKey="test"
+            options={allTableKeys.map(e => {
+              return { id: e.id, name: e.name };
+            })}
+            filterCb={filterCb}
+          />
         </Flex>
         <Table>
           <Thead>
@@ -116,7 +113,9 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
               {tableKeys.map(key => (
                 <Th key={key.id}>
                   <Flex>
-                    <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                    {key.sortable && (
+                      <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
+                    )}
                     {t(`accounts.${key.id}`)}
                   </Flex>
                 </Th>

@@ -12,8 +12,9 @@ import {
   Stack,
   useDisclosure
 } from "@chakra-ui/react";
+import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useContext } from "react";
 import { IAccountDto } from "services/backend/nswagts";
 
 import AddNewAccountantForm from "./AddNewAccountantForm";
@@ -27,11 +28,7 @@ interface Props {
 const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleSubmit = useCallback(() => {
-    onClose();
-    onSubmit();
-  }, []);
+  const { fetchData } = useContext(AccountsContext);
 
   return (
     <>
@@ -48,7 +45,7 @@ const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
               <CurrentAccountant accountant={account.accountant} />
               <Divider />
               <Heading size="md">{t("accountant.addAccountant")}</Heading>
-              <AddNewAccountantForm account={account} />
+              <AddNewAccountantForm account={account} onSubmit={fetchData} />
             </Stack>
           </ModalBody>
           <ModalFooter></ModalFooter>

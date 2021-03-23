@@ -14,6 +14,7 @@ import AccountOptionsMenu from "./AccountOptionsMenu";
 interface Props {
   data: IAccountDto[];
   searchString: string;
+  fetchData?: () => Promise<void>;
 }
 
 type AccountsTableKey = {
@@ -67,8 +68,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
       }`;
     }
     if (key == "accountant") {
-      const a = account.users.find(u => u.role == RoleEnum.Accountant);
-      if (a) {
+      if (account.accountant) {
         return <BiCheck />;
       } else {
         return t("accountant.noAccountant");
@@ -147,4 +147,3 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
   );
 };
 export default AccountsTable;
-//<ChangeAccountantModal account={account} />

@@ -18,9 +18,12 @@ namespace Web.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<AccountDto>>> GetAllAccounts()
+    public async Task<ActionResult<List<AccountDto>>> GetAllAccounts([FromQuery] bool includeDeactivated = false)
     {
-      return await Mediator.Send(new GetAccountsQuery());
+      return await Mediator.Send(new GetAccountsQuery
+      {
+        IncludeDeactivated = includeDeactivated
+      });
     }
 
     [HttpGet("myAccount")]

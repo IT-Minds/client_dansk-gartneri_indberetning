@@ -15,6 +15,7 @@ namespace Application.Accounts.Queries.GetAccountsQuery
   [Authorize(Role = RoleEnum.Admin)]
   public class GetAccountsQuery : IRequest<List<AccountDto>>
   {
+    public bool IncludeDeactivated { get; set; }
     public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, List<AccountDto>>
     {
       private readonly IApplicationDbContext _context;
@@ -28,7 +29,8 @@ namespace Application.Accounts.Queries.GetAccountsQuery
       public async Task<List<AccountDto>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
       {
         var viewModel = await _context.Accounts
-          .Include(x => x.Users)
+          .Where(a => request.IncludeDeactivated || a.DeactivationTime == null)
+          .Include(x => x.Users.Where(u => request.IncludeDeactivated || u.DeactivationTime == null))
           .ProjectTo<AccountDto>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
 

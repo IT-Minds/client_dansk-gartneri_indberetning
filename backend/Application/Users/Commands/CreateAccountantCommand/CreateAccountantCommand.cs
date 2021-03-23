@@ -42,7 +42,16 @@ namespace Application.Users.Commands.CreateAccountantCommand
           throw new InvalidOperationException("Cannot assign a new accountant, because the account already has an active accountant. Deactivate the active accountant before assigning a new.");
         }
 
-        if (_context.Accounts.Any(e => e.Email == request.AccountantDto.Email) || _context.Users.Any(e => e.Email == request.AccountantDto.Email))
+        if (_context.Admins
+          .Where(e => e.DeactivationTime == null)
+          .Any(e => e.Email == request.AccountantDto.Email))
+        {
+          throw new ArgumentException("The provided email address is already used by another user.");
+        }
+
+        if (_context.Users
+          .Where(e => e.DeactivationTime == null)
+          .Any(e => e.Email == request.AccountantDto.Email))
         {
           throw new ArgumentException("The provided email address is already used by another user.");
         }

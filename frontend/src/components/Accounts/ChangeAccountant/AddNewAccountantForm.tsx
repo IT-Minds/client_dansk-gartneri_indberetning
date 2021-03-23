@@ -1,6 +1,6 @@
 import { Button, Flex, FormControl, FormLabel, Input, Stack, useToast } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,

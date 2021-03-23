@@ -35,7 +35,7 @@ namespace Web.Controllers
       return NoContent();
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}/password")]
     public async Task<ActionResult> UpdatePassword([FromRoute] int id, [FromBody] UpdatePasswordCommand command)
     {
       command.Id = id;

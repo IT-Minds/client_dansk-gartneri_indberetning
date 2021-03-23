@@ -41,7 +41,8 @@ export const table: Locale = {
     addressLine4: "Line 4",
     CVR_getFromRegistry: "Get info from CVR-registry",
     CVR_apiErrorTitle: "CVR not found",
-    CVR_apiErrorDescription: "Could not find CVR number in the registry"
+    CVR_apiErrorDescription: "Could not find CVR number in the registry",
+    accountant: "Accountant"
   },
 
   login: {

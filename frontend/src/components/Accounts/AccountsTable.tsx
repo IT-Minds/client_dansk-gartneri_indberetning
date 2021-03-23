@@ -4,7 +4,8 @@ import QueryMultiSelectBtn from "components/Common/QueryMultiSelectBtn";
 import QuerySortBtn, { Direction } from "components/Common/QuerySortBtn";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
-import { IAccountDto } from "services/backend/nswagts";
+import { BiCheck, BiChevronDown } from "react-icons/bi";
+import { IAccountDto, RoleEnum } from "services/backend/nswagts";
 import { AccountFilter } from "types/AccountFilter";
 import SelectType from "types/SelectType";
 
@@ -29,7 +30,8 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
     { name: t("accounts.email"), id: "email" },
     { name: t("accounts.tel"), id: "tel" },
     { name: t("accounts.cvrNumber"), id: "cvrNumber" },
-    { name: t("accounts.address"), id: "address" }
+    { name: t("accounts.address"), id: "address" },
+    { name: t("accounts.accountant"), id: "accountant" }
   ];
   const [tableKeys, setTableKeys] = useState<SelectType[]>(allKeyOptions);
 
@@ -49,6 +51,14 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
       return `${a.addressLine1 ?? ""} ${a.addressLine2 ?? ""} ${a.addressLine3 ?? ""} ${
         a.addressLine4 ?? ""
       }`;
+    }
+    if (key == "accountant") {
+      const a = account.users.find(u => u.role == RoleEnum.Accountant);
+      if (a) {
+        return <BiCheck />;
+      } else {
+        return "Ingen revisor";
+      }
     }
     return account[key as keyof IAccountDto];
   }, []);

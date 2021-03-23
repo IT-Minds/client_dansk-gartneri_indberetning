@@ -40,6 +40,7 @@ export interface Locale {
     CVR_getFromRegistry: string;
     CVR_apiErrorTitle: string;
     CVR_apiErrorDescription: string;
+    accountant: string;
   };
 
   login: {

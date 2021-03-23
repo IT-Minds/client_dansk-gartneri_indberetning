@@ -14,7 +14,6 @@ import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,
   IAccountDto,
-  IUserAccountIdDto,
   RoleEnum,
   UserAccountIdDto
 } from "services/backend/nswagts";
@@ -55,7 +54,6 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Text>{account.id}</Text>
       <FormControl id="name" isRequired>
         <FormLabel htmlFor="name">{t("accounts.name")}</FormLabel>
         <Input value={name} onChange={e => setName(e.target.value)}></Input>

@@ -4,18 +4,23 @@ import QueryMultiSelectBtn from "components/Common/QueryMultiSelectBtn";
 import QuerySortBtn, { Direction } from "components/Common/QuerySortBtn";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
-import { BiCheck, BiChevronDown } from "react-icons/bi";
+import { BiCheck } from "react-icons/bi";
 import { IAccountDto, RoleEnum } from "services/backend/nswagts";
 import { AccountFilter } from "types/AccountFilter";
 import SelectType from "types/SelectType";
 
-import ChangeAccountantModal from "./ChangeAccountant/ChangeAccountantModal";
-import NewAccountModal from "./NewAccountModal";
+import AccountOptionsMenu from "./AccountOptionsMenu";
 
 interface Props {
   data: IAccountDto[];
   searchString: string;
 }
+
+type AccountsTableKey = {
+  name: string;
+  id: string;
+  sortable: boolean;
+};
 
 const AccountsTable: FC<Props> = ({ data, searchString }) => {
   const { t, locale, localeNameMap } = useLocales();
@@ -32,6 +37,15 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
     { name: t("accounts.cvrNumber"), id: "cvrNumber" },
     { name: t("accounts.address"), id: "address" },
     { name: t("accounts.accountant"), id: "accountant" }
+  ];
+  const allTableColumns: AccountsTableKey[] = [
+    { name: t("accounts.id"), id: "id", sortable: true },
+    { name: t("accounts.name"), id: "name", sortable: true },
+    { name: t("accounts.email"), id: "email", sortable: true },
+    { name: t("accounts.tel"), id: "tel", sortable: true },
+    { name: t("accounts.cvrNumber"), id: "cvrNumber", sortable: true },
+    { name: t("accounts.address"), id: "address", sortable: false },
+    { name: t("accounts.accountant"), id: "accountant", sortable: false }
   ];
   const [tableKeys, setTableKeys] = useState<SelectType[]>(allKeyOptions);
 
@@ -57,7 +71,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
       if (a) {
         return <BiCheck />;
       } else {
-        return "Ingen revisor";
+        return t("accountant.noAccountant");
       }
     }
     return account[key as keyof IAccountDto];
@@ -121,7 +135,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
                       <Td key={key.id}>{genValueFromKey(account, key.id.toString())}</Td>
                     ))}
                     <Td>
-                      <ChangeAccountantModal account={account} />
+                      <AccountOptionsMenu account={account} />
                     </Td>
                   </Tr>
                 );
@@ -133,3 +147,4 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
   );
 };
 export default AccountsTable;
+//<ChangeAccountantModal account={account} />

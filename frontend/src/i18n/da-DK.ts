@@ -59,5 +59,15 @@ export const table: Locale = {
 
   actions: {
     delete: "Slet"
+  },
+
+  accountant: {
+    editAccountant: "Rediger revisor",
+    addAccountant: "Tilføj ny revisor",
+    noAccountant: "Ingen revisor",
+    addSuccessTitle: "Revisor tilføjet",
+    addSuccessText: "En mail med invitation til systemet er sendt til revisor.",
+    addErrorTitle: "Tilføjelse mislykket",
+    addErrorText: "Der skete en fejl. Prøv eventuelt igen."
   }
 };

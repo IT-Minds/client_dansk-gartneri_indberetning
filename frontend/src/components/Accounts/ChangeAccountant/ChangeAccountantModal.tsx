@@ -1,7 +1,7 @@
 import {
-  Button,
   Divider,
   Heading,
+  MenuItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,9 +12,7 @@ import {
   Stack,
   useDisclosure
 } from "@chakra-ui/react";
-import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import Head from "next/head";
 import { FC, useCallback } from "react";
 import { IAccountDto } from "services/backend/nswagts";
 
@@ -27,7 +25,6 @@ interface Props {
 }
 
 const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
-  const { buttonFont } = useColors();
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -38,21 +35,19 @@ const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
 
   return (
     <>
-      <Button rounded="full" colorScheme="blue" textColor={buttonFont} onClick={onOpen}>
-        Revisor
-      </Button>
+      <MenuItem onClick={onOpen}>{t("accountant.editAccountant")}</MenuItem>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Rediger revisor</ModalHeader>
+          <ModalHeader>{t("accountant.editAccountant")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={5}>
-              <Heading size="sm">Revisor:</Heading>
-              <CurrentAccountant account={account} />
+              <Heading size="sm">{t("accounts.accountant")}:</Heading>
+              <CurrentAccountant accountant={account.accountant} />
               <Divider />
-              <Heading size="md">Tilføj ny revisor</Heading>
+              <Heading size="md">{t("accountant.addAccountant")}</Heading>
               <AddNewAccountantForm account={account} />
             </Stack>
           </ModalBody>

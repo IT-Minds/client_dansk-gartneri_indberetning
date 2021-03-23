@@ -59,5 +59,15 @@ export const table: Locale = {
 
   actions: {
     delete: "Delete"
+  },
+
+  accountant: {
+    editAccountant: "Edit accountant",
+    addAccountant: "Add new accountant",
+    noAccountant: "No accountant",
+    addSuccessTitle: "Accountant added",
+    addSuccessText: "An email has been sent to the accountant with an invite to the system.",
+    addErrorTitle: "An error occured",
+    addErrorText: "Addition unsuccesfull. Please try again later."
   }
 };

@@ -1,15 +1,14 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC } from "react";
-import { IAccountDto, RoleEnum } from "services/backend/nswagts";
+import { IUserAccountIdDto } from "services/backend/nswagts";
 
 interface Props {
-  account: IAccountDto;
+  accountant: IUserAccountIdDto;
 }
 
-const CurrentAccountant: FC<Props> = ({ account }) => {
+const CurrentAccountant: FC<Props> = ({ accountant }) => {
   const { t } = useLocales();
-  const accountant = account.users.find(u => u.role == RoleEnum.Accountant);
 
   return (
     <Stack>
@@ -23,7 +22,7 @@ const CurrentAccountant: FC<Props> = ({ account }) => {
           </Text>
         </>
       ) : (
-        <Text>Ingen revisor er tilknyttet denne kunde.</Text>
+        <Text>{t("accountant.noAccountant")}</Text>
       )}
     </Stack>
   );

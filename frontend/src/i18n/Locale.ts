@@ -58,4 +58,14 @@ export interface Locale {
   actions: {
     delete: string;
   };
+
+  accountant: {
+    editAccountant: string;
+    addAccountant: string;
+    noAccountant: string;
+    addSuccessTitle: string;
+    addSuccessText: string;
+    addErrorTitle: string;
+    addErrorText: string;
+  };
 }

@@ -6,7 +6,9 @@ import {
   Input,
   ModalHeader,
   Spacer,
-  Text
+  Stack,
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
@@ -14,19 +16,21 @@ import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,
   IAccountDto,
+  ICreateAccountCommand,
   RoleEnum,
   UserAccountIdDto
 } from "services/backend/nswagts";
 
 interface Props {
   account: IAccountDto;
-  onSubmit?: (e: React.FormEvent) => void;
+  onSubmit?: (success: boolean) => void;
 }
 
 const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
   const { t } = useLocales();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const toast = useToast();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -34,38 +38,61 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
 
       console.log(account.id); //This is not undefined
       const accountantDto = new UserAccountIdDto({
+        id: 1,
         accountId: account.id,
         name: name,
-        email: email
+        email: email,
+        role: RoleEnum.Accountant
       });
+      accountantDto.accountId = account.id;
       console.log(accountantDto.accountId); //Why is this always undefined?
 
-      const userClient = await genUserClient();
-      await userClient.createAndAddAccountant(
-        new CreateAccountantCommand({
+      try {
+        const userClient = await genUserClient();
+        const command = new CreateAccountantCommand({
           accountantDto: accountantDto
-        })
-      );
-      onSubmit(e);
+        });
+        await userClient.createAndAddAccountant(command);
+        toast({
+          title: t("accountant.addSuccessTitle"),
+          description: t("accountant.addSuccessText"),
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+        onSubmit(true);
+      } catch {
+        toast({
+          title: t("accountant.addErrorTitle"),
+          description: t("accountant.addErrorText"),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+      }
     },
     [name, email]
   );
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl id="name" isRequired>
-        <FormLabel htmlFor="name">{t("accounts.name")}</FormLabel>
-        <Input value={name} onChange={e => setName(e.target.value)}></Input>
-      </FormControl>
-      <FormControl id="email" isRequired>
-        <FormLabel htmlFor="email">{t("accounts.email")}</FormLabel>
-        <Input type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
-      </FormControl>
-      <Flex justifyContent="flex-end" w="100%" mt={5}>
-        <Button colorScheme="green" type="submit">
-          {t("common.add")}
-        </Button>
-      </Flex>
+      <Stack spacing={5}>
+        <FormControl id="name" isRequired>
+          <FormLabel htmlFor="name">{t("accounts.name")}</FormLabel>
+          <Input value={name} onChange={e => setName(e.target.value)}></Input>
+        </FormControl>
+        <FormControl id="email" isRequired>
+          <FormLabel htmlFor="email">{t("accounts.email")}</FormLabel>
+          <Input type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
+        </FormControl>
+        <Flex justifyContent="flex-end" w="100%" mt={5}>
+          <Button colorScheme="green" type="submit">
+            {t("common.add")}
+          </Button>
+        </Flex>
+      </Stack>
     </form>
   );
 };

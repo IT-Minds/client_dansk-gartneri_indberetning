@@ -7,6 +7,7 @@ using Application.Common.Interfaces;
 using Application.Common.Security;
 using AutoMapper;
 using Domain.Entities;
+using Domain.EntityExtensions;
 using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,11 @@ namespace Application.Users.Commands.CreateAccountantCommand
         if (account == null)
         {
           throw new NotFoundException("The provided account id does not correspond to any existing account.");
+        }
+
+        if (account.GetActiveAccountant() != null)
+        {
+          throw new InvalidOperationException("Cannot assign a new accountant, because the account already has an active accountant. Deactivate the active accountant before assigning a new.");
         }
 
         if (_context.Accounts.Any(e => e.Email == request.AccountantDto.Email) || _context.Users.Any(e => e.Email == request.AccountantDto.Email))

@@ -1,22 +1,10 @@
-import {
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalHeader,
-  Spacer,
-  Stack,
-  Text,
-  useToast
-} from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Input, Stack, useToast } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,
   IAccountDto,
-  ICreateAccountCommand,
   RoleEnum,
   UserAccountIdDto
 } from "services/backend/nswagts";
@@ -79,16 +67,16 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Stack spacing={5}>
-        <FormControl id="name" isRequired>
+        <FormControl id="name" isRequired isDisabled={account.accountant != null}>
           <FormLabel htmlFor="name">{t("accounts.name")}</FormLabel>
           <Input value={name} onChange={e => setName(e.target.value)}></Input>
         </FormControl>
-        <FormControl id="email" isRequired>
+        <FormControl id="email" isRequired isDisabled={account.accountant != null}>
           <FormLabel htmlFor="email">{t("accounts.email")}</FormLabel>
           <Input type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
         </FormControl>
         <Flex justifyContent="flex-end" w="100%" mt={5}>
-          <Button colorScheme="green" type="submit">
+          <Button colorScheme="green" type="submit" disabled={account.accountant != null}>
             {t("common.add")}
           </Button>
         </Flex>

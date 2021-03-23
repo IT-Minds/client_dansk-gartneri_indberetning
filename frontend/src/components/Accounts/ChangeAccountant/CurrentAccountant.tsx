@@ -1,6 +1,8 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import { FC } from "react";
+import React, { FC, useCallback } from "react";
+import { BiX } from "react-icons/bi";
+import { genUserClient } from "services/backend/apiClients";
 import { IUserAccountIdDto } from "services/backend/nswagts";
 
 interface Props {
@@ -9,6 +11,31 @@ interface Props {
 
 const CurrentAccountant: FC<Props> = ({ accountant }) => {
   const { t } = useLocales();
+  const toast = useToast();
+
+  const handleDelete = useCallback(async (e: React.MouseEvent) => {
+    try {
+      const userClient = await genUserClient();
+      await userClient.deactivateUser(accountant.accountId);
+      toast({
+        title: t("accountant.addSuccessTitle"),
+        description: t("accountant.addSuccessText"),
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left"
+      });
+    } catch {
+      toast({
+        title: t("accountant.addErrorTitle"),
+        description: t("accountant.addErrorText"),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left"
+      });
+    }
+  }, []);
 
   return (
     <Stack>
@@ -20,6 +47,17 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
           <Text>
             {t("accounts.email")}: {accountant.email}
           </Text>
+          <Box>
+            <Button
+              size="sm"
+              colorScheme="red"
+              variant="outline"
+              rounded="full"
+              leftIcon={<BiX />}
+              onClick={handleDelete}>
+              {t("actions.delete")}
+            </Button>
+          </Box>
         </>
       ) : (
         <Text>{t("accountant.noAccountant")}</Text>

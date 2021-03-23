@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import { BiX } from "react-icons/bi";
 import { genUserClient } from "services/backend/apiClients";
 import { IUserAccountIdDto } from "services/backend/nswagts";
@@ -12,11 +13,12 @@ interface Props {
 const CurrentAccountant: FC<Props> = ({ accountant }) => {
   const { t } = useLocales();
   const toast = useToast();
+  const { fetchData } = useContext(AccountsContext);
 
   const handleDelete = useCallback(async (e: React.MouseEvent) => {
     try {
       const userClient = await genUserClient();
-      await userClient.deactivateUser(accountant.accountId);
+      await userClient.deactivateUser(accountant.id);
       toast({
         title: t("accountant.addSuccessTitle"),
         description: t("accountant.addSuccessText"),
@@ -25,6 +27,7 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
         isClosable: true,
         position: "bottom-left"
       });
+      fetchData();
     } catch {
       toast({
         title: t("accountant.addErrorTitle"),

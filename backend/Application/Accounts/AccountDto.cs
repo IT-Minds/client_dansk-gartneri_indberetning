@@ -24,9 +24,9 @@ namespace Application.Accounts
     public void Mapping(Profile profile)
     {
       profile.CreateMap<Account, AccountDto>()
-        .ForMember(dest => dest.Client, map => map.MapFrom(from => from.Client()));
+        .ForMember(dest => dest.Client, map => map.MapFrom(from => from.GetClient()));
       profile.CreateMap<Account, AccountDto>()
-        .ForMember(dest => dest.Accountant, map => map.MapFrom(from => from.Accountant()));
+        .ForMember(dest => dest.Accountant, map => map.MapFrom(from => from.GetActiveAccountant()));
     }
   }
 }

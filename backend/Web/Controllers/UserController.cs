@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Users;
 using Application.Users.Commands.CreateAccountantCommand;
+using Application.Users.Commands.DeactivateUserCommand;
+using Application.Users.Commands.UpdatePassword;
 using Application.Users.Commands.UpdateUserCommand;
 using Application.Users.Queries.GetAdminsQuery;
-using Application.Users.Commands.UpdatePassword;
 
 namespace Web.Controllers
 {
@@ -35,7 +34,18 @@ namespace Web.Controllers
       return NoContent();
     }
 
-    [HttpPut("{id}/password")]
+    [HttpPut("{id}/deactivate")]
+    public async Task<ActionResult> DeactivateUser([FromRoute] int id)
+    {
+      await Mediator.Send(new DeactivateUserCommand
+      {
+        Id = id
+      });
+
+      return NoContent();
+    }
+
+    [HttpPut("{id}/changePassword")]
     public async Task<ActionResult> UpdatePassword([FromRoute] int id, [FromBody] UpdatePasswordCommand command)
     {
       command.Id = id;

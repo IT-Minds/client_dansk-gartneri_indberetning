@@ -20,8 +20,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
         User = new UserDto()
         {
           Name = "TestUpdate",
-          Email = "TestEmail",
-          DeactivationTime = new DateTimeOffset(DateTime.Now)
+          Email = "TestEmail"
         }
       };
 
@@ -34,7 +33,6 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
       entity.Should().NotBeNull();
       entity.Name.Should().Be(command.User.Name);
       entity.Email.Should().Be(command.User.Email);
-      entity.DeactivationTime.Should().Be(command.User.DeactivationTime);
     }
 
     [Fact]
@@ -46,8 +44,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
         User = new UserDto()
         {
           Name = "TestUpdate",
-          Email = "TestEmail",
-          DeactivationTime = new DateTimeOffset(DateTime.Now)
+          Email = "TestEmail"
         }
       };
 
@@ -66,8 +63,7 @@ namespace Application.UnitTests.Users.Commands.UpdateUserCommandTest
         User = new UserDto()
         {
           Name = "TestUpdate",
-          Email = "test2@test2.dk", //Already used by user defined in ApplicationDbContextFactory
-          DeactivationTime = new DateTimeOffset(DateTime.Now)
+          Email = "test2@test2.dk" //Already used by user defined in ApplicationDbContextFactory
         }
       };
 

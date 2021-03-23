@@ -61,6 +61,18 @@ export const table: Locale = {
     delete: "Slet"
   },
 
+  password: {
+    dontMatch: "De to passwords er ikke ens.",
+    tooShort: "Skal være på minds 8 karakterer.",
+    missingUppercase: "Skal have mindst ét stort bogstav.",
+    missingLowercase: "Skal have mindst ét lille bogstav.",
+    missingNumber: "Skal have mindst ét tal.",
+    changeSuccessTitle: "Password opdateret",
+    changeSuccessText: "Dit password er nu blevet opdateret.",
+    changeFailTitle: "Fejl",
+    changeFailText: "Noget gik galt, prøv igen senere."
+  },
+
   accountant: {
     editAccountant: "Rediger revisor",
     addAccountant: "Tilføj ny revisor",

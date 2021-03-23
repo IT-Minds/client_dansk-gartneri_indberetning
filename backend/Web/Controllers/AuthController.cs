@@ -36,12 +36,17 @@ namespace Web.Controllers
     [HttpGet("resetPassword")]
     public IActionResult RedirectToResetPassword([FromQuery] string token)
     {
-      if (!Regex.IsMatch(token, "/^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$/"))
+      var url = _corsOptions.Origins[0] + "/changepassword?token=";
+
+      if (Regex.IsMatch(token, "/^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$/"))
+      {
+        url += token;
+      } else
       {
         throw new ArgumentException("The provided argument was not a valid token");
       }
 
-      return Redirect(_corsOptions.Origins[0] +  "/resetPassword?token=" + token);
+      return Redirect(url);
     }
   }
 }

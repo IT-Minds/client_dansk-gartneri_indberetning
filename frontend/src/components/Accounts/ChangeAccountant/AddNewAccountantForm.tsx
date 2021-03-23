@@ -36,8 +36,7 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
       const accountantDto = new UserAccountIdDto({
         accountId: account.id,
         name: name,
-        email: email,
-        role: RoleEnum.Accountant
+        email: email
       });
       console.log(accountantDto.accountId); //Why is this always undefined?
 

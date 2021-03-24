@@ -78,22 +78,3 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
   );
 };
 export default CurrentAccountant;
-/*
-<Text>
-            {t("accounts.name")}: {accountant.name}
-          </Text>
-          <Text>
-            {t("accounts.email")}: {accountant.email}
-          </Text>
-          <Box>
-            <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              rounded="full"
-              leftIcon={<BiX />}
-              onClick={handleDelete}>
-              {t("actions.delete")}
-            </Button>
-          </Box>
-*/

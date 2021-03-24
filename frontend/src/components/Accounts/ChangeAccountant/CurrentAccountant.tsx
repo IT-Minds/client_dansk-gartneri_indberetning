@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Table, Td, Text, Th, Tr, useToast } from "@chakra-ui/react";
+import { Box, Button, Stack, Table, Tbody, Td, Text, Th, Tr, useToast } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
 import React, { FC, useCallback, useContext } from "react";
@@ -48,14 +48,16 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
       {accountant ? (
         <>
           <Table>
-            <Tr>
-              <Th>{t("accounts.name")}:</Th>
-              <Td>{accountant.name}</Td>
-            </Tr>
-            <Tr>
-              <Th>{t("accounts.email")}:</Th>
-              <Td>{accountant.email}</Td>
-            </Tr>
+            <Tbody>
+              <Tr>
+                <Th>{t("accounts.name")}:</Th>
+                <Td>{accountant.name}</Td>
+              </Tr>
+              <Tr>
+                <Th>{t("accounts.email")}:</Th>
+                <Td>{accountant.email}</Td>
+              </Tr>
+            </Tbody>
           </Table>
           <Box>
             <Button

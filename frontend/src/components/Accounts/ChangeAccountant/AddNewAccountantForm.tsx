@@ -24,7 +24,6 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
     async (e: React.FormEvent) => {
       e.preventDefault();
 
-      console.log(account.id); //This is not undefined
       const accountantDto = new UserAccountIdDto({
         id: 1,
         accountId: account.id,
@@ -33,7 +32,6 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
         role: RoleEnum.Accountant
       });
       accountantDto.accountId = account.id;
-      console.log(accountantDto.accountId); //Why is this always undefined?
 
       try {
         const userClient = await genUserClient();

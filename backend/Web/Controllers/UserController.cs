@@ -13,13 +13,13 @@ namespace Web.Controllers
 
   public class UserController : ApiControllerBase
   {
-    [HttpGet]
+    [HttpGet("admins")]
     public async Task<ActionResult<List<UserDto>>> GetAllAdmins()
     {
       return await Mediator.Send(new GetAdminsQuery());
     }
 
-    [HttpPost]
+    [HttpPost("accountant")]
     public async Task<ActionResult<int>> CreateAndAddAccountant([FromBody] CreateAccountantCommand command)
     {
       return await Mediator.Send(command);

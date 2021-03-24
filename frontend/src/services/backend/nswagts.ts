@@ -748,7 +748,7 @@ export class UserClient extends ClientBase implements IUserClient {
     }
 
     getAllAdmins(): Promise<UserDto[]> {
-        let url_ = this.baseUrl + "/api/User";
+        let url_ = this.baseUrl + "/api/User/admins";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
@@ -788,7 +788,7 @@ export class UserClient extends ClientBase implements IUserClient {
     }
 
     createAndAddAccountant(command: CreateAccountantCommand): Promise<number> {
-        let url_ = this.baseUrl + "/api/User";
+        let url_ = this.baseUrl + "/api/User/accountant";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);

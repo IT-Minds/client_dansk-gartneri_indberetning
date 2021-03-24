@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Stack, Table, Td, Text, Th, Tr, useToast } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
 import React, { FC, useCallback, useContext } from "react";
@@ -47,12 +47,16 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
     <Stack>
       {accountant ? (
         <>
-          <Text>
-            {t("accounts.name")}: {accountant.name}
-          </Text>
-          <Text>
-            {t("accounts.email")}: {accountant.email}
-          </Text>
+          <Table>
+            <Tr>
+              <Th>{t("accounts.name")}:</Th>
+              <Td>{accountant.name}</Td>
+            </Tr>
+            <Tr>
+              <Th>{t("accounts.email")}:</Th>
+              <Td>{accountant.email}</Td>
+            </Tr>
+          </Table>
           <Box>
             <Button
               size="sm"
@@ -72,3 +76,22 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
   );
 };
 export default CurrentAccountant;
+/*
+<Text>
+            {t("accounts.name")}: {accountant.name}
+          </Text>
+          <Text>
+            {t("accounts.email")}: {accountant.email}
+          </Text>
+          <Box>
+            <Button
+              size="sm"
+              colorScheme="red"
+              variant="outline"
+              rounded="full"
+              leftIcon={<BiX />}
+              onClick={handleDelete}>
+              {t("actions.delete")}
+            </Button>
+          </Box>
+*/

@@ -112,7 +112,7 @@ const AccountsTable: FC<Props> = ({ data, searchString }) => {
             <Tr>
               {tableKeys.map(key => (
                 <Th key={key.id}>
-                  <Flex>
+                  <Flex alignItems="center">
                     {key.sortable && (
                       <QuerySortBtn queryKey={key.id.toString()} sortCb={handleSortChange} mr={3} />
                     )}

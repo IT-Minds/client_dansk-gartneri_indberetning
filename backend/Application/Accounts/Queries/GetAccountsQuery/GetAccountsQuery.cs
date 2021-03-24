@@ -30,7 +30,7 @@ namespace Application.Accounts.Queries.GetAccountsQuery
       {
         var viewModel = await _context.Accounts
           .Where(a => request.IncludeDeactivated || a.DeactivationTime == null)
-          .Include(x => x.Users.Where(u => request.IncludeDeactivated || u.DeactivationTime == null))
+          .Include(x => x.Users)
           .ProjectTo<AccountDto>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
 

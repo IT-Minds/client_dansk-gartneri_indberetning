@@ -127,7 +127,7 @@ export class ClientBase {
 
 export interface IAccountClient {
     createAccount(command: CreateAccountCommand): Promise<number>;
-    getAllAccounts(includeDeactivated?: boolean | undefined): Promise<AccountDto[]>;
+    getAllAccounts(): Promise<AccountDto[]>;
     getAccount(): Promise<AccountDto>;
 }
 
@@ -182,12 +182,8 @@ export class AccountClient extends ClientBase implements IAccountClient {
         return Promise.resolve<number>(<any>null);
     }
 
-    getAllAccounts(includeDeactivated?: boolean | undefined): Promise<AccountDto[]> {
-        let url_ = this.baseUrl + "/api/Account?";
-        if (includeDeactivated === null)
-            throw new Error("The parameter 'includeDeactivated' cannot be null.");
-        else if (includeDeactivated !== undefined)
-            url_ += "includeDeactivated=" + encodeURIComponent("" + includeDeactivated) + "&";
+    getAllAccounts(): Promise<AccountDto[]> {
+        let url_ = this.baseUrl + "/api/Account";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{

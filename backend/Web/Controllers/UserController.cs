@@ -44,5 +44,11 @@ namespace Web.Controllers
       await Mediator.Send(command);
       return NoContent();
     }
+
+    [HttpPut("resetPassword")]
+    public async Task<ActionResult<UserTokenDto>> ResetPassword(ResetPasswordCommand command)
+    {
+      return await Mediator.Send(command);
+    }
   }
 }

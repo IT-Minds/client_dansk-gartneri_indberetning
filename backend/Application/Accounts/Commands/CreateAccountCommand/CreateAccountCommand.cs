@@ -93,9 +93,7 @@ namespace Application.Accounts.Commands.CreateAccountCommand
         userEntity.SSOTokenId = tokenId;
         await _context.SaveChangesAsync(cancellationToken);
 
-        var host = _accessor.HttpContext.Request.Host;
-        var baseUrl = "https://" + host;
-        _jobClient.Enqueue(() => _mailService.SendUserActivationEmail(userEntity.Email, token, baseUrl));
+        _jobClient.Enqueue(() => _mailService.SendUserActivationEmail(userEntity.Email, token));
 
         return accountEntity.Id;
       }

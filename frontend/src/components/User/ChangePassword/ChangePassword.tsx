@@ -11,12 +11,14 @@ const ChangePassword: FC = () => {
   const { t } = useLocales();
   const router = useRouter();
 
+  /*
   useEffect(() => {
     const token = router.query.token as string;
     if (token) {
       setAuthToken(token);
     }
   }, [router, router.query]);
+  */
 
   return (
     <BasicLayout maxW="600px">

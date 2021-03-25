@@ -1,14 +1,12 @@
 using System;
 using System.Net;
 using System.Net.Mail;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Common.Options;
 using Application.Mails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using RazorEmail.Services;
 using RazorEmails.Interfaces;
 using RazorEmails.Views.Emails.ActivateUserEmail;
 
@@ -80,14 +78,14 @@ namespace Application.Common.Services
       await SendEmailAsync(mail);
     }
 
-    public async Task SendUserActivationEmail(string email, string token, string baseUrl)
+    public async Task SendUserActivationEmail(string email, string token)
     {
       var activateUserModel = new ActivateUserEmailViewModel()
       {
         Header = "Velkommen til Dansk Gartneri indeberetningssystem",
         Paragraph =
           "Du er blevet inviteret til systemet. Klik herunder for at aktivere din bruger og vælge dit password.",
-        Url = baseUrl + "/api/auth/resetPassword?token=" + token
+        Url = _mailOptions.baseUrl + "/changepassword?token=" + token
       };
       var mail = new MailRequestDto
       {

@@ -33,6 +33,7 @@ namespace Web.Controllers
       return result;
     }
 
+    /*
     [HttpGet("resetPassword")]
     public IActionResult RedirectToResetPassword([FromQuery] string token)
     {
@@ -48,5 +49,6 @@ namespace Web.Controllers
 
       return Redirect(url);
     }
+    */
   }
 }

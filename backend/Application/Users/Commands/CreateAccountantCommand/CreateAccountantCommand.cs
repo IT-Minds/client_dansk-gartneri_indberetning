@@ -39,23 +39,36 @@ namespace Application.Users.Commands.CreateAccountantCommand
 
         if (account.GetActiveAccountant() != null)
         {
-          throw new InvalidOperationException("Cannot assign a new accountant, because the account already has an active accountant. Deactivate the active accountant before assigning a new.");
+          throw new InvalidOperationException("Cannot assign a new accountant, because the account already has an active accountant. Unassign the accountant before assigning a new.");
         }
 
-        if (_context.Admins
-          .Where(e => e.DeactivationTime == null)
-          .Any(e => e.Email == request.AccountantDto.Email))
+        if (_context.Admins.Any(e => e.Email == request.AccountantDto.Email))
         {
           throw new ArgumentException("The provided email address is already used by another user.");
         }
 
-        if (_context.Users
-          .Where(e => e.DeactivationTime == null)
-          .Any(e => e.Email == request.AccountantDto.Email))
+        if (_context.Users.Any(e => e.Email == request.AccountantDto.Email && e.Role != RoleEnum.Accountant))
         {
           throw new ArgumentException("The provided email address is already used by another user.");
         }
 
+        var existingAccountant = await _context.Users.FirstOrDefaultAsync(e => e.Email == request.AccountantDto.Email && e.Role == RoleEnum.Accountant);
+
+        //If the accountant exists
+        //This updates the accountants account. Is it a problem that an accountant can only be assigned to one account at a time?
+        if (existingAccountant != null)
+        {
+          existingAccountant.Account = account;
+          existingAccountant.AccountId = account.Id;
+          existingAccountant.DeactivationTime = null; //If the user was deactivated, activate it again
+
+          await _context.SaveChangesAsync(cancellationToken);
+
+          //TODO: Send email to accountant to notify that he/she has been assigned
+          return existingAccountant.Id;
+        }
+
+        //If the accountant doesn't exists, create a new one
         var accountantEntity = new User
         {
           Name = request.AccountantDto.Name,
@@ -67,7 +80,6 @@ namespace Application.Users.Commands.CreateAccountantCommand
 
         _context.Users.Add(accountantEntity);
         await _context.SaveChangesAsync(cancellationToken);
-
         return accountantEntity.Id;
       }
     }

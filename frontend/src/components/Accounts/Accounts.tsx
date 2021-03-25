@@ -16,9 +16,11 @@ const Accounts: FC = () => {
   const { t } = useLocales();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
+  const [isFetching, setIsFetching] = useState(false);
   const [searchString, setSearchString] = useState<string>("");
 
   const fetchData = useCallback(async () => {
+    setIsFetching(true);
     try {
       const accountClient = await genAccountClient();
       const data = await accountClient.getAllAccounts();
@@ -34,6 +36,7 @@ const Accounts: FC = () => {
     } catch (err) {
       logger.warn("exampleClient.get Error", err);
     }
+    setIsFetching(false);
   }, []);
 
   useEffect(() => {
@@ -45,7 +48,8 @@ const Accounts: FC = () => {
       value={{
         accounts: accounts,
         dispatchAccounts: dispatchAccounts,
-        fetchData: fetchData
+        fetchData: fetchData,
+        isFetching: isFetching
       }}>
       <BasicLayout>
         <Stack spacing={4}>

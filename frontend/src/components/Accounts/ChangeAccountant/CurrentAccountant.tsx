@@ -1,7 +1,19 @@
-import { Box, Button, Stack, Table, Tbody, Td, Text, Th, Tr, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Skeleton,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Tr,
+  useToast
+} from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import React, { FC, useCallback, useContext } from "react";
+import React, { FC, useCallback, useContext, useMemo } from "react";
 import { BiX } from "react-icons/bi";
 import { genUserClient } from "services/backend/apiClients";
 import { IUserAccountIdDto } from "services/backend/nswagts";
@@ -13,7 +25,7 @@ interface Props {
 const CurrentAccountant: FC<Props> = ({ accountant }) => {
   const { t } = useLocales();
   const toast = useToast();
-  const { fetchData } = useContext(AccountsContext);
+  const { fetchData, isFetching } = useContext(AccountsContext);
 
   const handleDelete = useCallback(
     async (e: React.MouseEvent) => {
@@ -43,38 +55,43 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
     [accountant]
   );
 
-  return (
-    <Stack>
-      {accountant ? (
-        <>
-          <Table>
-            <Tbody>
-              <Tr>
-                <Th>{t("accounts.name")}:</Th>
-                <Td>{accountant.name}</Td>
-              </Tr>
-              <Tr>
-                <Th>{t("accounts.email")}:</Th>
-                <Td>{accountant.email}</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-          <Box>
-            <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              rounded="full"
-              leftIcon={<BiX />}
-              onClick={handleDelete}>
-              {t("actions.delete")}
-            </Button>
-          </Box>
-        </>
-      ) : (
-        <Text>{t("accountant.noAccountant")}</Text>
-      )}
-    </Stack>
+  const jsxContent = useMemo(
+    () => (
+      <Stack>
+        {accountant ? (
+          <>
+            <Table>
+              <Tbody>
+                <Tr>
+                  <Th>{t("accounts.name")}:</Th>
+                  <Td>{accountant.name}</Td>
+                </Tr>
+                <Tr>
+                  <Th>{t("accounts.email")}:</Th>
+                  <Td>{accountant.email}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+            <Box>
+              <Button
+                size="sm"
+                colorScheme="red"
+                variant="outline"
+                rounded="full"
+                leftIcon={<BiX />}
+                onClick={handleDelete}>
+                {t("actions.delete")}
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <Text>{t("accountant.noAccountant")}</Text>
+        )}
+      </Stack>
+    ),
+    [accountant]
   );
+
+  return isFetching ? <Skeleton>{jsxContent}</Skeleton> : jsxContent;
 };
 export default CurrentAccountant;

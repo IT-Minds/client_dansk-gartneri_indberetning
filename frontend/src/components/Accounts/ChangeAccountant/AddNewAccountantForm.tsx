@@ -1,6 +1,15 @@
-import { Button, Flex, FormControl, FormLabel, Input, Stack, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Spinner,
+  Stack,
+  useToast
+} from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,
@@ -18,11 +27,14 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
   const { t } = useLocales();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [formDisabled, setFormDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
+      setLoading(true);
 
       const accountantDto = new UserAccountIdDto({
         id: 1,
@@ -58,24 +70,29 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
           position: "bottom-left"
         });
       }
+      setLoading(false);
     },
     [name, email]
   );
 
+  useEffect(() => {
+    setFormDisabled(account.accountant != null || loading);
+  }, [loading, account.accountant]);
+
   return (
     <form onSubmit={handleSubmit}>
       <Stack spacing={5}>
-        <FormControl id="name" isRequired isDisabled={account.accountant != null}>
+        <FormControl id="name" isRequired isDisabled={formDisabled}>
           <FormLabel htmlFor="name">{t("accounts.name")}</FormLabel>
           <Input value={name} onChange={e => setName(e.target.value)}></Input>
         </FormControl>
-        <FormControl id="email" isRequired isDisabled={account.accountant != null}>
+        <FormControl id="email" isRequired isDisabled={formDisabled}>
           <FormLabel htmlFor="email">{t("accounts.email")}</FormLabel>
           <Input type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
         </FormControl>
         <Flex justifyContent="flex-end" w="100%" mt={5}>
-          <Button colorScheme="green" type="submit" disabled={account.accountant != null}>
-            {t("common.add")}
+          <Button colorScheme="green" type="submit" disabled={formDisabled}>
+            {loading ? <Spinner /> : t("common.add")}
           </Button>
         </Flex>
       </Stack>

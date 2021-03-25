@@ -6,6 +6,7 @@ type ContextType = {
   accounts: IAccountDto[];
   dispatchAccounts: Dispatch<AllListActions<IAccountDto>>;
   fetchData: () => Promise<void>;
+  isFetching: boolean;
 };
 
 export const AccountsContext = createContext<ContextType>(null);

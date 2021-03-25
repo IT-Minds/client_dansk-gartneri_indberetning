@@ -42,7 +42,8 @@ export const table: Locale = {
     CVR_getFromRegistry: "Hent info fra CVR-registret",
     CVR_apiErrorTitle: "CVR ikke fundet",
     CVR_apiErrorDescription: "Kunne ikke finde CVR-nummer i registret",
-    accountant: "Revisor"
+    accountant: "Revisor",
+    fetching: "Henter kunder..."
   },
 
   login: {
@@ -86,7 +87,6 @@ export const table: Locale = {
     deleteErrorTitle: "Deaktivering mislykket",
     deleteErrorText: "Der skete en fejl. Prøv eventuelt igen.",
     alreadyAssignedTitle: "Fejl",
-    alreadyAssignedText:
-      "Denne mail bruges af en revisor, der allerede er tilknyttet en konto. Fjern denne, før du "
+    alreadyAssignedText: "Denne mail bruges af en revisor, der allerede er tilknyttet en konto."
   }
 };

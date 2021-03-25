@@ -63,7 +63,7 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
         });
         onSubmit(true);
       } catch {
-        if (accounts.some(a => a.email == email)) {
+        if (accounts.some(a => a.accountant?.email == email)) {
           toast({
             title: t("accountant.alreadyAssignedTitle"),
             description: t("accountant.alreadyAssignedText"),

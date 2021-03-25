@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack, Stack } from "@chakra-ui/react";
+import { Box, Flex, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
@@ -62,6 +62,14 @@ const Accounts: FC = () => {
               <NewAccountModal onSubmit={fetchData} />
             </HStack>
           </Flex>
+          <HStack h="20px" alignItems="center">
+            {isFetching && (
+              <>
+                <Spinner size="sm" />
+                <Text>{t("accounts.fetching")}</Text>
+              </>
+            )}
+          </HStack>
           <AccountsTable data={accounts} searchString={searchString} fetchData={fetchData} />
         </Stack>
       </BasicLayout>

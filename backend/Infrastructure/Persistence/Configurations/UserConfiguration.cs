@@ -13,7 +13,8 @@ namespace Infrastructure.Persistence.Configurations
       builder.Property(e => e.Email)
         .IsRequired();
 
-      builder.HasIndex(e => e.Email);
+      builder.HasIndex(e => e.Email)
+        .IsUnique();
 
       builder.Property(e => e.Role)
         .IsRequired();

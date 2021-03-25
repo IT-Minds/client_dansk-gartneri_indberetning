@@ -41,6 +41,7 @@ const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
       const userClient = await genUserClient();
       try {
         await userClient.updatePassword(
+          activeUser.id,
           new UpdatePasswordCommand({
             newPassword: password
           })

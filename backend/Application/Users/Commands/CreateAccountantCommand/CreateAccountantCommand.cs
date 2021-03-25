@@ -51,7 +51,9 @@ namespace Application.Users.Commands.CreateAccountantCommand
           throw new ArgumentException("The provided email address is already used by another user.");
         }
 
-        var existingAccountant = await _context.Users.FirstOrDefaultAsync(e => e.Email == request.AccountantDto.Email && e.Role == RoleEnum.Accountant);
+        var existingAccountant = await _context.Users
+          .Include(x => x.Account)
+          .FirstOrDefaultAsync(e => e.Email == request.AccountantDto.Email && e.Role == RoleEnum.Accountant);
 
         //If the accountant exists
         if (existingAccountant != null)

@@ -84,6 +84,9 @@ export const table: Locale = {
     deleteSuccessTitle: "Revisor fjernet",
     deleteSuccessText: "Revisoren er nu fjernet og deaktiveret.",
     deleteErrorTitle: "Deaktivering mislykket",
-    deleteErrorText: "Der skete en fejl. Prøv eventuelt igen."
+    deleteErrorText: "Der skete en fejl. Prøv eventuelt igen.",
+    alreadyAssignedTitle: "Fejl",
+    alreadyAssignedText:
+      "Denne mail bruges af en revisor, der allerede er tilknyttet en konto. Fjern denne, før du "
   }
 };

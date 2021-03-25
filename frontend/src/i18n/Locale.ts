@@ -83,5 +83,7 @@ export interface Locale {
     deleteSuccessText: string;
     deleteErrorTitle: string;
     deleteErrorText: string;
+    alreadyAssignedTitle: string;
+    alreadyAssignedText: string;
   };
 }

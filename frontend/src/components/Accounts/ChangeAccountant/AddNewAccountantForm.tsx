@@ -8,8 +8,9 @@ import {
   Stack,
   useToast
 } from "@chakra-ui/react";
+import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { genUserClient } from "services/backend/apiClients";
 import {
   CreateAccountantCommand,
@@ -29,6 +30,7 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
   const [email, setEmail] = useState("");
   const [formDisabled, setFormDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { accounts } = useContext(AccountsContext);
   const toast = useToast();
 
   const handleSubmit = useCallback(
@@ -61,18 +63,29 @@ const AddNewAccountantForm: FC<Props> = ({ account, onSubmit }) => {
         });
         onSubmit(true);
       } catch {
-        toast({
-          title: t("accountant.addErrorTitle"),
-          description: t("accountant.addErrorText"),
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom-left"
-        });
+        if (accounts.some(a => a.email == email)) {
+          toast({
+            title: t("accountant.alreadyAssignedTitle"),
+            description: t("accountant.alreadyAssignedText"),
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom-left"
+          });
+        } else {
+          toast({
+            title: t("accountant.addErrorTitle"),
+            description: t("accountant.addErrorText"),
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom-left"
+          });
+        }
       }
       setLoading(false);
     },
-    [name, email]
+    [name, email, accounts]
   );
 
   useEffect(() => {

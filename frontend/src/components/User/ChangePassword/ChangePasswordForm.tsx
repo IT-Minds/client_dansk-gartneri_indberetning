@@ -14,11 +14,7 @@ import { pwValidationResult, usePasswordValidation } from "hooks/usePasswordVali
 import { useRouter } from "next/router";
 import { FC, useCallback, useContext, useState } from "react";
 import { genUserClient } from "services/backend/apiClients";
-import {
-  IUserTokenDto,
-  ResetPasswordCommand,
-  UpdatePasswordCommand
-} from "services/backend/nswagts";
+import { ResetPasswordCommand, UpdatePasswordCommand } from "services/backend/nswagts";
 
 interface Props {
   onSubmit: (success: boolean) => void;

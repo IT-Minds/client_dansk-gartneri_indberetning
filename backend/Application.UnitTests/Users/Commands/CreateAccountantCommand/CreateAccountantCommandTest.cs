@@ -99,5 +99,24 @@ namespace Application.UnitTests.Users.Commands.CreateAccountant
       Func<Task> action = async () => await handler.Handle(command, CancellationToken.None);
       action.Should().Throw<InvalidOperationException>();
     }
+
+    [Fact]
+    public async Task Handle_GivenAccountantHasAccountThrowException()
+    {
+      var command = new CreateAccountantCommand
+      {
+        AccountantDto = new UserAccountIdDto()
+        {
+          Name = "test name",
+          Email = "test1accountant@test.dk", //Matches an existing accountant in ApplicationDbContextFactory
+          AccountId = 2
+        }
+      };
+
+      var handler = new CreateAccountantCommand.CreateAccountantCommandHandler(Context);
+
+      Func<Task> action = async () => await handler.Handle(command, CancellationToken.None);
+      action.Should().Throw<InvalidOperationException>();
+    }
   }
 }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Common.Security;
-using AutoMapper;
 using Domain.Entities;
 using Domain.EntityExtensions;
 using Domain.Enums;
@@ -55,16 +54,21 @@ namespace Application.Users.Commands.CreateAccountantCommand
         var existingAccountant = await _context.Users.FirstOrDefaultAsync(e => e.Email == request.AccountantDto.Email && e.Role == RoleEnum.Accountant);
 
         //If the accountant exists
-        //This updates the accountants account. Is it a problem that an accountant can only be assigned to one account at a time?
         if (existingAccountant != null)
         {
+          if (existingAccountant.DeactivationTime == null && existingAccountant.Account != null)
+          {
+            throw new InvalidOperationException(
+              "Cannot assign the given accountant to a new account, as the accountant is already assigned another account. Unassign the accountant before assigning.");
+          }
+
           existingAccountant.Account = account;
           existingAccountant.AccountId = account.Id;
           existingAccountant.DeactivationTime = null; //If the user was deactivated, activate it again
 
           await _context.SaveChangesAsync(cancellationToken);
 
-          //TODO: Send email to accountant to notify that he/she has been assigned
+          //TODO: Send email to accountant to notify that he/she has been assigned a new account
           return existingAccountant.Id;
         }
 
@@ -80,6 +84,8 @@ namespace Application.Users.Commands.CreateAccountantCommand
 
         _context.Users.Add(accountantEntity);
         await _context.SaveChangesAsync(cancellationToken);
+
+        //TODO: Send email to accountant
         return accountantEntity.Id;
       }
     }

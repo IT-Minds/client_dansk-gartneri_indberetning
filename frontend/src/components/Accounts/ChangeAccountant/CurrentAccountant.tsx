@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import React, { FC, useCallback, useContext, useMemo } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import { BiX } from "react-icons/bi";
 import { genUserClient } from "services/backend/apiClients";
 import { IUserAccountIdDto } from "services/backend/nswagts";
@@ -55,8 +55,8 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
     [accountant]
   );
 
-  const jsxContent = useMemo(
-    () => (
+  return (
+    <Skeleton isLoaded={!isFetching}>
       <Stack>
         {accountant ? (
           <>
@@ -88,10 +88,7 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
           <Text>{t("accountant.noAccountant")}</Text>
         )}
       </Stack>
-    ),
-    [accountant]
-  );
-
-  return isFetching ? <Skeleton>{jsxContent}</Skeleton> : jsxContent;
+    </Skeleton>
+  )
 };
 export default CurrentAccountant;

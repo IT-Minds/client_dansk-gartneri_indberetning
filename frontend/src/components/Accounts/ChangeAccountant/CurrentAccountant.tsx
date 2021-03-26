@@ -89,6 +89,6 @@ const CurrentAccountant: FC<Props> = ({ accountant }) => {
         )}
       </Stack>
     </Skeleton>
-  )
+  );
 };
 export default CurrentAccountant;

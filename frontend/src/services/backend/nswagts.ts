@@ -693,6 +693,7 @@ export class MailClient extends ClientBase implements IMailClient {
 
 export interface IUserClient {
     getAllAdmins(): Promise<UserDto[]>;
+    createAndAddAccountant(command: CreateAccountantCommand): Promise<number>;
     updateUser(id: number, command: UpdateUserCommand): Promise<FileResponse>;
     deactivateUser(id: number): Promise<FileResponse>;
     updatePassword(command: UpdatePasswordCommand): Promise<FileResponse>;
@@ -750,8 +751,48 @@ export class UserClient extends ClientBase implements IUserClient {
         return Promise.resolve<UserDto[]>(<any>null);
     }
 
+    createAndAddAccountant(command: CreateAccountantCommand): Promise<number> {
+        let url_ = this.baseUrl + "/api/User/accountant";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processCreateAndAddAccountant(_response));
+        });
+    }
+
+    protected processCreateAndAddAccountant(response: Response): Promise<number> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<number>(<any>null);
+    }
+
     updateUser(id: number, command: UpdateUserCommand): Promise<FileResponse> {
-        let url_ = this.baseUrl + "/api/User/{id}/changePassword";
+        let url_ = this.baseUrl + "/api/User/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1610,6 +1651,43 @@ export class SendTestMailCommand implements ISendTestMailCommand {
 }
 
 export interface ISendTestMailCommand {
+}
+
+export class CreateAccountantCommand implements ICreateAccountantCommand {
+    accountantDto?: UserAccountIdDto | null;
+
+    constructor(data?: ICreateAccountantCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.accountantDto = data.accountantDto && !(<any>data.accountantDto).toJSON ? new UserAccountIdDto(data.accountantDto) : <UserAccountIdDto>this.accountantDto; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.accountantDto = _data["accountantDto"] ? UserAccountIdDto.fromJS(_data["accountantDto"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CreateAccountantCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateAccountantCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountantDto"] = this.accountantDto ? this.accountantDto.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface ICreateAccountantCommand {
+    accountantDto?: IUserAccountIdDto | null;
 }
 
 export class UpdateUserCommand implements IUpdateUserCommand {

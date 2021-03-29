@@ -10,6 +10,5 @@ namespace Application.Common.Options
     public string Host { get; set; }
     public int Port { get; set; }
     public string baseUrl { get; set; }
-    public string DevelopmentRecipient { get; set; }
   }
 }

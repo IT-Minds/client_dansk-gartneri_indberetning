@@ -70,7 +70,7 @@ namespace Application.Common.Services
       };
       var mail = new MailRequestDto
       {
-        ToEmail = _mailOptions.DevelopmentRecipient,
+        ToEmail = _mailOptions.Mail,
         Subject = "Test mail from Dansk Gartneri",
         Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
       };
@@ -89,7 +89,7 @@ namespace Application.Common.Services
       };
       var mail = new MailRequestDto
       {
-        ToEmail = _mailOptions.DevelopmentRecipient ?? email,
+        ToEmail = email,
         Subject = "Velkommen til Dansk Gartneri indberetningssystem",
         Body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/Emails/ActivateUserEmail/ActivateUserEmail.cshtml", activateUserModel)
       };

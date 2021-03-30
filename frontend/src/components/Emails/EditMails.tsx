@@ -16,8 +16,8 @@ import {
 } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
-import ExtendedMailEditor from "./Editor/ExtendedMailEditor";
-import PreviewContainer from "./Editor/PreviewContainer";
+import ExtendedMailEditor from "./ExtendedMailEditor";
+import PreviewModal from "./PreviewModal";
 
 const EditEmails: FC = () => {
   const toast = useToast();
@@ -37,8 +37,6 @@ const EditEmails: FC = () => {
       ctaButtonText: ""
     })
   );
-  const [htmlResponse, setHtmlResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const fetchData = useCallback(async () => {
@@ -65,26 +63,6 @@ const EditEmails: FC = () => {
     }
     asyncInnerEffect();
   }, [fetchData]);
-
-  const handlePreview = useCallback(
-    async (e: React.MouseEvent) => {
-      setIsLoading(true);
-      console.log(currentMail);
-      try {
-        const mailClient = await genMailClient();
-        const res = await mailClient.generatePreview(
-          new GeneratePreviewMailCommand({
-            emailDto: currentMail
-          })
-        );
-        setHtmlResponse(res);
-      } catch (e) {
-        console.error(e);
-      }
-      setIsLoading(false);
-    },
-    [currentMail]
-  );
 
   const handleSave = useCallback(
     async (e: React.MouseEvent) => {
@@ -125,7 +103,7 @@ const EditEmails: FC = () => {
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const mail = emails.find(m => m.id == Number(e.target.value));
       if (!mail) return;
-      if (mail.id != currentMail.id) setHtmlResponse("");
+      //if (mail.id != currentMail.id) setHtmlResponse("");
       setCurrentMail(mail);
     },
     [emails]
@@ -144,9 +122,7 @@ const EditEmails: FC = () => {
             ))}
           </Select>
           <HStack>
-            <Button w="max-content" minW="100px" onClick={handlePreview}>
-              {isLoading ? <Spinner /> : t("mailEditor.preview")}
-            </Button>
+            <PreviewModal currentMail={currentMail} />
             <Button colorScheme="green" w="max-content" minW="100px" onClick={handleSave}>
               {isSaving ? <Spinner /> : "Gem"}
             </Button>
@@ -156,13 +132,17 @@ const EditEmails: FC = () => {
         <Stack>
           <ExtendedMailEditor
             variant="endCTAButton"
-            state={currentMail}
-            setState={state => setCurrentMail(state)}
+            email={currentMail}
+            setEmail={email => setCurrentMail(email)}
           />
-          <PreviewContainer html={htmlResponse} />
         </Stack>
       </Stack>
     </BasicLayout>
   );
 };
 export default EditEmails;
+/*
+<Button w="max-content" minW="100px" onClick={handlePreview}>
+              {isLoading ? <Spinner /> : t("mailEditor.preview")}
+            </Button>
+*/

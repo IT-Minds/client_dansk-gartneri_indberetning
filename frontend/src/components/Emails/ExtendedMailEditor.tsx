@@ -1,29 +1,46 @@
-import {
-  Box,
-  Divider,
-  FormControl,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputLeftElement,
-  Stack,
-  Text,
-  Textarea,
-  Tooltip
-} from "@chakra-ui/react";
+import { FormControl, Input, InputGroup, InputLeftAddon, Stack, Tooltip } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC } from "react";
 import { IEmailDto } from "services/backend/nswagts";
 
+import SectionInput from "./SectionInput";
+
 interface Props {
-  state: IEmailDto;
-  setState: (state: IEmailDto) => void;
+  email: IEmailDto;
+  setEmail: (state: IEmailDto) => void;
   variant?: "endCTAButton";
 }
 
-const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
+export type Section = {
+  h: string;
+  p: string;
+  setH: (h: string) => void;
+  setP: (p: string) => void;
+};
+
+const ExtendedMailEditor: FC<Props> = ({ email, setEmail, variant }) => {
   const { t } = useLocales();
+
+  const sections: Section[] = [
+    {
+      h: email.heading1,
+      p: email.paragraph1,
+      setH: h => setEmail({ ...email, ...{ heading1: h } }),
+      setP: p => setEmail({ ...email, ...{ paragraph1: p } })
+    },
+    {
+      h: email.heading2,
+      p: email.paragraph2,
+      setH: h => setEmail({ ...email, ...{ heading2: h } }),
+      setP: p => setEmail({ ...email, ...{ paragraph2: p } })
+    },
+    {
+      h: email.heading3,
+      p: email.paragraph3,
+      setH: h => setEmail({ ...email, ...{ heading3: h } }),
+      setP: p => setEmail({ ...email, ...{ paragraph3: p } })
+    }
+  ];
 
   return (
     <Stack>
@@ -32,8 +49,8 @@ const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
           <InputGroup>
             <InputLeftAddon w="110px">{t("mailEditor.name")}</InputLeftAddon>
             <Input
-              value={state.name}
-              onChange={e => setState({ ...state, ...{ name: e.target.value } })}></Input>{" "}
+              value={email.name}
+              onChange={e => setEmail({ ...email, ...{ name: e.target.value } })}></Input>{" "}
           </InputGroup>
         </FormControl>
       </Tooltip>
@@ -42,8 +59,8 @@ const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
           <InputGroup>
             <InputLeftAddon w="110px">{t("mailEditor.subject")}</InputLeftAddon>
             <Input
-              value={state.subject}
-              onChange={e => setState({ ...state, ...{ title: e.target.value } })}></Input>
+              value={email.subject}
+              onChange={e => setEmail({ ...email, ...{ title: e.target.value } })}></Input>
           </InputGroup>
         </FormControl>
       </Tooltip>
@@ -53,31 +70,17 @@ const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
             <InputGroup>
               <InputLeftAddon w="110px">{t("mailEditor.ctaButtonInputLabel")}</InputLeftAddon>
               <Input
-                value={state.ctaButtonText}
+                value={email.ctaButtonText}
                 onChange={e =>
-                  setState({ ...state, ...{ ctaButtonText: e.target.value } })
+                  setEmail({ ...email, ...{ ctaButtonText: e.target.value } })
                 }></Input>
             </InputGroup>
           </FormControl>
         </Tooltip>
       )}
-      <Box shadow="md" p="20px">
-        <Heading size="md" color="gray.300" float="right">
-          Afsnit 1
-        </Heading>
-        <Input
-          variant="flushed"
-          value={state.heading1}
-          fontWeight="bold"
-          fontSize="1.3em"
-          onChange={e => setState({ ...state, ...{ heading1: e.target.value } })}
-        />
-        <Textarea
-          variant="unstyled"
-          value={state.paragraph1}
-          onChange={e => setState({ ...state, ...{ paragraph1: e.target.value } })}
-        />
-      </Box>
+      {sections.map((section, i) => (
+        <SectionInput key={i} section={section} index={i + 1} />
+      ))}
     </Stack>
   );
 };

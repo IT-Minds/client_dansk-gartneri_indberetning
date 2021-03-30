@@ -16,15 +16,13 @@ namespace Application.Mails.Commands.SendResetPasswordMailCommand
     public class SendResetPasswordCommandHandler : IRequestHandler<SendResetPasswordCommand>
     {
       private readonly IApplicationDbContext _context;
-      private readonly IHttpContextAccessor _accessor;
       private readonly IMailService _mailService;
       private readonly ITokenService _tokenService;
 
-      public SendResetPasswordCommandHandler(IApplicationDbContext context, IMailService mailService, IHttpContextAccessor accessor, ITokenService tokenService)
+      public SendResetPasswordCommandHandler(IApplicationDbContext context, IMailService mailService, ITokenService tokenService)
       {
         _context = context;
         _mailService = mailService;
-        _accessor = accessor;
         _tokenService = tokenService;
       }
 
@@ -47,8 +45,6 @@ namespace Application.Mails.Commands.SendResetPasswordMailCommand
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        var host = _accessor.HttpContext.Request.Host;
-        var baseUrl = "https://" + host;
         BackgroundJob.Enqueue(() => _mailService.SendForgotPasswordEmail(request.Email, token));
 
         return Unit.Value;

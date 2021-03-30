@@ -1,14 +1,20 @@
-import { FormControl, Input, InputGroup, InputLeftAddon, Stack, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  FormControl,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  Stack,
+  Text,
+  Textarea,
+  Tooltip
+} from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC } from "react";
 import { IEmailDto } from "services/backend/nswagts";
-
-import EmailSectionAccordion from "./EmailSectionAccordion/EmailSectionAccordion";
-
-export type EditorState = {
-  editorContent: string;
-  ctaButton?: string;
-};
 
 interface Props {
   state: IEmailDto;
@@ -55,8 +61,60 @@ const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
           </FormControl>
         </Tooltip>
       )}
-      <EmailSectionAccordion email={state} setEmail={setState} />
+      <Box shadow="md" p="20px">
+        <Heading size="md" color="gray.300" float="right">
+          Afsnit 1
+        </Heading>
+        <Input
+          variant="flushed"
+          value={state.heading1}
+          fontWeight="bold"
+          fontSize="1.3em"
+          onChange={e => setState({ ...state, ...{ heading1: e.target.value } })}
+        />
+        <Textarea
+          variant="unstyled"
+          value={state.paragraph1}
+          onChange={e => setState({ ...state, ...{ paragraph1: e.target.value } })}
+        />
+      </Box>
     </Stack>
   );
 };
 export default ExtendedMailEditor;
+/*
+ <InputGroup>
+        <InputLeftAddon>Overskrift 1</InputLeftAddon>
+        <Input
+          value={state.heading1}
+          onChange={e => setState({ ...state, ...{ heading1: e.target.value } })}
+        />
+      </InputGroup>
+      <Textarea
+        value={state.paragraph1}
+        onChange={e => setState({ ...state, ...{ paragraph1: e.target.value } })}
+      />
+      <InputGroup>
+        <InputLeftAddon>Overskrift 2</InputLeftAddon>
+        <Input
+          value={state.heading2}
+          onChange={e => setState({ ...state, ...{ heading2: e.target.value } })}
+        />
+      </InputGroup>
+      <Textarea
+        value={state.paragraph2}
+        onChange={e => setState({ ...state, ...{ paragraph2: e.target.value } })}
+      />
+      <InputGroup>
+        <InputLeftAddon>Overskrift 1</InputLeftAddon>
+        <Input
+          value={state.heading3}
+          onChange={e => setState({ ...state, ...{ heading3: e.target.value } })}
+        />
+      </InputGroup>
+      <Textarea
+        value={state.paragraph3}
+        onChange={e => setState({ ...state, ...{ paragraph3: e.target.value } })}
+      />
+
+*/

@@ -1,10 +1,7 @@
 import { FormControl, Input, InputGroup, InputLeftAddon, Stack, Tooltip } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import dynamic from "next/dynamic";
 import { FC } from "react";
 import { IEmailDto } from "services/backend/nswagts";
-
-const Editor = dynamic(() => import("./Editor"), { ssr: false });
 
 export type EditorState = {
   editorContent: string;

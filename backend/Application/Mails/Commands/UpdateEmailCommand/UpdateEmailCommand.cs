@@ -38,7 +38,12 @@ namespace Application.Mails.Commands.UpdateEmailCommand
 
         emailEntity.Name = request.NewEmail.Name;
         emailEntity.Subject = request.NewEmail.Subject;
-        emailEntity.HtmlContent = request.NewEmail.HtmlContent;
+        emailEntity.Heading1 = request.NewEmail.Heading1;
+        emailEntity.Paragraph1 = request.NewEmail.Paragraph1;
+        emailEntity.Heading2 = request.NewEmail.Heading2;
+        emailEntity.Paragraph2 = request.NewEmail.Paragraph2;
+        emailEntity.Heading3 = request.NewEmail.Heading3;
+        emailEntity.Paragraph3 = request.NewEmail.Paragraph3;
         emailEntity.CtaButtonText = request.NewEmail.CtaButtonText;
 
         _context.Emails.Update(emailEntity);

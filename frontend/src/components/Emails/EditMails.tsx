@@ -28,7 +28,12 @@ const EditEmails: FC = () => {
       id: 0,
       name: "",
       subject: "",
-      htmlContent: "",
+      heading1: "",
+      heading2: "",
+      heading3: "",
+      paragraph1: "",
+      paragraph2: "",
+      paragraph3: "",
       ctaButtonText: ""
     })
   );

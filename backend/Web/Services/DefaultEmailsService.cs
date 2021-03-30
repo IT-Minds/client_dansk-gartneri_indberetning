@@ -29,7 +29,12 @@ namespace Web.Services
           {
             Name = email.Name,
             Subject = email.Subject,
-            HtmlContent = email.HtmlContent,
+            Heading1 = email.Heading1,
+            Paragraph1 = email.Paragraph1,
+            Heading2 = email.Heading2,
+            Paragraph2 = email.Paragraph2,
+            Heading3 = email.Heading3,
+            Paragraph3 = email.Paragraph3,
             CtaButtonText = email.CtaButtonText
           };
           _context.Emails.Add(emailEntity);

@@ -1790,7 +1790,12 @@ export class EmailDto implements IEmailDto {
     id?: number;
     name?: string | null;
     subject?: string | null;
-    htmlContent?: string | null;
+    heading1?: string | null;
+    paragraph1?: string | null;
+    heading2?: string | null;
+    paragraph2?: string | null;
+    heading3?: string | null;
+    paragraph3?: string | null;
     ctaButtonText?: string | null;
 
     constructor(data?: IEmailDto) {
@@ -1807,7 +1812,12 @@ export class EmailDto implements IEmailDto {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
             this.subject = _data["subject"] !== undefined ? _data["subject"] : <any>null;
-            this.htmlContent = _data["htmlContent"] !== undefined ? _data["htmlContent"] : <any>null;
+            this.heading1 = _data["heading1"] !== undefined ? _data["heading1"] : <any>null;
+            this.paragraph1 = _data["paragraph1"] !== undefined ? _data["paragraph1"] : <any>null;
+            this.heading2 = _data["heading2"] !== undefined ? _data["heading2"] : <any>null;
+            this.paragraph2 = _data["paragraph2"] !== undefined ? _data["paragraph2"] : <any>null;
+            this.heading3 = _data["heading3"] !== undefined ? _data["heading3"] : <any>null;
+            this.paragraph3 = _data["paragraph3"] !== undefined ? _data["paragraph3"] : <any>null;
             this.ctaButtonText = _data["ctaButtonText"] !== undefined ? _data["ctaButtonText"] : <any>null;
         }
     }
@@ -1824,7 +1834,12 @@ export class EmailDto implements IEmailDto {
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["subject"] = this.subject !== undefined ? this.subject : <any>null;
-        data["htmlContent"] = this.htmlContent !== undefined ? this.htmlContent : <any>null;
+        data["heading1"] = this.heading1 !== undefined ? this.heading1 : <any>null;
+        data["paragraph1"] = this.paragraph1 !== undefined ? this.paragraph1 : <any>null;
+        data["heading2"] = this.heading2 !== undefined ? this.heading2 : <any>null;
+        data["paragraph2"] = this.paragraph2 !== undefined ? this.paragraph2 : <any>null;
+        data["heading3"] = this.heading3 !== undefined ? this.heading3 : <any>null;
+        data["paragraph3"] = this.paragraph3 !== undefined ? this.paragraph3 : <any>null;
         data["ctaButtonText"] = this.ctaButtonText !== undefined ? this.ctaButtonText : <any>null;
         return data; 
     }
@@ -1834,7 +1849,12 @@ export interface IEmailDto {
     id?: number;
     name?: string | null;
     subject?: string | null;
-    htmlContent?: string | null;
+    heading1?: string | null;
+    paragraph1?: string | null;
+    heading2?: string | null;
+    paragraph2?: string | null;
+    heading3?: string | null;
+    paragraph3?: string | null;
     ctaButtonText?: string | null;
 }
 

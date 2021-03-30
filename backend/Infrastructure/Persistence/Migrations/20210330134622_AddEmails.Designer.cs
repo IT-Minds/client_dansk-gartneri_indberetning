@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210329105147_AddEmails")]
+    [Migration("20210330134622_AddEmails")]
     partial class AddEmails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,7 +161,13 @@ namespace Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("HtmlContent")
+                    b.Property<string>("Heading1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Heading2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Heading3")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("LastModified")
@@ -173,6 +179,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Paragraph1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Paragraph2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Paragraph3")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
                         .HasMaxLength(200)

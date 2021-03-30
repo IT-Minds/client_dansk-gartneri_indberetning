@@ -65,7 +65,12 @@ namespace Application.Common.Services
     {
       var emailModel = new CtaButtonEmailViewModel()
       {
-        HtmlContent = "<h2>Lorem</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.</p>",
+        Heading1 = "Lorem",
+        paragraph1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
+        Heading2 = "Lorem",
+        paragraph2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
+        Heading3 = "Lorem",
+        paragraph3 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.",
         CtaButtonText = "Lorem ipsum",
         CtaButtonUrl = "http://danskgartneri.dk"
       };
@@ -85,7 +90,12 @@ namespace Application.Common.Services
 
       var emailModel = new CtaButtonEmailViewModel()
       {
-        HtmlContent = emailEntity.HtmlContent,
+        Heading1 = emailEntity.Heading1,
+        paragraph1 = emailEntity.Paragraph1,
+        Heading2 = emailEntity.Heading2,
+        paragraph2 = emailEntity.Paragraph2,
+        Heading3 = emailEntity.Heading3,
+        paragraph3 = emailEntity.Paragraph3,
         CtaButtonText = emailEntity.CtaButtonText,
         CtaButtonUrl = _mailOptions.baseUrl + "/changepassword?token=" + token
       };
@@ -104,7 +114,12 @@ namespace Application.Common.Services
 
       var emailModel = new CtaButtonEmailViewModel()
       {
-        HtmlContent = emailEntity.HtmlContent,
+        Heading1 = emailEntity.Heading1,
+        paragraph1 = emailEntity.Paragraph1,
+        Heading2 = emailEntity.Heading2,
+        paragraph2 = emailEntity.Paragraph2,
+        Heading3 = emailEntity.Heading3,
+        paragraph3 = emailEntity.Paragraph3,
         CtaButtonText = emailEntity.CtaButtonText,
         CtaButtonUrl = _mailOptions.baseUrl + "/changepassword?token=" + token
       };
@@ -121,7 +136,12 @@ namespace Application.Common.Services
     {
       var emailModel = new CtaButtonEmailViewModel()
       {
-        HtmlContent = emailDto.HtmlContent,
+        Heading1 = emailDto.Heading1,
+        paragraph1 = emailDto.Paragraph1,
+        Heading2 = emailDto.Heading2,
+        paragraph2 = emailDto.Paragraph2,
+        Heading3 = emailDto.Heading3,
+        paragraph3 = emailDto.Paragraph3,
         CtaButtonText = emailDto.CtaButtonText,
       };
 

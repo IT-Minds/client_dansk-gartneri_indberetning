@@ -3,6 +3,8 @@ import { useLocales } from "hooks/useLocales";
 import { FC } from "react";
 import { IEmailDto } from "services/backend/nswagts";
 
+import EmailSectionAccordion from "./EmailSectionAccordion/EmailSectionAccordion";
+
 export type EditorState = {
   editorContent: string;
   ctaButton?: string;
@@ -53,10 +55,7 @@ const ExtendedMailEditor: FC<Props> = ({ state, setState, variant }) => {
           </FormControl>
         </Tooltip>
       )}
-      <Editor
-        content={state.htmlContent}
-        setContent={content => setState({ ...state, ...{ htmlContent: content } })}
-      />
+      <EmailSectionAccordion email={state} setEmail={setState} />
     </Stack>
   );
 };

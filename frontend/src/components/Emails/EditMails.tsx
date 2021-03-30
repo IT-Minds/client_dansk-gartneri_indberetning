@@ -8,15 +8,10 @@ import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
 import { genMailClient } from "services/backend/apiClients";
-import {
-  EmailDto,
-  GeneratePreviewMailCommand,
-  IEmailDto,
-  UpdateEmailCommand
-} from "services/backend/nswagts";
+import { EmailDto, IEmailDto, UpdateEmailCommand } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
-import ExtendedMailEditor from "./ExtendedMailEditor";
+import EditEmailForm from "./EditEmailForm";
 import PreviewModal from "./PreviewModal";
 
 const EditEmails: FC = () => {
@@ -103,7 +98,6 @@ const EditEmails: FC = () => {
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const mail = emails.find(m => m.id == Number(e.target.value));
       if (!mail) return;
-      //if (mail.id != currentMail.id) setHtmlResponse("");
       setCurrentMail(mail);
     },
     [emails]
@@ -130,7 +124,7 @@ const EditEmails: FC = () => {
         </Flex>
         <Divider mb={5} />
         <Stack>
-          <ExtendedMailEditor
+          <EditEmailForm
             variant="endCTAButton"
             email={currentMail}
             setEmail={email => setCurrentMail(email)}
@@ -141,8 +135,3 @@ const EditEmails: FC = () => {
   );
 };
 export default EditEmails;
-/*
-<Button w="max-content" minW="100px" onClick={handlePreview}>
-              {isLoading ? <Spinner /> : t("mailEditor.preview")}
-            </Button>
-*/

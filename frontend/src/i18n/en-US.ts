@@ -105,12 +105,13 @@ export const table: Locale = {
     editEmails: "Edit emails",
     name: "Email name:",
     subject: "Subject:",
-    paragraph: "Paragraph",
-    heading: "Heading",
     ctaButtonInputLabel: "Button:",
     preview: "Preview",
     nameTooltip: "Name of the mail. Is not visible to the recipient.",
     subjectTooltip: "Subject of the mail, as it is visible to the recipient.",
-    ctaTooltip: "Text on the button at the bottom of th email."
+    ctaTooltip: "Text on the button at the bottom of th email.",
+    section: "Section",
+    headingPlaceholder: "Heading here",
+    paragraphPlaceholder: "Paragraph here"
   }
 };

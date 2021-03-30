@@ -18,7 +18,7 @@ export type Section = {
   setP: (p: string) => void;
 };
 
-const ExtendedMailEditor: FC<Props> = ({ email, setEmail, variant }) => {
+const EditEmailForm: FC<Props> = ({ email, setEmail, variant }) => {
   const { t } = useLocales();
 
   const sections: Section[] = [
@@ -84,40 +84,4 @@ const ExtendedMailEditor: FC<Props> = ({ email, setEmail, variant }) => {
     </Stack>
   );
 };
-export default ExtendedMailEditor;
-/*
- <InputGroup>
-        <InputLeftAddon>Overskrift 1</InputLeftAddon>
-        <Input
-          value={state.heading1}
-          onChange={e => setState({ ...state, ...{ heading1: e.target.value } })}
-        />
-      </InputGroup>
-      <Textarea
-        value={state.paragraph1}
-        onChange={e => setState({ ...state, ...{ paragraph1: e.target.value } })}
-      />
-      <InputGroup>
-        <InputLeftAddon>Overskrift 2</InputLeftAddon>
-        <Input
-          value={state.heading2}
-          onChange={e => setState({ ...state, ...{ heading2: e.target.value } })}
-        />
-      </InputGroup>
-      <Textarea
-        value={state.paragraph2}
-        onChange={e => setState({ ...state, ...{ paragraph2: e.target.value } })}
-      />
-      <InputGroup>
-        <InputLeftAddon>Overskrift 1</InputLeftAddon>
-        <Input
-          value={state.heading3}
-          onChange={e => setState({ ...state, ...{ heading3: e.target.value } })}
-        />
-      </InputGroup>
-      <Textarea
-        value={state.paragraph3}
-        onChange={e => setState({ ...state, ...{ paragraph3: e.target.value } })}
-      />
-
-*/
+export default EditEmailForm;

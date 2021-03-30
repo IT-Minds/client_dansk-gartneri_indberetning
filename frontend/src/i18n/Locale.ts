@@ -102,12 +102,13 @@ export interface Locale {
     editEmails: string;
     name: string;
     subject: string;
-    paragraph: string;
-    heading: string;
     ctaButtonInputLabel: string;
     preview: string;
     nameTooltip: string;
     subjectTooltip: string;
     ctaTooltip: string;
+    section: string;
+    headingPlaceholder: string;
+    paragraphPlaceholder: string;
   };
 }

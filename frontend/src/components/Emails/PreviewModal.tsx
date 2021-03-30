@@ -22,10 +22,8 @@ const PreviewModal: FC<Props> = ({ currentMail }) => {
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [htmlResponse, setHtmlResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPreview = useCallback(async () => {
-    setIsLoading(true);
     console.log(currentMail);
     try {
       const mailClient = await genMailClient();
@@ -38,7 +36,6 @@ const PreviewModal: FC<Props> = ({ currentMail }) => {
     } catch (e) {
       console.error(e);
     }
-    setIsLoading(false);
   }, [currentMail]);
 
   useEffect(() => {

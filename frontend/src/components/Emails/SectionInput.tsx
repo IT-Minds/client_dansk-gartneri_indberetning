@@ -1,8 +1,8 @@
-import { Box, Heading, Input, Text, Textarea } from "@chakra-ui/react";
+import { Box, Heading, Input, Textarea } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import React, { FC } from "react";
 
-import { Section } from "./ExtendedMailEditor";
+import { Section } from "./EditEmailForm";
 
 interface Props {
   index: number;
@@ -15,12 +15,12 @@ const SectionInput: FC<Props> = ({ index, section }) => {
   return (
     <Box shadow="md" p="20px">
       <Heading size="md" color="gray.300" float="right">
-        Afsnit {index}
+        {t("mailEditor.section")} {index}
       </Heading>
       <Input
         variant="flushed"
         value={section.h ?? ""}
-        placeholder="Overskrift her"
+        placeholder={t("mailEditor.headingPlaceholder")}
         fontWeight="bold"
         fontSize="1.3em"
         onChange={e => section.setH(e.target.value)}
@@ -28,7 +28,7 @@ const SectionInput: FC<Props> = ({ index, section }) => {
       <Textarea
         variant="unstyled"
         value={section.p ?? ""}
-        placeholder="Brødtekst her"
+        placeholder={t("mailEditor.paragraphPlaceholder")}
         onChange={e => section.setP(e.target.value)}
       />
     </Box>

@@ -104,12 +104,13 @@ export const table: Locale = {
     editEmails: "Rediger emails",
     name: "Email navn:",
     subject: "Emne:",
-    paragraph: "Brødtekst",
-    heading: "Overskrift",
-    ctaButtonInputLabel: "Knap:",
+    ctaButtonInputLabel: "Knaptekst:",
     preview: "Se forhåndsvisning",
     nameTooltip: "Navn på email. Vises ikke for modtageren.",
     subjectTooltip: "Emnefelt på email, som den vises for modtageren.",
-    ctaTooltip: "Tekst på knappen, der vises nederst i mailen."
+    ctaTooltip: "Tekst på knappen, der vises nederst i mailen.",
+    section: "Afsnit",
+    headingPlaceholder: "Overskrift her",
+    paragraphPlaceholder: "Brødtekst her"
   }
 };

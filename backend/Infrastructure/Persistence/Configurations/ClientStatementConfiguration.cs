@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configurations
         .HasForeignKey(e => e.AccountId)
         .IsRequired(true);
 
-      builder.HasMany<CropTurnover>(e => e.CropTurnovers)
+      builder.HasMany<StatementData>(e => e.StatementData)
         .WithOne(e => e.ClientStatement)
         .IsRequired(true);
 

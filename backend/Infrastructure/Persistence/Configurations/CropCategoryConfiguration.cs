@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-  public class CropCategoryConfiguration : IEntityTypeConfiguration<CropCategory>
+  public class CropCategoryConfiguration : IEntityTypeConfiguration<StatementField>
   {
-    public void Configure(EntityTypeBuilder<CropCategory> builder)
+    public void Configure(EntityTypeBuilder<StatementField> builder)
     {
       builder.Property(e => e.Name)
         .HasMaxLength(200)
@@ -15,8 +15,8 @@ namespace Infrastructure.Persistence.Configurations
       builder.Property(e => e.TaxPerMille)
         .IsRequired();
 
-      builder.HasMany<CropTurnover>(e => e.CropTurnovers)
-        .WithOne(e => e.CropCategory);
+      builder.HasMany<StatementData>(e => e.StatementData)
+        .WithOne(e => e.StatementField);
     }
   }
 }

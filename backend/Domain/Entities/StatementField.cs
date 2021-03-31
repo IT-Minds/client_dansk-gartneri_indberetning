@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using Domain.Common;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
-  public class CropCategory : AuditableEntity
+  public class StatementField : AuditableEntity
   {
     public int Id { get; set; }
     public string Name { get; set; }
     public float TaxPerMille { get; set; }
-
-    public virtual ICollection<CropTurnover> CropTurnovers { get; set; }
+    public StatementCategory Category { get; set; }
+    public virtual ICollection<StatementData> StatementData { get; set; }
   }
 }

@@ -13,8 +13,8 @@ namespace Application.Common.Interfaces
     DbSet<AdminUser> Admins { get; set; }
     DbSet<Address> Addresses { get; set; }
     DbSet<ClientStatement> ClientStatements { get; set; }
-    DbSet<CropCategory> CropCategories { get; set; }
-    DbSet<CropTurnover> CropTurnovers { get; set; }
+    DbSet<StatementField> CropCategories { get; set; }
+    DbSet<StatementData> CropTurnovers { get; set; }
     DbSet<ExampleChild> ExampleChildren { get; set; }
     DbSet<ExampleParent> ExampleParents { get; set; }
 

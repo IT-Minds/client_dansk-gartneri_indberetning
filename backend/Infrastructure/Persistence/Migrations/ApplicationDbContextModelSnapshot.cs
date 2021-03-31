@@ -185,7 +185,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("ClientStatements");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CropCategory", b =>
+            modelBuilder.Entity("Domain.Entities.StatementField", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("CropCategories");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CropTurnover", b =>
+            modelBuilder.Entity("Domain.Entities.StatementData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -227,23 +227,23 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("ClientStatementId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CropCategoryId")
+                    b.Property<int>("StatementFieldId")
                         .HasColumnType("int");
 
                     b.Property<int>("TaxPerMille")
                         .HasColumnType("int");
 
-                    b.Property<int>("Turnover")
+                    b.Property<int>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CropCategoryId");
+                    b.HasIndex("StatementFieldId");
 
-                    b.HasIndex("ClientStatementId", "CropCategoryId")
+                    b.HasIndex("ClientStatementId", "StatementFieldId")
                         .IsUnique();
 
-                    b.ToTable("CropTurnovers");
+                    b.ToTable("StatementData");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
@@ -384,23 +384,23 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("AssignedUser");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CropTurnover", b =>
+            modelBuilder.Entity("Domain.Entities.StatementData", b =>
                 {
                     b.HasOne("Domain.Entities.ClientStatement", "ClientStatement")
-                        .WithMany("CropTurnovers")
+                        .WithMany("StatementData")
                         .HasForeignKey("ClientStatementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.CropCategory", "CropCategory")
-                        .WithMany("CropTurnovers")
-                        .HasForeignKey("CropCategoryId")
+                    b.HasOne("Domain.Entities.StatementField", "StatementField")
+                        .WithMany("StatementData")
+                        .HasForeignKey("StatementFieldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ClientStatement");
 
-                    b.Navigation("CropCategory");
+                    b.Navigation("StatementField");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
@@ -439,12 +439,12 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.ClientStatement", b =>
                 {
-                    b.Navigation("CropTurnovers");
+                    b.Navigation("StatementData");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CropCategory", b =>
+            modelBuilder.Entity("Domain.Entities.StatementField", b =>
                 {
-                    b.Navigation("CropTurnovers");
+                    b.Navigation("StatementData");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExampleParent", b =>

@@ -15,5 +15,7 @@ namespace Domain.Entities
     public int AccountId { get; set; }
     public virtual Account Account { get; set; }
     public string SSOTokenId { get; set; }
+    public int AssignedStatementId { get; set; }
+    public virtual ClientStatement ClientStatement { get; set; }
   }
 }

@@ -14,6 +14,9 @@ namespace Infrastructure.Persistence.Configurations
 
       builder.Property(e => e.TaxPerMille)
         .IsRequired();
+
+      builder.HasMany<CropTurnover>(e => e.CropTurnovers)
+        .WithOne(e => e.CropCategory);
     }
   }
 }

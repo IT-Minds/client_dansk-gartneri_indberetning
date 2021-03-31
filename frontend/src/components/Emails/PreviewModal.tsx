@@ -24,7 +24,6 @@ const PreviewModal: FC<Props> = ({ currentMail }) => {
   const [htmlResponse, setHtmlResponse] = useState("");
 
   const fetchPreview = useCallback(async () => {
-    console.log(currentMail);
     try {
       const mailClient = await genMailClient();
       const res = await mailClient.generatePreview(

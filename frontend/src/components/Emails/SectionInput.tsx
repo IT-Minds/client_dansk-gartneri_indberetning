@@ -2,34 +2,35 @@ import { Box, Heading, Input, Textarea } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import React, { FC } from "react";
 
-import { Section } from "./EditEmailForm";
-
 interface Props {
-  index: number;
-  section: Section;
+  sectionHeading: string;
+  p: string;
+  h: string;
+  setP: (p: string) => void;
+  setH: (h: string) => void;
 }
 
-const SectionInput: FC<Props> = ({ index, section }) => {
+const SectionInput: FC<Props> = ({ sectionHeading, p, h, setP, setH }) => {
   const { t } = useLocales();
 
   return (
     <Box shadow="md" p="20px">
       <Heading size="md" color="gray.300" float="right">
-        {t("mailEditor.section")} {index}
+        {sectionHeading}
       </Heading>
       <Input
         variant="flushed"
-        value={section.h ?? ""}
+        value={h ?? ""}
         placeholder={t("mailEditor.headingPlaceholder")}
         fontWeight="bold"
         fontSize="1.3em"
-        onChange={e => section.setH(e.target.value)}
+        onChange={e => setH(e.target.value)}
       />
       <Textarea
         variant="unstyled"
-        value={section.p ?? ""}
+        value={p ?? ""}
         placeholder={t("mailEditor.paragraphPlaceholder")}
-        onChange={e => section.setP(e.target.value)}
+        onChange={e => setP(e.target.value)}
       />
     </Box>
   );

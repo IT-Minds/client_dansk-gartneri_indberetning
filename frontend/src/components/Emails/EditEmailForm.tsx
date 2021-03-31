@@ -11,36 +11,8 @@ interface Props {
   variant?: "endCTAButton";
 }
 
-export type Section = {
-  h: string;
-  p: string;
-  setH: (h: string) => void;
-  setP: (p: string) => void;
-};
-
 const EditEmailForm: FC<Props> = ({ email, setEmail, variant }) => {
   const { t } = useLocales();
-
-  const sections: Section[] = [
-    {
-      h: email.heading1,
-      p: email.paragraph1,
-      setH: h => setEmail({ ...email, ...{ heading1: h } }),
-      setP: p => setEmail({ ...email, ...{ paragraph1: p } })
-    },
-    {
-      h: email.heading2,
-      p: email.paragraph2,
-      setH: h => setEmail({ ...email, ...{ heading2: h } }),
-      setP: p => setEmail({ ...email, ...{ paragraph2: p } })
-    },
-    {
-      h: email.heading3,
-      p: email.paragraph3,
-      setH: h => setEmail({ ...email, ...{ heading3: h } }),
-      setP: p => setEmail({ ...email, ...{ paragraph3: p } })
-    }
-  ];
 
   return (
     <Stack>
@@ -78,9 +50,27 @@ const EditEmailForm: FC<Props> = ({ email, setEmail, variant }) => {
           </FormControl>
         </Tooltip>
       )}
-      {sections.map((section, i) => (
-        <SectionInput key={i} section={section} index={i + 1} />
-      ))}
+      <SectionInput
+        sectionHeading={`${t("mailEditor.section")} 1`}
+        h={email.heading1}
+        p={email.paragraph1}
+        setH={h => setEmail({ ...email, ...{ Heading1: h } })}
+        setP={p => setEmail({ ...email, ...{ paragraph1: p } })}
+      />
+      <SectionInput
+        sectionHeading={`${t("mailEditor.section")} 2`}
+        h={email.heading2}
+        p={email.paragraph2}
+        setH={h => setEmail({ ...email, ...{ Heading2: h } })}
+        setP={p => setEmail({ ...email, ...{ paragraph2: p } })}
+      />
+      <SectionInput
+        sectionHeading={`${t("mailEditor.section")} 3`}
+        h={email.heading3}
+        p={email.paragraph3}
+        setH={h => setEmail({ ...email, ...{ Heading3: h } })}
+        setP={p => setEmail({ ...email, ...{ paragraph3: p } })}
+      />
     </Stack>
   );
 };

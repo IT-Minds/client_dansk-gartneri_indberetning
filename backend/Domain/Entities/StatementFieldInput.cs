@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-  public class StatementData
+  public class StatementFieldInput
   {
     public int Id { get; set; }
     public int ClientStatementId { get; set; }

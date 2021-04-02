@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210331213636_TestMigration")]
-    partial class TestMigration
+    [Migration("20210331230701_StatementEntities")]
+    partial class StatementEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -187,67 +187,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("ClientStatements");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StatementField", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("LastModified")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("TaxPerMille")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CropCategories");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StatementData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ClientStatementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatementFieldId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaxPerMille")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StatementFieldId");
-
-                    b.HasIndex("ClientStatementId", "StatementFieldId")
-                        .IsUnique();
-
-                    b.ToTable("StatementData");
-                });
-
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
                 {
                     b.Property<int>("Id")
@@ -300,6 +239,70 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExampleParents");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StatementField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<float>("TaxPerMille")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatementFields");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StatementFieldInput", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ClientStatementId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatementFieldId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TaxPerMille")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatementFieldId");
+
+                    b.HasIndex("ClientStatementId", "StatementFieldId")
+                        .IsUnique();
+
+                    b.ToTable("StatementFieldInputs");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -386,25 +389,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("AssignedUser");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StatementData", b =>
-                {
-                    b.HasOne("Domain.Entities.ClientStatement", "ClientStatement")
-                        .WithMany("StatementData")
-                        .HasForeignKey("ClientStatementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.StatementField", "StatementField")
-                        .WithMany("StatementData")
-                        .HasForeignKey("StatementFieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ClientStatement");
-
-                    b.Navigation("StatementField");
-                });
-
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
                 {
                     b.HasOne("Domain.Entities.ExampleParent", "Parent")
@@ -414,6 +398,25 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StatementFieldInput", b =>
+                {
+                    b.HasOne("Domain.Entities.ClientStatement", "ClientStatement")
+                        .WithMany("StatementFieldInputs")
+                        .HasForeignKey("ClientStatementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.StatementField", "StatementField")
+                        .WithMany("StatementFieldInputs")
+                        .HasForeignKey("StatementFieldId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClientStatement");
+
+                    b.Navigation("StatementField");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -441,17 +444,17 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.ClientStatement", b =>
                 {
-                    b.Navigation("StatementData");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StatementField", b =>
-                {
-                    b.Navigation("StatementData");
+                    b.Navigation("StatementFieldInputs");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExampleParent", b =>
                 {
                     b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StatementField", b =>
+                {
+                    b.Navigation("StatementFieldInputs");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

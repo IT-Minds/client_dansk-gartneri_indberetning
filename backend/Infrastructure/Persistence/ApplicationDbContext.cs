@@ -27,8 +27,8 @@ namespace Infrastructure.Persistence
     public DbSet<AdminUser> Admins { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<ClientStatement> ClientStatements { get; set; }
-    public DbSet<StatementField> CropCategories { get; set; }
-    public DbSet<StatementData> CropTurnovers { get; set; }
+    public DbSet<StatementField> StatementFields { get; set; }
+    public DbSet<StatementFieldInput> StatementFieldInputs { get; set; }
     public DbSet<ExampleChild> ExampleChildren { get; set; }
 
     public DbSet<ExampleParent> ExampleParents { get; set; }

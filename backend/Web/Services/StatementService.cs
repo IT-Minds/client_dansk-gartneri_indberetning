@@ -7,21 +7,21 @@ using Web.Options;
 
 namespace Web.Services
 {
-  public class CropService
+  public class StatementService
   {
     private readonly IApplicationDbContext _context;
-    private readonly CropOptions _options;
+    private readonly StatementOptions _options;
 
-    public CropService(IApplicationDbContext context, IOptions<CropOptions> options)
+    public StatementService(IApplicationDbContext context, IOptions<StatementOptions> options)
     {
       _context = context;
       _options = options.Value;
     }
 
-    public void SetupCrops()
+    public void SetupStatementFields()
     {
-      if (_context.CropCategories.Count() != 0) return;
-      _context.CropCategories.AddRange(_options.CropCategories);
+      if (_context.StatementFields.Count() != 0) return;
+      _context.StatementFields.AddRange(_options.StatementFields);
       _context.SaveChanges();
     }
   }

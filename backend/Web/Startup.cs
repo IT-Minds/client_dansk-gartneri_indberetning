@@ -53,6 +53,7 @@ namespace Web
       services.Configure<TokenOptions>(Configuration.GetSection(TokenOptions.Tokens));
       services.Configure<MailOptions>(Configuration.GetSection(MailOptions.MailSettings));
       services.Configure<SuperUserOptions>(Configuration.GetSection(SuperUserOptions.SuperUser));
+      services.Configure<StatementOptions>(Configuration.GetSection(StatementOptions.Statement));
 
       var corsOptions = Configuration.GetSection(CorsOptions.Cors).Get<CorsOptions>();
       services.AddCors(options =>
@@ -110,6 +111,7 @@ namespace Web
       services.AddScoped<IPasswordHasher, PasswordHasher>();
       services.AddScoped<IMailService, MailService>();
       services.AddScoped<SuperAdminService>();
+      services.AddScoped<StatementService>();
       services.AddSignalR();
 
       var key = Encoding.ASCII.GetBytes("VERY_SECRET_SECRET");
@@ -133,7 +135,7 @@ namespace Web
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, SuperAdminService superAdminService)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, SuperAdminService superAdminService, StatementService statementService)
     {
       if (env.IsDevelopment())
       {
@@ -157,6 +159,7 @@ namespace Web
         // }
 
         superAdminService.SetupSuperUser();
+        statementService.SetupStatementFields();
       }
 
       app.UseCors("AllowSecure");

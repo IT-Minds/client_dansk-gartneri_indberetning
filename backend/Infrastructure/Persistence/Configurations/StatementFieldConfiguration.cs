@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-  public class CropCategoryConfiguration : IEntityTypeConfiguration<StatementField>
+  public class StatementFieldConfiguration : IEntityTypeConfiguration<StatementField>
   {
     public void Configure(EntityTypeBuilder<StatementField> builder)
     {
@@ -15,7 +15,7 @@ namespace Infrastructure.Persistence.Configurations
       builder.Property(e => e.TaxPerMille)
         .IsRequired();
 
-      builder.HasMany<StatementData>(e => e.StatementData)
+      builder.HasMany<StatementFieldInput>(e => e.StatementFieldInputs)
         .WithOne(e => e.StatementField);
     }
   }

@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configurations
         .HasForeignKey(e => e.AccountId)
         .IsRequired(true);
 
-      builder.HasMany<StatementData>(e => e.StatementData)
+      builder.HasMany<StatementFieldInput>(e => e.StatementFieldInputs)
         .WithOne(e => e.ClientStatement)
         .IsRequired(true);
 

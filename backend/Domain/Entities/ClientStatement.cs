@@ -13,6 +13,6 @@ namespace Domain.Entities
     public int? AssignedUserId { get; set; }
     public virtual User AssignedUser { get; set; }
     public StatementStatus Status { get; set; }
-    public virtual ICollection<StatementData> StatementData {get; set;}
+    public virtual ICollection<StatementFieldInput> StatementFieldInputs {get; set;}
   }
 }

@@ -10,6 +10,6 @@ namespace Domain.Entities
     public string Name { get; set; }
     public float TaxPerMille { get; set; }
     public StatementCategory Category { get; set; }
-    public virtual ICollection<StatementData> StatementData { get; set; }
+    public virtual ICollection<StatementFieldInput> StatementFieldInputs { get; set; }
   }
 }

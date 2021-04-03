@@ -18,7 +18,7 @@ namespace Infrastructure.Persistence.Configurations
         .HasForeignKey(e => e.StatementFieldId)
         .IsRequired();
 
-      builder.HasIndex(e => new {e.ClientStatementId, CropCategoryId = e.StatementFieldId}).IsUnique();
+      builder.HasIndex(e => new {e.ClientStatementId, e.StatementFieldId}).IsUnique();
     }
   }
 }

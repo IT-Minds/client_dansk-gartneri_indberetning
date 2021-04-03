@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientStatements\Commands\CreateClientStatement\" />
     <Folder Include="Common\Services\" />
+    <Folder Include="StatementFieldInputs\" />
     <Folder Include="StatementFields\Queries\GetStatementFieldsQuery\" />
   </ItemGroup>
 

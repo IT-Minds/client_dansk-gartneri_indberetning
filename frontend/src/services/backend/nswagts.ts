@@ -693,6 +693,8 @@ export class MailClient extends ClientBase implements IMailClient {
 
 export interface IStatementClient {
     getAllStatementFields(): Promise<StatementFieldDto[]>;
+    getClientStatement(): Promise<ClientStatementDto[]>;
+    createStatement(command: CreateClientStatementCommand): Promise<number>;
 }
 
 export class StatementClient extends ClientBase implements IStatementClient {
@@ -707,7 +709,7 @@ export class StatementClient extends ClientBase implements IStatementClient {
     }
 
     getAllStatementFields(): Promise<StatementFieldDto[]> {
-        let url_ = this.baseUrl + "/api/Statement";
+        let url_ = this.baseUrl + "/api/Statement/statementfields";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
@@ -744,6 +746,86 @@ export class StatementClient extends ClientBase implements IStatementClient {
             });
         }
         return Promise.resolve<StatementFieldDto[]>(<any>null);
+    }
+
+    getClientStatement(): Promise<ClientStatementDto[]> {
+        let url_ = this.baseUrl + "/api/Statement/statement";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetClientStatement(_response));
+        });
+    }
+
+    protected processGetClientStatement(response: Response): Promise<ClientStatementDto[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ClientStatementDto.fromJS(item));
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ClientStatementDto[]>(<any>null);
+    }
+
+    createStatement(command: CreateClientStatementCommand): Promise<number> {
+        let url_ = this.baseUrl + "/api/Statement/statement";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processCreateStatement(_response));
+        });
+    }
+
+    protected processCreateStatement(response: Response): Promise<number> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<number>(<any>null);
     }
 }
 
@@ -1751,6 +1833,194 @@ export interface IStatementFieldDto {
     id?: number;
     name?: string | null;
     taxPerMille?: number;
+}
+
+export class ClientStatementDto implements IClientStatementDto {
+    id?: number;
+    accountId?: number;
+    account?: AccountDto | null;
+    revisionYear?: number;
+    assignedUserId?: number | null;
+    assignedUser?: UserAccountIdDto | null;
+    status?: StatementStatus;
+    statementFieldInputs?: StatementFieldInputDto[] | null;
+
+    constructor(data?: IClientStatementDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.account = data.account && !(<any>data.account).toJSON ? new AccountDto(data.account) : <AccountDto>this.account; 
+            this.assignedUser = data.assignedUser && !(<any>data.assignedUser).toJSON ? new UserAccountIdDto(data.assignedUser) : <UserAccountIdDto>this.assignedUser; 
+            if (data.statementFieldInputs) {
+                this.statementFieldInputs = [];
+                for (let i = 0; i < data.statementFieldInputs.length; i++) {
+                    let item = data.statementFieldInputs[i];
+                    this.statementFieldInputs[i] = item && !(<any>item).toJSON ? new StatementFieldInputDto(item) : <StatementFieldInputDto>item;
+                }
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
+            this.account = _data["account"] ? AccountDto.fromJS(_data["account"]) : <any>null;
+            this.revisionYear = _data["revisionYear"] !== undefined ? _data["revisionYear"] : <any>null;
+            this.assignedUserId = _data["assignedUserId"] !== undefined ? _data["assignedUserId"] : <any>null;
+            this.assignedUser = _data["assignedUser"] ? UserAccountIdDto.fromJS(_data["assignedUser"]) : <any>null;
+            this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
+            if (Array.isArray(_data["statementFieldInputs"])) {
+                this.statementFieldInputs = [] as any;
+                for (let item of _data["statementFieldInputs"])
+                    this.statementFieldInputs!.push(StatementFieldInputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ClientStatementDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ClientStatementDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
+        data["account"] = this.account ? this.account.toJSON() : <any>null;
+        data["revisionYear"] = this.revisionYear !== undefined ? this.revisionYear : <any>null;
+        data["assignedUserId"] = this.assignedUserId !== undefined ? this.assignedUserId : <any>null;
+        data["assignedUser"] = this.assignedUser ? this.assignedUser.toJSON() : <any>null;
+        data["status"] = this.status !== undefined ? this.status : <any>null;
+        if (Array.isArray(this.statementFieldInputs)) {
+            data["statementFieldInputs"] = [];
+            for (let item of this.statementFieldInputs)
+                data["statementFieldInputs"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IClientStatementDto {
+    id?: number;
+    accountId?: number;
+    account?: IAccountDto | null;
+    revisionYear?: number;
+    assignedUserId?: number | null;
+    assignedUser?: IUserAccountIdDto | null;
+    status?: StatementStatus;
+    statementFieldInputs?: IStatementFieldInputDto[] | null;
+}
+
+export enum StatementStatus {
+    Unsigned = 0,
+    Signed = 1,
+}
+
+export class StatementFieldInputDto implements IStatementFieldInputDto {
+    id?: number;
+    clientStatementId?: number;
+    clientStatement?: ClientStatementDto | null;
+    statementFieldId?: number;
+    statementField?: StatementFieldDto | null;
+    value?: number;
+    taxPerMille?: number;
+
+    constructor(data?: IStatementFieldInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.clientStatement = data.clientStatement && !(<any>data.clientStatement).toJSON ? new ClientStatementDto(data.clientStatement) : <ClientStatementDto>this.clientStatement; 
+            this.statementField = data.statementField && !(<any>data.statementField).toJSON ? new StatementFieldDto(data.statementField) : <StatementFieldDto>this.statementField; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.clientStatementId = _data["clientStatementId"] !== undefined ? _data["clientStatementId"] : <any>null;
+            this.clientStatement = _data["clientStatement"] ? ClientStatementDto.fromJS(_data["clientStatement"]) : <any>null;
+            this.statementFieldId = _data["statementFieldId"] !== undefined ? _data["statementFieldId"] : <any>null;
+            this.statementField = _data["statementField"] ? StatementFieldDto.fromJS(_data["statementField"]) : <any>null;
+            this.value = _data["value"] !== undefined ? _data["value"] : <any>null;
+            this.taxPerMille = _data["taxPerMille"] !== undefined ? _data["taxPerMille"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): StatementFieldInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StatementFieldInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["clientStatementId"] = this.clientStatementId !== undefined ? this.clientStatementId : <any>null;
+        data["clientStatement"] = this.clientStatement ? this.clientStatement.toJSON() : <any>null;
+        data["statementFieldId"] = this.statementFieldId !== undefined ? this.statementFieldId : <any>null;
+        data["statementField"] = this.statementField ? this.statementField.toJSON() : <any>null;
+        data["value"] = this.value !== undefined ? this.value : <any>null;
+        data["taxPerMille"] = this.taxPerMille !== undefined ? this.taxPerMille : <any>null;
+        return data; 
+    }
+}
+
+export interface IStatementFieldInputDto {
+    id?: number;
+    clientStatementId?: number;
+    clientStatement?: IClientStatementDto | null;
+    statementFieldId?: number;
+    statementField?: IStatementFieldDto | null;
+    value?: number;
+    taxPerMille?: number;
+}
+
+export class CreateClientStatementCommand implements ICreateClientStatementCommand {
+    accountId?: number;
+    revisionYear?: number;
+
+    constructor(data?: ICreateClientStatementCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
+            this.revisionYear = _data["revisionYear"] !== undefined ? _data["revisionYear"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): CreateClientStatementCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateClientStatementCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
+        data["revisionYear"] = this.revisionYear !== undefined ? this.revisionYear : <any>null;
+        return data; 
+    }
+}
+
+export interface ICreateClientStatementCommand {
+    accountId?: number;
+    revisionYear?: number;
 }
 
 export class CreateAccountantCommand implements ICreateAccountantCommand {

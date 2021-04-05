@@ -1,35 +1,48 @@
-import {
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  Stack,
-  Text
-} from "@chakra-ui/react";
+import { Heading, Input, Stack, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
-import { setAuthToken } from "hooks/useAuth";
 import { useLocales } from "hooks/useLocales";
-import { useRouter } from "next/router";
-import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { IClientStatementDto, IStatementFieldInputDto } from "services/backend/nswagts";
 
-interface Props {}
+interface Props {
+  statement: IClientStatementDto;
+}
 
-const StatementForm: FC<Props> = ({}) => {
+const StatementForm: FC<Props> = ({ statement }) => {
   const { t } = useLocales();
   const { activeUser } = useContext(AuthContext);
   const { register, handleSubmit, watch, errors } = useForm();
+  const [localForm, setLocalform] = useState<IClientStatementDto>(statement);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const onSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
     console.log(e);
   }, []);
 
   return (
-    <form>
-      <Stack></Stack>
+    <form onSubmit={onSubmit}>
+      <Stack>
+        <Heading>1. Grøntsager i væksthus</Heading>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th></Th>
+              <Th>Omsætning excl. moms</Th>
+              <Th>Afgiften udgør:</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>Svampe</Td>
+              <Td>
+                <Input></Input>
+              </Td>
+              <Td>{localForm.statementFieldInputs[0].taxPerMille}%</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </Stack>
     </form>
   );
 };

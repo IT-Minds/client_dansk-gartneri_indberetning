@@ -693,7 +693,7 @@ export class MailClient extends ClientBase implements IMailClient {
 
 export interface IStatementClient {
     getAllStatementFields(): Promise<StatementFieldDto[]>;
-    getClientStatement(): Promise<ClientStatementDto[]>;
+    getClientStatements(): Promise<ClientStatementDto[]>;
     createStatement(command: CreateClientStatementCommand): Promise<number>;
 }
 
@@ -748,8 +748,8 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return Promise.resolve<StatementFieldDto[]>(<any>null);
     }
 
-    getClientStatement(): Promise<ClientStatementDto[]> {
-        let url_ = this.baseUrl + "/api/Statement/statement";
+    getClientStatements(): Promise<ClientStatementDto[]> {
+        let url_ = this.baseUrl + "/api/Statement/mystatements";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
@@ -762,11 +762,11 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processGetClientStatement(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetClientStatements(_response));
         });
     }
 
-    protected processGetClientStatement(response: Response): Promise<ClientStatementDto[]> {
+    protected processGetClientStatements(response: Response): Promise<ClientStatementDto[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {

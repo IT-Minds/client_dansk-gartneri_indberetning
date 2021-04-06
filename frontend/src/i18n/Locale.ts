@@ -99,6 +99,7 @@ export interface Locale {
     taxIs: string;
     boughtPlants: string;
     other: string;
+    expences: string;
 
     section1: {
       heading: string;
@@ -134,6 +135,7 @@ export interface Locale {
       subHeading2: string;
       subHeading3: string;
       packagingCost: string;
+      packagingCostDesc: string;
       applesPearsOther: string;
       cherry: string;
       plum: string;

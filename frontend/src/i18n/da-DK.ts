@@ -101,6 +101,7 @@ export const table: Locale = {
     taxIs: "Afgiften udgør",
     boughtPlants: "Indkøbte planter",
     other: "Andet",
+    expences: "Udgifter",
 
     section1: {
       heading: "1. Grøntsager i væksthus",
@@ -136,8 +137,8 @@ export const table: Locale = {
       subHeading1: "Kernefrugt",
       subHeading2: "Stenfrugt",
       subHeading3: "Busk- og bærfrugt",
-      packagingCost:
-        "For producenter med eget lager anfør udgift til emballage og indkøbt salgsfragt excl. moms.",
+      packagingCost: "Udgifter til emballage og indkøbt salgsfragt",
+      packagingCostDesc: "(for producenter med eget lager, excl. moms)",
       applesPearsOther: "Æbler, pærer m.v.",
       cherry: "Kirsebær",
       plum: "Blommer",

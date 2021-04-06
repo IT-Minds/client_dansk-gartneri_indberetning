@@ -20,7 +20,7 @@ interface Props {
   children: ReactNode;
 }
 
-const StatementSection2: FC<Props> = ({ heading, children }) => {
+const StatementSection: FC<Props> = ({ heading, children }) => {
   const { t } = useLocales();
 
   return (
@@ -32,4 +32,4 @@ const StatementSection2: FC<Props> = ({ heading, children }) => {
     </Box>
   );
 };
-export default StatementSection2;
+export default StatementSection;

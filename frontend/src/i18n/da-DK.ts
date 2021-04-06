@@ -117,21 +117,22 @@ export const table: Locale = {
       boughtPlantsDesc: "(excl. moms kun vedr. stikløg eller andet)"
     },
     section4: {
-      heading: "Potteplanter m.v.",
+      heading: "4. Potteplanter m.v.",
       onions: "Løg og knolde",
       plants: "Potteplanter",
       flowers: "Snitblomster",
       boughtPlantsDesc: "(excl. moms kun vedr. snitblomster)"
     },
     section7: {
-      heading: "Planteskoleplanter",
+      heading: "7. Planteskoleplanter",
       description: "Inklusive videre- og detailsalg",
+      plants: "Planteskoleplanter",
       turnoverDescription:
         "(Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.)",
       boughtPlantsDesc: "(excl. moms)"
     },
     section8: {
-      heading: "Frugt og bær",
+      heading: "8. Frugt og bær",
       subHeading1: "Kernefrugt",
       subHeading2: "Stenfrugt",
       subHeading3: "Busk- og bærfrugt",

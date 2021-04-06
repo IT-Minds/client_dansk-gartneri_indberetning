@@ -40,25 +40,48 @@ interface Props {
   tooltip?: string;
 }
 
-const StatementRow2: FC<Props> = ({ text, subText, tax, children, tooltip }) => {
+const StatementRow: FC<Props> = ({ text, subText, tax, children, tooltip }) => {
   const { t } = useLocales();
   const router = useRouter();
   const { activeUser } = useContext(AuthContext);
 
   return (
     <>
-      <Stack spacing={0}>
-        <Text>{text}</Text>
-        <Text fontSize="sm" color="gray.500">
-          {subText}
-        </Text>
-      </Stack>
+      <HStack>
+        <Box>
+          {tooltip && (
+            <Popover>
+              <PopoverTrigger>
+                <IconButton
+                  aria-label="info"
+                  icon={<BsInfoCircle size="20px" />}
+                  isRound={true}
+                  w="0"
+                  size="sm"
+                  variant="ghost"
+                />
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverBody>{tooltip}</PopoverBody>
+              </PopoverContent>
+            </Popover>
+          )}
+        </Box>
+        <Stack spacing={0}>
+          <Text>{text}</Text>
+          <Text fontSize="sm" color="gray.500">
+            {subText}
+          </Text>
+        </Stack>
+      </HStack>
       <InputDKK />
       <Text>{tax}‰</Text>
     </>
   );
 };
-export default StatementRow2;
+export default StatementRow;
 /*
 <Box>
         {tooltip && (

@@ -124,6 +124,7 @@ export interface Locale {
     section7: {
       heading: string;
       description: string;
+      plants: string;
       turnoverDescription: string;
       boughtPlantsDesc: string;
     };

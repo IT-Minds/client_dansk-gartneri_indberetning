@@ -97,13 +97,14 @@ export interface Locale {
   statements: {
     turnoverExlMoms: string;
     taxIs: string;
+    boughtPlants: string;
     other: string;
 
     section1: {
       heading: string;
       mushrooms: string;
       tomatoCucumberHerbs: string;
-      boughtPlants: string;
+      boughtPlantsDesc: string;
     };
     section3: {
       heading: string;
@@ -111,20 +112,20 @@ export interface Locale {
       carrot: string;
       pea: string;
       onion: string;
-      boughtPlants: string;
+      boughtPlantsDesc: string;
     };
     section4: {
       heading: string;
       onions: string;
       plants: string;
       flowers: string;
-      boughtPlants: string;
+      boughtPlantsDesc: string;
     };
     section7: {
       heading: string;
       description: string;
       turnoverDescription: string;
-      plantsTurnover: string;
+      boughtPlantsDesc: string;
     };
     section8: {
       heading: string;

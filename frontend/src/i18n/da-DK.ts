@@ -99,13 +99,14 @@ export const table: Locale = {
   statements: {
     turnoverExlMoms: "Omsætning excl. moms",
     taxIs: "Afgiften udgør",
+    boughtPlants: "Indkøbte planter",
     other: "Andet",
 
     section1: {
       heading: "1. Grøntsager i væksthus",
       mushrooms: "Svampe",
       tomatoCucumberHerbs: "Tomat, agurk, krydderurt",
-      boughtPlants: "Indkøbte planter excl. moms, ikke for svampe"
+      boughtPlantsDesc: "(excl. moms, ikke for svampe)"
     },
     section3: {
       heading: "3. Grøntsager på friland",
@@ -113,21 +114,21 @@ export const table: Locale = {
       carrot: "Gulerod",
       pea: "Ært",
       onion: "Løg",
-      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. stikløg eller andet"
+      boughtPlantsDesc: "(excl. moms kun vedr. stikløg eller andet)"
     },
     section4: {
       heading: "Potteplanter m.v.",
       onions: "Løg og knolde",
       plants: "Potteplanter",
       flowers: "Snitblomster",
-      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. snitblomster"
+      boughtPlantsDesc: "(excl. moms kun vedr. snitblomster)"
     },
     section7: {
       heading: "Planteskoleplanter",
       description: "Inklusive videre- og detailsalg",
       turnoverDescription:
-        "Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.",
-      plantsTurnover: "Indkøbte planter excl. moms"
+        "(Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.)",
+      boughtPlantsDesc: "(excl. moms)"
     },
     section8: {
       heading: "Frugt og bær",

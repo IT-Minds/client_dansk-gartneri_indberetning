@@ -1,34 +1,21 @@
 import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
   HStack,
   IconButton,
-  Input,
   Popover,
   PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
   PopoverTrigger,
   Stack,
-  SystemProps,
-  Table,
   Td,
   Text,
-  Th,
   Tr
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
-import { setAuthToken } from "hooks/useAuth";
 import { useLocales } from "hooks/useLocales";
 import { useRouter } from "next/router";
-import { FC, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { FC, ReactNode, useContext } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 
 import InputDKK from "./InputDKK";

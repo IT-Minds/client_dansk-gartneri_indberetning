@@ -20,8 +20,6 @@ import { IClientStatementDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
 import StatementForm from "./StatementForm";
-import StatementHeaderRow from "./StatementHeaderRow";
-import StatementTableForm from "./StatementTableForm";
 
 interface Props {}
 
@@ -51,7 +49,7 @@ const FormPage: FC<Props> = ({}) => {
 
   return (
     <BasicLayout>
-      <StatementTableForm statement={statements[0]} />
+      <StatementForm statement={statements[0]} />
     </BasicLayout>
   );
 };

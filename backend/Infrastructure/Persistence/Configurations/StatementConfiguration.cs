@@ -4,22 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-  public class ClientStatementConfiguration : IEntityTypeConfiguration<ClientStatement>
+  public class StatementConfiguration : IEntityTypeConfiguration<Statement>
   {
-    public void Configure(EntityTypeBuilder<ClientStatement> builder)
+    public void Configure(EntityTypeBuilder<Statement> builder)
     {
       builder.HasOne<Account>(e => e.Account)
-        .WithMany(e => e.ClientStatements)
+        .WithMany(e => e.Statements)
         .HasForeignKey(e => e.AccountId)
         .IsRequired(true);
-
-      builder.HasMany<StatementFieldInput>(e => e.StatementFieldInputs)
-        .WithOne(e => e.ClientStatement)
-        .IsRequired(true);
-
-      builder.HasOne<User>(e => e.AssignedUser)
-        .WithOne(e => e.ClientStatement)
-        .HasForeignKey<ClientStatement>(e => e.AssignedUserId);
 
       builder.Property(e => e.Status)
         .IsRequired(true);

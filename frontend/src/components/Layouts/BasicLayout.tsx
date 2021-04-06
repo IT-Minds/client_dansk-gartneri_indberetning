@@ -10,7 +10,7 @@ interface Props {
 const BasicLayout: FC<Props> = ({ children, maxW }) => {
   return (
     <Grid
-      gridTemplateColumns={`1fr minmax(400px, ${maxW ?? "80vw"}) 1fr`}
+      gridTemplateColumns={`1fr minmax(400px, ${maxW ?? "100vw"}) 1fr`}
       gridTemplateRows="auto 1fr">
       <GridItem rowSpan={1} colSpan={3}>
         <Header />

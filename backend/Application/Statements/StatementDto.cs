@@ -1,15 +1,20 @@
 using System.Collections.Generic;
-using Domain.Common;
+using Application.Accounts;
+using Application.Common.Mappings;
+using Application.Users;
+using Domain.Entities;
 using Domain.Enums;
 
-namespace Domain.Entities
+namespace Application.Statements
 {
-  public class Statement : AuditableEntity
+  public class StatementDto : IAutoMap<Statement>
   {
     public int Id { get; set; }
     public int AccountId { get; set; }
-    public virtual Account Account { get; set; }
+    public virtual AccountDto Account { get; set; }
     public int RevisionYear { get; set; }
+    public int? AssignedUserId { get; set; }
+    public virtual UserAccountIdDto AssignedUser { get; set; }
     public StatementStatus Status { get; set; }
 
     public int s1_mushrooms { get; set; }

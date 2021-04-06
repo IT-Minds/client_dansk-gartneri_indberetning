@@ -10,24 +10,24 @@ using Application.Common.Security;
 using Domain.EntityExtensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.ClientStatements.Commands.CreateClientStatementCommand
+namespace Application.Statements.Commands.CreateStatementCommand
 {
   [Authorize(Role = RoleEnum.Admin)]
-  public class CreateClientStatementCommand : IRequest<int>
+  public class CreateStatementCommand : IRequest<int>
   {
     public int AccountId { get; set; }
     public int RevisionYear { get; set; }
 
-    public class CreateClientStatementCommandHandler : IRequestHandler<CreateClientStatementCommand, int>
+    public class CreateStatementCommandHandler : IRequestHandler<CreateStatementCommand, int>
     {
       private readonly IApplicationDbContext _context;
 
-      public CreateClientStatementCommandHandler(IApplicationDbContext context)
+      public CreateStatementCommandHandler(IApplicationDbContext context)
       {
         _context = context;
       }
 
-      public async Task<int> Handle(CreateClientStatementCommand request, CancellationToken cancellationToken)
+      public async Task<int> Handle(CreateStatementCommand request, CancellationToken cancellationToken)
       {
         var accountEntity = await _context.Accounts
           .Include(e => e.Users)
@@ -38,29 +38,14 @@ namespace Application.ClientStatements.Commands.CreateClientStatementCommand
           throw new NotFoundException(nameof(Account), request.AccountId);
         }
 
-        var statement = new ClientStatement
+        var statement = new Statement
         {
           AccountId = request.AccountId,
           Account = accountEntity,
           RevisionYear = request.RevisionYear,
-          AssignedUserId = accountEntity.GetClient().Id,
-          AssignedUser = accountEntity.GetClient(),
           Status = StatementStatus.Unsigned
         };
-        _context.ClientStatements.Add(statement);
-
-        foreach (var field in _context.StatementFields)
-        {
-          var statementFieldInput = new StatementFieldInput
-          {
-            ClientStatementId = statement.Id,
-            ClientStatement = statement,
-            StatementFieldId = field.Id,
-            StatementField = field,
-            TaxPerMille = field.TaxPerMille
-          };
-          _context.StatementFieldInputs.Add(statementFieldInput);
-        }
+        _context.Statements.Add(statement);
 
         await _context.SaveChangesAsync(cancellationToken);
 

@@ -11,33 +11,32 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.ClientStatements.Queries.GetClientStatements
+namespace Application.Statements.Queries.GetMyStatements
 {
   [Authenticated]
-  public class GetClientStatementsQuery : IRequest<List<ClientStatementDto>>
+  public class GetMyStatementsQuery : IRequest<List<StatementDto>>
   {
     public int RevisionYear { get; set; }
 
-    public class GetClientStatementsQueryHandler : IRequestHandler<GetClientStatementsQuery, List<ClientStatementDto>>
+    public class GetMyStatementsQueryHandler : IRequestHandler<GetMyStatementsQuery, List<StatementDto>>
     {
       private readonly IApplicationDbContext _context;
       private readonly IMapper _mapper;
       private readonly ICurrentUserService _currentUser;
 
-      public GetClientStatementsQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUser)
+      public GetMyStatementsQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUser)
       {
         _context = context;
         _mapper = mapper;
         _currentUser = currentUser;
       }
-      public async Task<List<ClientStatementDto>> Handle(GetClientStatementsQuery request, CancellationToken cancellationToken)
+      public async Task<List<StatementDto>> Handle(GetMyStatementsQuery request, CancellationToken cancellationToken)
       {
         var currentUser = await _context.Users.FindAsync(int.Parse(_currentUser.UserId));
 
-        var statement = await _context.ClientStatements
+        var statement = await _context.Statements
           .Where(e => e.AccountId == currentUser.AccountId)
-          .Include(x => x.StatementFieldInputs)
-          .ProjectTo<ClientStatementDto>(_mapper.ConfigurationProvider)
+          .ProjectTo<StatementDto>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
 
         return statement;

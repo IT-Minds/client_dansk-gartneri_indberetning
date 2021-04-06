@@ -142,48 +142,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ClientStatement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AssignedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("LastModified")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RevisionYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedUserId")
-                        .IsUnique()
-                        .HasFilter("[AssignedUserId] IS NOT NULL");
-
-                    b.HasIndex("AccountId", "RevisionYear");
-
-                    b.ToTable("ClientStatements");
-                });
-
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
                 {
                     b.Property<int>("Id")
@@ -238,14 +196,14 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("ExampleParents");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StatementField", b =>
+            modelBuilder.Entity("Domain.Entities.Statement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Category")
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("Created")
@@ -260,46 +218,84 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<int>("RevisionYear")
+                        .HasColumnType("int");
 
-                    b.Property<float>("TaxPerMille")
-                        .HasColumnType("real");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s1_boughtPlants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s1_mushrooms")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s1_tomatoCucumberHerb")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s3_boughtPlants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s3_carrots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s3_onions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s3_other")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s3_peas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s4_boughtPlants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s4_cutFlowers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s4_onions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s4_plants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s7_boughtPlants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s7_plants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_applesPearsEtc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_cherries")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_currant")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_otherBerryFruit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_otherStoneFruit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_packaging")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_plums")
+                        .HasColumnType("int");
+
+                    b.Property<int>("s8_strawberries")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatementFields");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StatementFieldInput", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ClientStatementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatementFieldId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("TaxPerMille")
-                        .HasColumnType("real");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StatementFieldId");
-
-                    b.HasIndex("ClientStatementId", "StatementFieldId")
+                    b.HasIndex("AccountId", "RevisionYear")
                         .IsUnique();
 
-                    b.ToTable("StatementFieldInputs");
+                    b.ToTable("Statements");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -310,9 +306,6 @@ namespace Infrastructure.Persistence.Migrations
                         .UseIdentityColumn();
 
                     b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssignedStatementId")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("Created")
@@ -369,23 +362,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ClientStatement", b =>
-                {
-                    b.HasOne("Domain.Entities.Account", "Account")
-                        .WithMany("ClientStatements")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", "AssignedUser")
-                        .WithOne("ClientStatement")
-                        .HasForeignKey("Domain.Entities.ClientStatement", "AssignedUserId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("AssignedUser");
-                });
-
             modelBuilder.Entity("Domain.Entities.ExampleChild", b =>
                 {
                     b.HasOne("Domain.Entities.ExampleParent", "Parent")
@@ -397,23 +373,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StatementFieldInput", b =>
+            modelBuilder.Entity("Domain.Entities.Statement", b =>
                 {
-                    b.HasOne("Domain.Entities.ClientStatement", "ClientStatement")
-                        .WithMany("StatementFieldInputs")
-                        .HasForeignKey("ClientStatementId")
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithMany("Statements")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.StatementField", "StatementField")
-                        .WithMany("StatementFieldInputs")
-                        .HasForeignKey("StatementFieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ClientStatement");
-
-                    b.Navigation("StatementField");
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -429,7 +397,7 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
-                    b.Navigation("ClientStatements");
+                    b.Navigation("Statements");
 
                     b.Navigation("Users");
                 });
@@ -439,24 +407,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ClientStatement", b =>
-                {
-                    b.Navigation("StatementFieldInputs");
-                });
-
             modelBuilder.Entity("Domain.Entities.ExampleParent", b =>
                 {
                     b.Navigation("Children");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StatementField", b =>
-                {
-                    b.Navigation("StatementFieldInputs");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("ClientStatement");
                 });
 #pragma warning restore 612, 618
         }

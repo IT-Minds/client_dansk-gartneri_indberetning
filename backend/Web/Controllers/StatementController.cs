@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.ClientStatements;
-using Application.ClientStatements.Commands.CreateClientStatementCommand;
-using Application.ClientStatements.Queries.GetClientStatements;
-using Application.StatementFields;
-using Application.StatementFields.Queries.GetStatementFieldsQuery;
+using Application.Statements;
+using Application.Statements.Commands.CreateStatementCommand;
+using Application.Statements.Queries.GetMyStatements;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,20 +10,14 @@ namespace Web.Controllers
 {
   public class StatementController : ApiControllerBase
   {
-    [HttpGet("statementfields")]
-    public async Task<ActionResult<List<StatementFieldDto>>> GetAllStatementFields()
-    {
-      return await Mediator.Send(new GetStatementFieldsQuery());
-    }
-
     [HttpGet("mystatements")]
-    public async Task<ActionResult<List<ClientStatementDto>>> GetClientStatements()
+    public async Task<ActionResult<List<StatementDto>>> GetClientStatements()
     {
-      return await Mediator.Send(new GetClientStatementsQuery());
+      return await Mediator.Send(new GetMyStatementsQuery());
     }
 
     [HttpPost("statement")]
-    public async Task<ActionResult<int>> CreateStatement([FromBody] CreateClientStatementCommand command)
+    public async Task<ActionResult<int>> CreateStatement([FromBody] CreateStatementCommand command)
     {
       return await Mediator.Send(command);
     }

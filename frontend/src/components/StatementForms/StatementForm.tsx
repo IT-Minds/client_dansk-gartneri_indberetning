@@ -3,7 +3,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IClientStatementDto } from "services/backend/nswagts";
+import { IStatementDto } from "services/backend/nswagts";
 
 import StatementSection from "./StatementSection";
 import StatementSectionTable from "./StatementSectionTable";
@@ -12,14 +12,14 @@ import StatementTableSubHeading from "./StatementTableSubHeading";
 import StatementTableSubHeadings from "./StatementTableSubHeadings";
 
 interface Props {
-  statement: IClientStatementDto;
+  statement: IStatementDto;
 }
 
 const StatementForm: FC<Props> = ({ statement }) => {
   const { t } = useLocales();
   const { activeUser } = useContext(AuthContext);
   const { register, handleSubmit, watch, errors } = useForm();
-  const [localForm, setLocalform] = useState<IClientStatementDto>(statement);
+  const [localForm, setLocalform] = useState<IStatementDto>(statement);
 
   const onSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();

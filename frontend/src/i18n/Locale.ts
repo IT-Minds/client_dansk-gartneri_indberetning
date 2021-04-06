@@ -42,6 +42,7 @@ export interface Locale {
     CVR_apiErrorDescription: string;
     accountant: string;
     fetching: string;
+    statementStatus: string;
   };
 
   login: {

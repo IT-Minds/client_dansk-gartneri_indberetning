@@ -16,7 +16,7 @@ import { useLocales } from "hooks/useLocales";
 import { useRouter } from "next/router";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { genStatementClient } from "services/backend/apiClients";
-import { IClientStatementDto } from "services/backend/nswagts";
+import { IStatementDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
 import StatementForm from "./StatementForm";
@@ -27,7 +27,7 @@ const FormPage: FC<Props> = ({}) => {
   const { t } = useLocales();
   const router = useRouter();
   const { activeUser } = useContext(AuthContext);
-  const [statements, setStatements] = useState<IClientStatementDto[]>([]);
+  const [statements, setStatements] = useState<IStatementDto[]>([]);
 
   const fetchData = useCallback(async () => {
     try {

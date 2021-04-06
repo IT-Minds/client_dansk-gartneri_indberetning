@@ -43,7 +43,8 @@ export const table: Locale = {
     CVR_apiErrorTitle: "CVR ikke fundet",
     CVR_apiErrorDescription: "Kunne ikke finde CVR-nummer i registret",
     accountant: "Revisor",
-    fetching: "Henter kunder..."
+    fetching: "Henter kunder...",
+    statementStatus: "Indberetning status"
   },
 
   login: {

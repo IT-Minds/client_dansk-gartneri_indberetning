@@ -93,4 +93,50 @@ export interface Locale {
     alreadyAssignedTitle: string;
     alreadyAssignedText: string;
   };
+
+  statements: {
+    turnoverExlMoms: string;
+    taxIs: string;
+    other: string;
+
+    section1: {
+      heading: string;
+      mushrooms: string;
+      tomatoCucumberHerbs: string;
+      boughtPlants: string;
+    };
+    section3: {
+      heading: string;
+      turnoverExlPotatoes: string;
+      carrot: string;
+      pea: string;
+      onion: string;
+      boughtPlants: string;
+    };
+    section4: {
+      heading: string;
+      onions: string;
+      plants: string;
+      flowers: string;
+      boughtPlants: string;
+    };
+    section7: {
+      heading: string;
+      description: string;
+      turnoverDescription: string;
+      plantsTurnover: string;
+    };
+    section8: {
+      heading: string;
+      subHeading1: string;
+      subHeading2: string;
+      subHeading3: string;
+      packagingCost: string;
+      applesPearsOther: string;
+      cherry: string;
+      plum: string;
+      currant: string;
+      strawberry: string;
+    };
+  };
 }

@@ -32,7 +32,7 @@ const FormPage: FC<Props> = ({}) => {
   const fetchData = useCallback(async () => {
     try {
       const statementClient = await genStatementClient();
-      const data = await statementClient.getClientStatement();
+      const data = await statementClient.getClientStatements();
 
       console.log(data);
 

@@ -95,5 +95,53 @@ export const table: Locale = {
     alreadyAssignedTitle: "Error",
     alreadyAssignedText:
       "This email is used by an accountant, that is already assigned to a client."
+  },
+
+  statements: {
+    turnoverExlMoms: "Omsætning excl. moms",
+    taxIs: "Afgiften udgør",
+    other: "Andet",
+
+    section1: {
+      heading: "1. Grøntsager i væksthus",
+      mushrooms: "Svampe",
+      tomatoCucumberHerbs: "Tomat, agurk, krydderurt",
+      boughtPlants: "Indkøbte planter excl. moms, ikke for svampe"
+    },
+    section3: {
+      heading: "3. Grøntsager på friland",
+      turnoverExlPotatoes: "(excl. kartofler) Omsætning excl. moms",
+      carrot: "Gulerod",
+      pea: "Ært",
+      onion: "Løg",
+      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. stikløg eller andet"
+    },
+    section4: {
+      heading: "Potteplanter m.v.",
+      onions: "Løg og knolde",
+      plants: "Potteplanter",
+      flowers: "Snitblomster",
+      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. snitblomster"
+    },
+    section7: {
+      heading: "Planteskoleplanter",
+      description: "Inklusive videre- og detailsalg",
+      turnoverDescription:
+        "Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.",
+      plantsTurnover: "Indkøbte planter excl. moms"
+    },
+    section8: {
+      heading: "Frugt og bær",
+      subHeading1: "Kernefrugt",
+      subHeading2: "Stenfrugt",
+      subHeading3: "Busk- og bærfrugt",
+      packagingCost:
+        "For producenter med eget lager anfør udgift til emballage og indkøbt salgsfragt excl. moms.",
+      applesPearsOther: "Æbler, pærer m.v.",
+      cherry: "Kirsebær",
+      plum: "Blommer",
+      currant: "Ribs",
+      strawberry: "Jordbær"
+    }
   }
 };

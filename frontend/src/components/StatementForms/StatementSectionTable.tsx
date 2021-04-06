@@ -16,7 +16,7 @@ const StatementSectionTable: FC<Props> = ({ children, h1, h2, h3 }) => {
       <Thead>
         <Tr>
           <Th>{h1}</Th>
-          <Th w="30%">{h2 ?? t("statements.turnoverExlMoms")}</Th>
+          <Th w="45%">{h2 ?? t("statements.turnoverExlMoms")}</Th>
           <Th w="15%">{h3 ?? t("statements.taxIs")}</Th>
         </Tr>
       </Thead>

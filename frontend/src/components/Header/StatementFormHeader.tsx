@@ -1,11 +1,14 @@
 import { Button, Flex, HStack, Image } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
+import { useRouter } from "next/router";
 import { FC } from "react";
 
 import HeaderButtons from "./HeaderBtns/HeaderBtns";
 
 const StatementFormHeader: FC = () => {
   const { headerBg } = useColors();
+  const router = useRouter();
+  const logoPath = router.basePath + "/images/icons/logo.svg";
   return (
     <Flex
       justifyContent="space-between"
@@ -17,7 +20,7 @@ const StatementFormHeader: FC = () => {
       position="fixed"
       w="100vw"
       zIndex={100}>
-      <Image src="images/icons/logo.svg" position="relative" pb="15px" h="60px"></Image>
+      <Image src={logoPath} position="relative" pb="15px" h="60px"></Image>
       <HStack>
         <Button colorScheme="green" rounded="full">
           Gem ændringer

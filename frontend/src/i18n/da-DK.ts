@@ -16,7 +16,8 @@ export const table: Locale = {
 
   common: {
     search: "Søg",
-    add: "Tilføj"
+    add: "Tilføj",
+    fetchingData: "Henter data..."
   },
 
   accounts: {
@@ -98,6 +99,7 @@ export const table: Locale = {
   },
 
   statements: {
+    myStatements: "Mine indberetninger",
     turnoverExlMoms: "Omsætning excl. moms",
     taxIs: "Afgiften udgør",
     boughtPlants: "Indkøbte planter",

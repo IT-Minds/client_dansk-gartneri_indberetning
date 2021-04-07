@@ -16,12 +16,12 @@ namespace Web.Controllers
       return await Mediator.Send(new GetMyStatementsQuery());
     }
 
-    [HttpGet("{year}")]
-    public async Task<ActionResult<StatementDto>> getStatement([FromRoute] int year)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<StatementDto>> getStatement([FromRoute] int id)
     {
       return await Mediator.Send(new GetStatementQuery
       {
-        RevisionYear = year
+        Id = id
       });
     }
 

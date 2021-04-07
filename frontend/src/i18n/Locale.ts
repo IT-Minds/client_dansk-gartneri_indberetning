@@ -15,6 +15,7 @@ export interface Locale {
   common: {
     search: string;
     add: string;
+    fetchingData: string;
   };
 
   accounts: {
@@ -96,6 +97,7 @@ export interface Locale {
   };
 
   statements: {
+    myStatements: string;
     turnoverExlMoms: string;
     taxIs: string;
     boughtPlants: string;

@@ -693,7 +693,7 @@ export class MailClient extends ClientBase implements IMailClient {
 
 export interface IStatementClient {
     getMyStatements(): Promise<StatementDto[]>;
-    getStatement(year: number): Promise<StatementDto>;
+    getStatement(id: number): Promise<StatementDto>;
     createStatement(command: CreateStatementCommand): Promise<number>;
 }
 
@@ -748,11 +748,11 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return Promise.resolve<StatementDto[]>(<any>null);
     }
 
-    getStatement(year: number): Promise<StatementDto> {
-        let url_ = this.baseUrl + "/api/Statement/{year}";
-        if (year === undefined || year === null)
-            throw new Error("The parameter 'year' must be defined.");
-        url_ = url_.replace("{year}", encodeURIComponent("" + year));
+    getStatement(id: number): Promise<StatementDto> {
+        let url_ = this.baseUrl + "/api/Statement/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{

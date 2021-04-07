@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, HStack, Select, Spinner, Stack, Text } from "@chakra-ui/react";
 import AccountingYearSelect from "components/Common/AccountingYearSelect";
+import FetchingSpinner from "components/Common/FetchingSpinner";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
@@ -98,14 +99,7 @@ const Accounts: FC = () => {
               <NewAccountModal onSubmit={fetchData} />
             </HStack>
           </Flex>
-          <HStack h="20px" alignItems="center">
-            {isFetching && (
-              <>
-                <Spinner size="sm" />
-                <Text>{t("accounts.fetching")}</Text>
-              </>
-            )}
-          </HStack>
+          <FetchingSpinner isFetching={isFetching} text={t("accounts.fetching")} />
           <AccountsTable
             data={accounts}
             accountingYear={accountingYear}

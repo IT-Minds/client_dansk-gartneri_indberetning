@@ -16,7 +16,7 @@ namespace Application.Statements.Queries.GetMyStatements
   [Authenticated]
   public class GetStatementQuery : IRequest<StatementDto>
   {
-    public int RevisionYear { get; set; }
+    public int Id { get; set; }
 
     public class GetStatementQueryHandler : IRequestHandler<GetStatementQuery, StatementDto>
     {
@@ -35,7 +35,7 @@ namespace Application.Statements.Queries.GetMyStatements
         var currentUser = await _context.Users.FindAsync(int.Parse(_currentUser.UserId));
 
         var statement = await _context.Statements
-          .Where(e => e.AccountId == currentUser.AccountId && e.RevisionYear == request.RevisionYear)
+          .Where(e => e.AccountId == currentUser.AccountId && e.Id == request.Id)
           .ProjectTo<StatementDto>(_mapper.ConfigurationProvider)
           .FirstOrDefaultAsync();
 

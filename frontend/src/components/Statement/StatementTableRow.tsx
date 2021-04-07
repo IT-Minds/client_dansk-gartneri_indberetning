@@ -14,19 +14,18 @@ import {
 } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { BsInfoCircle } from "react-icons/bs";
-
-import InputDKK from "./InputDKK";
 
 interface Props {
   text: string;
   subText?: string;
   tax: string;
   tooltip?: string;
+  inputElement: ReactNode;
 }
 
-const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip }) => {
+const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip, inputElement }) => {
   const { t } = useLocales();
   const { subTextColor } = useColors();
 
@@ -61,9 +60,7 @@ const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip }) => {
           </Stack>
         </HStack>
       </Td>
-      <Td>
-        <InputDKK />
-      </Td>
+      <Td>{inputElement}</Td>
       <Td>{tax}‰</Td>
     </Tr>
   );

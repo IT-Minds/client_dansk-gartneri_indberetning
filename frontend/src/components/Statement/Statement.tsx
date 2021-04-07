@@ -23,9 +23,13 @@ const Statement: FC<Props> = ({ id }) => {
       const data = await statementClient.getStatement(parseInt(id as string));
 
       if (data != null) setStatement(data);
-      else logger.info("statementClient.get no data");
+      else {
+        logger.info("statementClient.get no data");
+        router.push("/mystatements");
+      }
     } catch (err) {
       logger.warn("statementClient.get Error", err);
+      router.push("mystatements");
     }
   }, []);
 

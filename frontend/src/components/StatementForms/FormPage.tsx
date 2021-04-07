@@ -46,7 +46,7 @@ const FormPage: FC<Props> = ({}) => {
   }, [fetchData]);
 
   return (
-    <BasicLayout>
+    <BasicLayout variant="statementHeader">
       <StatementForm statement={statement} />
     </BasicLayout>
   );

@@ -63,11 +63,14 @@ const Accounts: FC = () => {
   }, [fetchData]);
 
   const accountingYears = useMemo(() => {
-    return accounts.reduce((res: Set<number>, a: IAccountDto) => {
-      a.statements.forEach(s => res.add(s.revisionYear));
-      return res;
-    }, new Set());
-  }, [accounts]);
+    const startYear = 2021;
+    const thisYear = new Date().getFullYear();
+    const years = [];
+    for (let i = startYear; i <= thisYear; i++) {
+      years.push(i);
+    }
+    return years;
+  }, []);
 
   return (
     <AccountsContext.Provider
@@ -82,7 +85,7 @@ const Accounts: FC = () => {
           <Heading>{t("accounts.accounts")}</Heading>
           <Flex justifyContent="space-between" alignItems="center">
             <Select placeholder="Vælg revisionsår" w="max-content">
-              {Array.from(accountingYears).map(year => (
+              {accountingYears.map(year => (
                 <option key={year} value={year + ""}>
                   {year}
                 </option>

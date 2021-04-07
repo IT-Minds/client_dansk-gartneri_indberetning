@@ -1,39 +1,15 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  Stack,
-  Table,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AuthContext } from "contexts/AuthContext";
-import { setAuthToken } from "hooks/useAuth";
 import { useLocales } from "hooks/useLocales";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { genAccountClient } from "services/backend/apiClients";
-import {
-  IAccountDto,
-  IStatementDto,
-  IUserAccountIdDto,
-  StatementStatus
-} from "services/backend/nswagts";
+import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
-interface Props {}
-
-const MyStatements: FC<Props> = ({}) => {
+const MyStatements: FC = () => {
   const { t } = useLocales();
   const router = useRouter();
   const { activeUser } = useContext(AuthContext);
@@ -84,14 +60,11 @@ const MyStatements: FC<Props> = ({}) => {
                   <Td>{genStatus(statement.status)}</Td>
                   <Td>
                     {statement.status == 0 && (
-                      <Button
-                        colorScheme="green"
-                        rounded="full"
-                        onClick={e =>
-                          router.push("statement?accountingYear=" + statement.revisionYear)
-                        }>
-                        Besvar
-                      </Button>
+                      <Link href={`/statement/${encodeURIComponent(statement.revisionYear)}`}>
+                        <Button colorScheme="green" rounded="full">
+                          Besvar
+                        </Button>
+                      </Link>
                     )}
                     {statement.status == 1 && <Button rounded="full">Se besvarelse</Button>}
                   </Td>
@@ -104,3 +77,4 @@ const MyStatements: FC<Props> = ({}) => {
   );
 };
 export default MyStatements;
+//onClick={e => router.push("statement/" + statement.revisionYear)}>

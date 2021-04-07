@@ -1,17 +1,8 @@
-import {
-  Box,
-  Flex,
-  InputGroup,
-  InputRightAddon,
-  NumberInput,
-  NumberInputField
-} from "@chakra-ui/react";
+import { InputGroup, InputRightAddon, NumberInput, NumberInputField } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC } from "react";
 
-interface Props {}
-
-const InputDKK: FC<Props> = ({}) => {
+const InputDKK: FC = () => {
   const { t } = useLocales();
 
   return (

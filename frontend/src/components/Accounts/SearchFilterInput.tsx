@@ -40,6 +40,7 @@ const SearchFilterInput: FC<Props> = ({ value, onChange }) => {
           icon={<MdClear opacity="0.4" />}
           onClick={handleClear}
           variant="ghost"
+          isRound={true}
         />
       </InputRightElement>
     </InputGroup>

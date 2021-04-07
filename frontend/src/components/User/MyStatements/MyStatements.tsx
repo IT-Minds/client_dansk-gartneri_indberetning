@@ -84,7 +84,12 @@ const MyStatements: FC<Props> = ({}) => {
                   <Td>{genStatus(statement.status)}</Td>
                   <Td>
                     {statement.status == 0 && (
-                      <Button colorScheme="green" rounded="full">
+                      <Button
+                        colorScheme="green"
+                        rounded="full"
+                        onClick={e =>
+                          router.push("statement?accountingYear=" + statement.revisionYear)
+                        }>
                         Besvar
                       </Button>
                     )}

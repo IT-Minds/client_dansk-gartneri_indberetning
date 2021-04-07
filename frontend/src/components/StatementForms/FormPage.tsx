@@ -26,17 +26,15 @@ interface Props {}
 const FormPage: FC<Props> = ({}) => {
   const { t } = useLocales();
   const router = useRouter();
-  const { activeUser } = useContext(AuthContext);
-  const [statements, setStatements] = useState<IStatementDto[]>([]);
+  const [statement, setStatement] = useState<IStatementDto>([]);
 
   const fetchData = useCallback(async () => {
     try {
       const statementClient = await genStatementClient();
-      const data = await statementClient.getClientStatements();
+      const year = router.query.accountingYear[0];
+      const data = await statementClient.getStatement(parseInt(year));
 
-      console.log(data);
-
-      if (data && data.length > 0) setStatements(data);
+      if (data != null) setStatement(data);
       else logger.info("exampleClient.get no data");
     } catch (err) {
       logger.warn("exampleClient.get Error", err);
@@ -49,9 +47,8 @@ const FormPage: FC<Props> = ({}) => {
 
   return (
     <BasicLayout>
-      <StatementForm statement={statements[0]} />
+      <StatementForm statement={statement} />
     </BasicLayout>
   );
 };
 export default FormPage;
-//<StatementForm statement={statements[0]}></StatementForm>

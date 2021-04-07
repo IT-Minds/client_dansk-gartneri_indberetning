@@ -14,28 +14,30 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Statements.Queries.GetMyStatements
 {
   [Authenticated]
-  public class GetMyStatementsQuery : IRequest<List<StatementDto>>
+  public class GetStatementQuery : IRequest<StatementDto>
   {
-    public class GetMyStatementsQueryHandler : IRequestHandler<GetMyStatementsQuery, List<StatementDto>>
+    public int RevisionYear { get; set; }
+
+    public class GetStatementQueryHandler : IRequestHandler<GetStatementQuery, StatementDto>
     {
       private readonly IApplicationDbContext _context;
       private readonly IMapper _mapper;
       private readonly ICurrentUserService _currentUser;
 
-      public GetMyStatementsQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUser)
+      public GetStatementQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUser)
       {
         _context = context;
         _mapper = mapper;
         _currentUser = currentUser;
       }
-      public async Task<List<StatementDto>> Handle(GetMyStatementsQuery request, CancellationToken cancellationToken)
+      public async Task<StatementDto> Handle(GetStatementQuery request, CancellationToken cancellationToken)
       {
         var currentUser = await _context.Users.FindAsync(int.Parse(_currentUser.UserId));
 
         var statement = await _context.Statements
-          .Where(e => e.AccountId == currentUser.AccountId)
+          .Where(e => e.AccountId == currentUser.AccountId && e.RevisionYear == request.RevisionYear)
           .ProjectTo<StatementDto>(_mapper.ConfigurationProvider)
-          .ToListAsync(cancellationToken);
+          .FirstOrDefaultAsync();
 
         return statement;
       }

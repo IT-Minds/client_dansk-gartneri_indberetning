@@ -692,7 +692,8 @@ export class MailClient extends ClientBase implements IMailClient {
 }
 
 export interface IStatementClient {
-    getClientStatements(): Promise<StatementDto[]>;
+    getMyStatements(): Promise<StatementDto[]>;
+    getStatement(year: number): Promise<StatementDto>;
     createStatement(command: CreateStatementCommand): Promise<number>;
 }
 
@@ -707,7 +708,7 @@ export class StatementClient extends ClientBase implements IStatementClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getClientStatements(): Promise<StatementDto[]> {
+    getMyStatements(): Promise<StatementDto[]> {
         let url_ = this.baseUrl + "/api/Statement/mystatements";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -721,11 +722,11 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processGetClientStatements(_response));
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetMyStatements(_response));
         });
     }
 
-    protected processGetClientStatements(response: Response): Promise<StatementDto[]> {
+    protected processGetMyStatements(response: Response): Promise<StatementDto[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -745,6 +746,45 @@ export class StatementClient extends ClientBase implements IStatementClient {
             });
         }
         return Promise.resolve<StatementDto[]>(<any>null);
+    }
+
+    getStatement(year: number): Promise<StatementDto> {
+        let url_ = this.baseUrl + "/api/Statement/{year}";
+        if (year === undefined || year === null)
+            throw new Error("The parameter 'year' must be defined.");
+        url_ = url_.replace("{year}", encodeURIComponent("" + year));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetStatement(_response));
+        });
+    }
+
+    protected processGetStatement(response: Response): Promise<StatementDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = StatementDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<StatementDto>(<any>null);
     }
 
     createStatement(command: CreateStatementCommand): Promise<number> {

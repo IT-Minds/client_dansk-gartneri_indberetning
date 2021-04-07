@@ -40,7 +40,7 @@ const Statement: FC<Props> = ({ id }) => {
   return (
     <>
       {statement && (
-        <BasicLayout variant="statementHeader">
+        <BasicLayout variant="statementHeader" maxW="1000px">
           <StatementForm statement={statement} />
         </BasicLayout>
       )}

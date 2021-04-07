@@ -9,7 +9,6 @@ import { ParsedUrlQuery } from "node:querystring";
 const StatementPage: NextPage = () => {
   const router = useRouter();
   const { accountingyear } = router.query;
-  console.log(accountingyear);
   return <Statement id={accountingyear} />;
 };
 

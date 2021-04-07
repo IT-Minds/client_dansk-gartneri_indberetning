@@ -1,4 +1,4 @@
-import { Button, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -60,7 +60,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} id="statement_form">
       <Stack>
         <StatementSection heading={t("statements.section1.heading")}>
           <StatementSectionTable>
@@ -374,7 +374,6 @@ const StatementForm: FC<Props> = ({ statement }) => {
           </StatementSectionTable>
         </StatementSection>
       </Stack>
-      <Button type="submit">Test</Button>
     </form>
   );
 };

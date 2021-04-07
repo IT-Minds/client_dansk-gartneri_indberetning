@@ -25,7 +25,7 @@ const StatementFormHeader: FC = () => {
         <Button colorScheme="green" rounded="full">
           Gem ændringer
         </Button>
-        <Button colorScheme="blue" rounded="full">
+        <Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
           Underskriv og send
         </Button>
       </HStack>

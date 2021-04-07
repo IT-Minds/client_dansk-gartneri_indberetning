@@ -18,7 +18,18 @@ const Accounts: FC = () => {
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [isFetching, setIsFetching] = useState(false);
   const [searchString, setSearchString] = useState<string>("");
-  const [accountingYear, setAccountingYear] = useState<number>(2021);
+
+  const accountingYears = useMemo(() => {
+    const startYear = 2021;
+    const thisYear = new Date().getFullYear();
+    const years = [];
+    for (let i = thisYear; i >= startYear; i--) {
+      years.push(i);
+    }
+    return years;
+  }, []);
+
+  const [accountingYear, setAccountingYear] = useState<number>(accountingYears[0]);
 
   const fetchData = useCallback(async () => {
     setIsFetching(true);
@@ -62,16 +73,6 @@ const Accounts: FC = () => {
     fetchData();
   }, [fetchData]);
 
-  const accountingYears = useMemo(() => {
-    const startYear = 2021;
-    const thisYear = new Date().getFullYear();
-    const years = [];
-    for (let i = startYear; i <= thisYear; i++) {
-      years.push(i);
-    }
-    return years;
-  }, []);
-
   return (
     <AccountsContext.Provider
       value={{
@@ -84,9 +85,12 @@ const Accounts: FC = () => {
         <Stack spacing={4}>
           <Heading>{t("accounts.accounts")}</Heading>
           <Flex justifyContent="space-between" alignItems="center">
-            <Select placeholder="Vælg revisionsår" w="max-content">
+            <Select
+              w="max-content"
+              value={accountingYear}
+              onChange={e => setAccountingYear(parseInt(e.target.value))}>
               {accountingYears.map(year => (
-                <option key={year} value={year + ""}>
+                <option key={year} value={year}>
                   {year}
                 </option>
               ))}

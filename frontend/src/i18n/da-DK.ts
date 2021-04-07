@@ -103,6 +103,7 @@ export const table: Locale = {
     boughtPlants: "Indkøbte planter",
     other: "Andet",
     expences: "Udgifter",
+    accountingYear: "Revisionsår",
 
     section1: {
       heading: "1. Grøntsager i væksthus",

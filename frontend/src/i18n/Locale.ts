@@ -101,6 +101,7 @@ export interface Locale {
     boughtPlants: string;
     other: string;
     expences: string;
+    accountingYear: string;
 
     section1: {
       heading: string;

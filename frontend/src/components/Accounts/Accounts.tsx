@@ -1,4 +1,5 @@
 import { Box, Flex, Heading, HStack, Select, Spinner, Stack, Text } from "@chakra-ui/react";
+import AccountingYearSelect from "components/Common/AccountingYearSelect";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
@@ -85,16 +86,11 @@ const Accounts: FC = () => {
         <Stack spacing={4}>
           <Heading>{t("accounts.accounts")}</Heading>
           <Flex justifyContent="space-between" alignItems="center">
-            <Select
-              w="max-content"
+            <AccountingYearSelect
+              options={accountingYears}
               value={accountingYear}
-              onChange={e => setAccountingYear(parseInt(e.target.value))}>
-              {accountingYears.map(year => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </Select>
+              cb={setAccountingYear}
+            />
             <HStack spacing={5}>
               <Box>
                 <SearchFilterInput onChange={setSearchString} value={searchString} />
@@ -123,3 +119,15 @@ const Accounts: FC = () => {
   );
 };
 export default Accounts;
+/*
+<Select
+              w="max-content"
+              value={accountingYear}
+              onChange={e => setAccountingYear(parseInt(e.target.value))}>
+              {accountingYears.map(year => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </Select>
+*/

@@ -21,5 +21,5 @@ export const genUserClient = (context?: GetServerSidePropsContext): Promise<User
   api(UserClient, context);
 export const genMailClient = (context?: GetServerSidePropsContext): Promise<MailClient> =>
   api(MailClient, context);
-export const getStatementClient = (context?: GetServerSidePropsContext): Promise<StatementClient> =>
+export const genStatementClient = (context?: GetServerSidePropsContext): Promise<StatementClient> =>
   api(StatementClient, context);

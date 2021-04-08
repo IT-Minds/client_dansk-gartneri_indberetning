@@ -8,9 +8,9 @@ import { StatementKeys } from "types/StatementKeys";
 import InputDKK from "./InputDKK";
 import StatementSection from "./StatementSection";
 import StatementSectionTable from "./StatementSectionTable";
+import StatementTableColHeadings from "./StatementTableColHeadings";
 import StatementTableRow from "./StatementTableRow";
 import StatementTableSubHeading from "./StatementTableSubHeading";
-import StatementTableSubHeadings from "./StatementTableSubHeadings";
 
 interface Props {
   statement: IStatementDto;
@@ -22,6 +22,8 @@ const StatementForm: FC<Props> = ({ statement }) => {
   const [localForm, setLocalform] = useState<IStatementDto>(statement);
 
   const onSubmit = useCallback((data: IStatementDto) => {
+    //Converts all strings of the form data into numbers.
+    //Works for now because all inputs are numbers, but should be changed if other types of input are added..
     const formattedData = Object.keys(data).reduce(
       (attrs, key) => ({
         ...attrs,
@@ -31,6 +33,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
       }),
       {}
     );
+    //TODO: Do something with the data.
     console.log(formattedData);
   }, []);
 
@@ -71,7 +74,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s1_mushrooms}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s1_mushrooms}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -84,13 +87,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s1_tomatoCucumberHerb}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s1_tomatoCucumberHerb}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
               }
             />
-            <StatementTableSubHeadings h2={t("statements.expences")} />
+            <StatementTableColHeadings h2={t("statements.expences")} />
             <StatementTableRow
               text={t("statements.boughtPlants")}
               subText={t("statements.section1.boughtPlantsDesc")}
@@ -100,7 +103,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s1_boughtPlants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s1_boughtPlants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -117,7 +120,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s3_carrots}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s3_carrots}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -130,13 +133,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s3_peas}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s3_peas}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
               }
             />
-            <StatementTableSubHeadings h2={t("statements.expences")} />
+            <StatementTableColHeadings h2={t("statements.expences")} />
             <StatementTableRow
               text={t("statements.boughtPlants")}
               subText={t("statements.section3.boughtPlantsDesc")}
@@ -145,7 +148,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s3_boughtPlants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s3_boughtPlants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -162,7 +165,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s4_onions}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s4_onions}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -175,7 +178,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s4_plants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s4_plants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -188,13 +191,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s4_cutFlowers}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s4_cutFlowers}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
               }
             />
-            <StatementTableSubHeadings h2={t("statements.expences")} />
+            <StatementTableColHeadings h2={t("statements.expences")} />
             <StatementTableRow
               text={t("statements.boughtPlants")}
               subText={t("statements.section3.boughtPlantsDesc")}
@@ -203,7 +206,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s4_boughtPlants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s4_boughtPlants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -220,13 +223,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s7_plants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s7_plants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
               }
             />
-            <StatementTableSubHeadings h2={t("statements.expences")} />
+            <StatementTableColHeadings h2={t("statements.expences")} />
             <StatementTableRow
               text={t("statements.boughtPlants")}
               tax="4.50"
@@ -234,7 +237,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s7_boughtPlants}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s7_boughtPlants}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -247,7 +250,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
             <StatementTableSubHeading>
               {t("statements.section8.subHeading1")}
             </StatementTableSubHeading>
-            <StatementTableSubHeadings
+            <StatementTableColHeadings
               h2={t("statements.turnoverExlMoms")}
               h3={t("statements.taxIs")}
             />
@@ -258,13 +261,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_applesPearsEtc}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_applesPearsEtc}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
               }
             />
-            <StatementTableSubHeadings h2={t("statements.expences")} />
+            <StatementTableColHeadings h2={t("statements.expences")} />
             <StatementTableRow
               text={t("statements.section8.packagingCost")}
               subText={t("statements.section8.packagingCostDesc")}
@@ -273,7 +276,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_packaging}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_applesPearsEtc}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -282,7 +285,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
             <StatementTableSubHeading>
               {t("statements.section8.subHeading2")}
             </StatementTableSubHeading>
-            <StatementTableSubHeadings
+            <StatementTableColHeadings
               h2={t("statements.turnoverExlMoms")}
               h3={t("statements.taxIs")}
             />
@@ -293,7 +296,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_cherries}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_cherries}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -306,7 +309,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_plums}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_plums}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -319,7 +322,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_otherStoneFruit}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_otherStoneFruit}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -328,7 +331,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
             <StatementTableSubHeading>
               {t("statements.section8.subHeading3")}
             </StatementTableSubHeading>
-            <StatementTableSubHeadings
+            <StatementTableColHeadings
               h2={t("statements.turnoverExlMoms")}
               h3={t("statements.taxIs")}
             />
@@ -339,7 +342,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_currant}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_currant}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -352,7 +355,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_strawberries}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_strawberries}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />
@@ -365,7 +368,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
                 <Controller
                   name={formKeys.s8_otherBerryFruit}
                   control={control}
-                  defaultValue={false}
+                  defaultValue={localForm.s8_otherBerryFruit}
                   rules={{ required: false }}
                   render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
                 />

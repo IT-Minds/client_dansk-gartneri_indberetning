@@ -7,7 +7,7 @@ interface Props {
   h3?: string;
 }
 
-const StatementTableSubHeadings: FC<Props> = ({ h1, h2, h3 }) => {
+const StatementTableColHeadings: FC<Props> = ({ h1, h2, h3 }) => {
   return (
     <Tr>
       <Th>{h1}</Th>
@@ -16,4 +16,4 @@ const StatementTableSubHeadings: FC<Props> = ({ h1, h2, h3 }) => {
     </Tr>
   );
 };
-export default StatementTableSubHeadings;
+export default StatementTableColHeadings;

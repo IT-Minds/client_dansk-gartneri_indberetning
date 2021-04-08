@@ -21,11 +21,11 @@ interface Props {
   text: string;
   subText?: string;
   tax: string;
-  tooltip?: string;
+  helpInfo?: string;
   inputElement: ReactNode;
 }
 
-const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip, inputElement }) => {
+const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, inputElement }) => {
   const { t } = useLocales();
   const { subTextColor } = useColors();
 
@@ -33,7 +33,7 @@ const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip, inputElemen
     <Tr>
       <Td>
         <HStack>
-          {tooltip && (
+          {helpInfo && (
             <Popover>
               <PopoverTrigger>
                 <IconButton
@@ -48,7 +48,7 @@ const StatementTableRow: FC<Props> = ({ text, subText, tax, tooltip, inputElemen
               <PopoverContent>
                 <PopoverArrow />
                 <PopoverCloseButton />
-                <PopoverBody>{tooltip}</PopoverBody>
+                <PopoverBody>{helpInfo}</PopoverBody>
               </PopoverContent>
             </Popover>
           )}

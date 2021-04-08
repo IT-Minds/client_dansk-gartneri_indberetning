@@ -692,6 +692,7 @@ export class MailClient extends ClientBase implements IMailClient {
 }
 
 export interface IStatementClient {
+    getAllStatements(): Promise<StatementDto[]>;
     getMyStatements(): Promise<StatementDto[]>;
     getStatement(id: number): Promise<StatementDto>;
     createStatement(command: CreateStatementCommand): Promise<number>;
@@ -706,6 +707,46 @@ export class StatementClient extends ClientBase implements IStatementClient {
         super(configuration);
         this.http = http ? http : <any>window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getAllStatements(): Promise<StatementDto[]> {
+        let url_ = this.baseUrl + "/api/Statement";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetAllStatements(_response));
+        });
+    }
+
+    protected processGetAllStatements(response: Response): Promise<StatementDto[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(StatementDto.fromJS(item));
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<StatementDto[]>(<any>null);
     }
 
     getMyStatements(): Promise<StatementDto[]> {

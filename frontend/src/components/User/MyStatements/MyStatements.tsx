@@ -24,8 +24,6 @@ import { logger } from "utils/logger";
 
 const MyStatements: FC = () => {
   const { t } = useLocales();
-  const router = useRouter();
-  const { activeUser } = useContext(AuthContext);
   const [account, setAccount] = useState<IAccountDto>();
   const [isFetching, setIsFetching] = useState(false);
 

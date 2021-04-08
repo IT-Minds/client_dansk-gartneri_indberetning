@@ -8,8 +8,8 @@ import { ParsedUrlQuery } from "node:querystring";
 
 const StatementPage: NextPage = () => {
   const router = useRouter();
-  const { accountingyear } = router.query;
-  return <Statement id={accountingyear} />;
+  const { statementId } = router.query;
+  return <Statement id={statementId} />;
 };
 
 export const getStaticProps: GetStaticProps<I18nProps<Locale>> = async context => {
@@ -23,13 +23,9 @@ export const getStaticProps: GetStaticProps<I18nProps<Locale>> = async context =
 };
 
 export const getStaticPaths: GetStaticPaths<ParsedUrlQuery> = async () => {
-  const paths = [];
-  for (let i = 0; i < 50; i++) {
-    paths.push("/statement/" + i);
-  }
   return {
-    paths: paths,
-    fallback: false
+    paths: [],
+    fallback: true
   };
 };
 

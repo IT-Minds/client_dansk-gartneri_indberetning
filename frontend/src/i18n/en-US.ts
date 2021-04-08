@@ -16,7 +16,8 @@ export const table: Locale = {
 
   common: {
     search: "Search",
-    add: "Add"
+    add: "Add",
+    fetchingData: "Loading data..."
   },
 
   accounts: {
@@ -43,7 +44,8 @@ export const table: Locale = {
     CVR_apiErrorTitle: "CVR not found",
     CVR_apiErrorDescription: "Could not find CVR number in the registry",
     accountant: "Accountant",
-    fetching: "Fetching clients..."
+    fetching: "Fetching clients...",
+    statementStatus: "Statement status"
   },
 
   login: {
@@ -97,16 +99,21 @@ export const table: Locale = {
       "This email is used by an accountant, that is already assigned to a client."
   },
 
+  //TODO: Translate these
   statements: {
+    myStatements: "Mine indberetninger",
     turnoverExlMoms: "Omsætning excl. moms",
     taxIs: "Afgiften udgør",
+    boughtPlants: "Indkøbte planter",
     other: "Andet",
+    expences: "Udgifter",
+    accountingYear: "Revisionsår",
 
     section1: {
       heading: "1. Grøntsager i væksthus",
       mushrooms: "Svampe",
       tomatoCucumberHerbs: "Tomat, agurk, krydderurt",
-      boughtPlants: "Indkøbte planter excl. moms, ikke for svampe"
+      boughtPlantsDesc: "(excl. moms, ikke for svampe)"
     },
     section3: {
       heading: "3. Grøntsager på friland",
@@ -114,29 +121,30 @@ export const table: Locale = {
       carrot: "Gulerod",
       pea: "Ært",
       onion: "Løg",
-      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. stikløg eller andet"
+      boughtPlantsDesc: "(excl. moms kun vedr. stikløg eller andet)"
     },
     section4: {
-      heading: "Potteplanter m.v.",
+      heading: "4. Potteplanter m.v.",
       onions: "Løg og knolde",
       plants: "Potteplanter",
       flowers: "Snitblomster",
-      boughtPlants: "Anfør indkøbte planter excl. moms kun vedr. snitblomster"
+      boughtPlantsDesc: "(excl. moms kun vedr. snitblomster)"
     },
     section7: {
-      heading: "Planteskoleplanter",
+      heading: "7. Planteskoleplanter",
       description: "Inklusive videre- og detailsalg",
+      plants: "Planteskoleplanter",
       turnoverDescription:
-        "Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.",
-      plantsTurnover: "Indkøbte planter excl. moms"
+        "(Indkøb og salg af planter ved direkte import fra udlandet skal ikke medregnes hverken i omsætning eller plantekøb.)",
+      boughtPlantsDesc: "(excl. moms)"
     },
     section8: {
-      heading: "Frugt og bær",
+      heading: "8. Frugt og bær",
       subHeading1: "Kernefrugt",
       subHeading2: "Stenfrugt",
       subHeading3: "Busk- og bærfrugt",
-      packagingCost:
-        "For producenter med eget lager anfør udgift til emballage og indkøbt salgsfragt excl. moms.",
+      packagingCost: "Udgifter til emballage og indkøbt salgsfragt",
+      packagingCostDesc: "(for producenter med eget lager, excl. moms)",
       applesPearsOther: "Æbler, pærer m.v.",
       cherry: "Kirsebær",
       plum: "Blommer",

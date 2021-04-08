@@ -2,7 +2,7 @@ import { Stack } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { IStatementDto } from "services/backend/nswagts";
+import { IStatementDto, StatementDto } from "services/backend/nswagts";
 import { StatementKeys } from "types/StatementKeys";
 
 import InputDKK from "./InputDKK";
@@ -37,31 +37,6 @@ const StatementForm: FC<Props> = ({ statement }) => {
     console.log(formattedData);
   }, []);
 
-  const formKeys: StatementKeys = {
-    s1_mushrooms: "s1_mushrooms",
-    s1_tomatoCucumberHerb: "s1_tomatoCucumberHerb",
-    s1_boughtPlants: "s1_boughtPlants",
-    s3_carrots: "s3_carrots",
-    s3_peas: "s3_peas",
-    s3_onions: "s3_onions",
-    s3_other: "s3_other",
-    s3_boughtPlants: "s3_boughtPlants",
-    s4_onions: "s4_onions",
-    s4_plants: "s4_plants",
-    s4_cutFlowers: "s4_cutFlowers",
-    s4_boughtPlants: "s4_boughtPlants",
-    s7_plants: "s7_plants",
-    s7_boughtPlants: "s7_boughtPlants",
-    s8_applesPearsEtc: "s8_applesPearsEtc",
-    s8_packaging: "s8_packaging",
-    s8_cherries: "s8_cherries",
-    s8_plums: "s8_plums",
-    s8_otherStoneFruit: "s8_otherStoneFruit",
-    s8_currant: "s8_currant",
-    s8_strawberries: "s8_strawberries",
-    s8_otherBerryFruit: "s8_otherBerryFruit"
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="statement_form">
       <Stack>
@@ -72,7 +47,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="0.25"
               inputElement={
                 <Controller
-                  name={formKeys.s1_mushrooms}
+                  name={nameof<IStatementDto>(o => o.s1_mushrooms)}
                   control={control}
                   defaultValue={localForm.s1_mushrooms}
                   rules={{ required: false }}
@@ -85,7 +60,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="2.00"
               inputElement={
                 <Controller
-                  name={formKeys.s1_tomatoCucumberHerb}
+                  name={nameof<IStatementDto>(o => o.s1_tomatoCucumberHerb)}
                   control={control}
                   defaultValue={localForm.s1_tomatoCucumberHerb}
                   rules={{ required: false }}
@@ -101,7 +76,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               helpInfo="Eksempel på hjælp til dette inputfelt."
               inputElement={
                 <Controller
-                  name={formKeys.s1_boughtPlants}
+                  name={nameof<IStatementDto>(o => o.s1_boughtPlants)}
                   control={control}
                   defaultValue={localForm.s1_boughtPlants}
                   rules={{ required: false }}
@@ -118,7 +93,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={formKeys.s3_carrots}
+                  name={nameof<IStatementDto>(o => o.s3_carrots)}
                   control={control}
                   defaultValue={localForm.s3_carrots}
                   rules={{ required: false }}
@@ -131,7 +106,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={formKeys.s3_peas}
+                  name={nameof<IStatementDto>(o => o.s3_peas)}
                   control={control}
                   defaultValue={localForm.s3_peas}
                   rules={{ required: false }}
@@ -146,7 +121,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={formKeys.s3_boughtPlants}
+                  name={nameof<IStatementDto>(o => o.s3_boughtPlants)}
                   control={control}
                   defaultValue={localForm.s3_boughtPlants}
                   rules={{ required: false }}
@@ -163,7 +138,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={formKeys.s4_onions}
+                  name={nameof<IStatementDto>(o => o.s4_onions)}
                   control={control}
                   defaultValue={localForm.s4_onions}
                   rules={{ required: false }}
@@ -176,7 +151,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={formKeys.s4_plants}
+                  name={nameof<IStatementDto>(o => o.s4_plants)}
                   control={control}
                   defaultValue={localForm.s4_plants}
                   rules={{ required: false }}
@@ -189,7 +164,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={formKeys.s4_cutFlowers}
+                  name={nameof<IStatementDto>(o => o.s4_cutFlowers)}
                   control={control}
                   defaultValue={localForm.s4_cutFlowers}
                   rules={{ required: false }}
@@ -204,7 +179,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={formKeys.s4_boughtPlants}
+                  name={nameof<IStatementDto>(o => o.s4_boughtPlants)}
                   control={control}
                   defaultValue={localForm.s4_boughtPlants}
                   rules={{ required: false }}
@@ -221,7 +196,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.50"
               inputElement={
                 <Controller
-                  name={formKeys.s7_plants}
+                  name={nameof<IStatementDto>(o => o.s7_plants)}
                   control={control}
                   defaultValue={localForm.s7_plants}
                   rules={{ required: false }}
@@ -235,7 +210,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.50"
               inputElement={
                 <Controller
-                  name={formKeys.s7_boughtPlants}
+                  name={nameof<IStatementDto>(o => o.s7_boughtPlants)}
                   control={control}
                   defaultValue={localForm.s7_boughtPlants}
                   rules={{ required: false }}
@@ -259,7 +234,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="5.00"
               inputElement={
                 <Controller
-                  name={formKeys.s8_applesPearsEtc}
+                  name={nameof<IStatementDto>(o => o.s8_applesPearsEtc)}
                   control={control}
                   defaultValue={localForm.s8_applesPearsEtc}
                   rules={{ required: false }}
@@ -274,7 +249,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="5.00"
               inputElement={
                 <Controller
-                  name={formKeys.s8_packaging}
+                  name={nameof<IStatementDto>(o => o.s8_packaging)}
                   control={control}
                   defaultValue={localForm.s8_applesPearsEtc}
                   rules={{ required: false }}
@@ -294,7 +269,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={formKeys.s8_cherries}
+                  name={nameof<IStatementDto>(o => o.s8_cherries)}
                   control={control}
                   defaultValue={localForm.s8_cherries}
                   rules={{ required: false }}
@@ -307,7 +282,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={formKeys.s8_plums}
+                  name={nameof<IStatementDto>(o => o.s8_plums)}
                   control={control}
                   defaultValue={localForm.s8_plums}
                   rules={{ required: false }}
@@ -320,7 +295,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={formKeys.s8_otherStoneFruit}
+                  name={nameof<IStatementDto>(o => o.s8_otherStoneFruit)}
                   control={control}
                   defaultValue={localForm.s8_otherStoneFruit}
                   rules={{ required: false }}
@@ -340,7 +315,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={formKeys.s8_currant}
+                  name={nameof<IStatementDto>(o => o.s8_currant)}
                   control={control}
                   defaultValue={localForm.s8_currant}
                   rules={{ required: false }}
@@ -353,7 +328,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={formKeys.s8_strawberries}
+                  name={nameof<IStatementDto>(o => o.s8_strawberries)}
                   control={control}
                   defaultValue={localForm.s8_strawberries}
                   rules={{ required: false }}
@@ -366,7 +341,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={formKeys.s8_otherBerryFruit}
+                  name={nameof<IStatementDto>(o => o.s8_otherBerryFruit)}
                   control={control}
                   defaultValue={localForm.s8_otherBerryFruit}
                   rules={{ required: false }}

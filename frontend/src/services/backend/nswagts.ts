@@ -1777,8 +1777,9 @@ export interface IStatementDto {
 }
 
 export enum StatementStatus {
-    Unsigned = 0,
-    Signed = 1,
+    InvitedNotEdited = 0,
+    InvitedAndEdited = 1,
+    SignedOff = 2,
 }
 
 export class UserTokenDto implements IUserTokenDto {

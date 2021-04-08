@@ -98,7 +98,7 @@ const StatementForm: FC<Props> = ({ statement }) => {
               text={t("statements.boughtPlants")}
               subText={t("statements.section1.boughtPlantsDesc")}
               tax="2.00"
-              tooltip="Eksempel på hjælp til dette inputfelt."
+              helpInfo="Eksempel på hjælp til dette inputfelt."
               inputElement={
                 <Controller
                   name={formKeys.s1_boughtPlants}

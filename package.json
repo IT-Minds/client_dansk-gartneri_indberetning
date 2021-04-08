@@ -5,6 +5,5 @@
   },
   "devDependencies": {
     "husky": "^5.0.6"
-  },
-  "dependencies": {}
+  }
 }

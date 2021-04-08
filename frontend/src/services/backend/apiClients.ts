@@ -5,6 +5,7 @@ import {
   AccountClient,
   AuthClient,
   ExampleChildClient,
+  MailClient,
   StatementClient,
   UserClient
 } from "./nswagts";
@@ -18,3 +19,7 @@ export const genAccountClient = (context?: GetServerSidePropsContext): Promise<A
   api(AccountClient, context);
 export const genUserClient = (context?: GetServerSidePropsContext): Promise<UserClient> =>
   api(UserClient, context);
+export const genMailClient = (context?: GetServerSidePropsContext): Promise<MailClient> =>
+  api(MailClient, context);
+export const getStatementClient = (context?: GetServerSidePropsContext): Promise<StatementClient> =>
+  api(StatementClient, context);

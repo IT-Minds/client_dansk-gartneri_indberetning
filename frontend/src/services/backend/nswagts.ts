@@ -1640,8 +1640,6 @@ export class StatementDto implements IStatementDto {
     accountId?: number;
     account?: AccountDto | null;
     revisionYear?: number;
-    assignedUserId?: number | null;
-    assignedUser?: UserAccountIdDto | null;
     status?: StatementStatus;
     s1_mushrooms?: number;
     s1_tomatoCucumberHerb?: number;
@@ -1673,7 +1671,6 @@ export class StatementDto implements IStatementDto {
                     (<any>this)[property] = (<any>data)[property];
             }
             this.account = data.account && !(<any>data.account).toJSON ? new AccountDto(data.account) : <AccountDto>this.account; 
-            this.assignedUser = data.assignedUser && !(<any>data.assignedUser).toJSON ? new UserAccountIdDto(data.assignedUser) : <UserAccountIdDto>this.assignedUser; 
         }
     }
 
@@ -1683,8 +1680,6 @@ export class StatementDto implements IStatementDto {
             this.accountId = _data["accountId"] !== undefined ? _data["accountId"] : <any>null;
             this.account = _data["account"] ? AccountDto.fromJS(_data["account"]) : <any>null;
             this.revisionYear = _data["revisionYear"] !== undefined ? _data["revisionYear"] : <any>null;
-            this.assignedUserId = _data["assignedUserId"] !== undefined ? _data["assignedUserId"] : <any>null;
-            this.assignedUser = _data["assignedUser"] ? UserAccountIdDto.fromJS(_data["assignedUser"]) : <any>null;
             this.status = _data["status"] !== undefined ? _data["status"] : <any>null;
             this.s1_mushrooms = _data["s1_mushrooms"] !== undefined ? _data["s1_mushrooms"] : <any>null;
             this.s1_tomatoCucumberHerb = _data["s1_tomatoCucumberHerb"] !== undefined ? _data["s1_tomatoCucumberHerb"] : <any>null;
@@ -1724,8 +1719,6 @@ export class StatementDto implements IStatementDto {
         data["accountId"] = this.accountId !== undefined ? this.accountId : <any>null;
         data["account"] = this.account ? this.account.toJSON() : <any>null;
         data["revisionYear"] = this.revisionYear !== undefined ? this.revisionYear : <any>null;
-        data["assignedUserId"] = this.assignedUserId !== undefined ? this.assignedUserId : <any>null;
-        data["assignedUser"] = this.assignedUser ? this.assignedUser.toJSON() : <any>null;
         data["status"] = this.status !== undefined ? this.status : <any>null;
         data["s1_mushrooms"] = this.s1_mushrooms !== undefined ? this.s1_mushrooms : <any>null;
         data["s1_tomatoCucumberHerb"] = this.s1_tomatoCucumberHerb !== undefined ? this.s1_tomatoCucumberHerb : <any>null;
@@ -1758,8 +1751,6 @@ export interface IStatementDto {
     accountId?: number;
     account?: IAccountDto | null;
     revisionYear?: number;
-    assignedUserId?: number | null;
-    assignedUser?: IUserAccountIdDto | null;
     status?: StatementStatus;
     s1_mushrooms?: number;
     s1_tomatoCucumberHerb?: number;

@@ -13,8 +13,6 @@ namespace Application.Statements
     public int AccountId { get; set; }
     public virtual AccountDto Account { get; set; }
     public int RevisionYear { get; set; }
-    public int? AssignedUserId { get; set; }
-    public virtual UserAccountIdDto AssignedUser { get; set; }
     public StatementStatus Status { get; set; }
 
     public int s1_mushrooms { get; set; }

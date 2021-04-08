@@ -18,5 +18,3 @@ export const genAccountClient = (context?: GetServerSidePropsContext): Promise<A
   api(AccountClient, context);
 export const genUserClient = (context?: GetServerSidePropsContext): Promise<UserClient> =>
   api(UserClient, context);
-export const genStatementClient = (context?: GetServerSidePropsContext): Promise<StatementClient> =>
-  api(StatementClient, context);

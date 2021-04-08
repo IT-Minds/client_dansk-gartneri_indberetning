@@ -61,6 +61,10 @@ export interface Locale {
   actions: {
     update: string;
     delete: string;
+    saveSuccessTitle: string;
+    saveSuccessText: string;
+    saveErrorTitle: string;
+    saveErrorText: string;
   };
 
   password: {
@@ -94,6 +98,20 @@ export interface Locale {
     deleteErrorText: string;
     alreadyAssignedTitle: string;
     alreadyAssignedText: string;
+  };
+
+  mailEditor: {
+    editEmails: string;
+    name: string;
+    subject: string;
+    ctaButtonInputLabel: string;
+    preview: string;
+    nameTooltip: string;
+    subjectTooltip: string;
+    ctaTooltip: string;
+    section: string;
+    headingPlaceholder: string;
+    paragraphPlaceholder: string;
   };
 
   statements: {

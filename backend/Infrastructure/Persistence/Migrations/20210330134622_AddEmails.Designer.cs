@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210330134622_AddEmails")]
+    partial class AddEmails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,108 +252,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("ExampleParents");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Statement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("LastModified")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RevisionYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s1_boughtPlants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s1_mushrooms")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s1_tomatoCucumberHerb")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s3_boughtPlants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s3_carrots")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s3_onions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s3_other")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s3_peas")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s4_boughtPlants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s4_cutFlowers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s4_onions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s4_plants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s7_boughtPlants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s7_plants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_applesPearsEtc")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_cherries")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_currant")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_otherBerryFruit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_otherStoneFruit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_packaging")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_plums")
-                        .HasColumnType("int");
-
-                    b.Property<int>("s8_strawberries")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId", "RevisionYear")
-                        .IsUnique();
-
-                    b.ToTable("Statements");
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -427,17 +327,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Statement", b =>
-                {
-                    b.HasOne("Domain.Entities.Account", "Account")
-                        .WithMany("Statements")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Entities.Account", "Account")
@@ -451,8 +340,6 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
-                    b.Navigation("Statements");
-
                     b.Navigation("Users");
                 });
 

@@ -113,15 +113,3 @@ const Accounts: FC = () => {
   );
 };
 export default Accounts;
-/*
-<Select
-              w="max-content"
-              value={accountingYear}
-              onChange={e => setAccountingYear(parseInt(e.target.value))}>
-              {accountingYears.map(year => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </Select>
-*/

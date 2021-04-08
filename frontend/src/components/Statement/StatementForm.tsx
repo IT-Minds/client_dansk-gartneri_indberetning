@@ -2,8 +2,7 @@ import { Stack } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { IStatementDto, StatementDto } from "services/backend/nswagts";
-import { StatementKeys } from "types/StatementKeys";
+import { IStatementDto } from "services/backend/nswagts";
 
 import InputDKK from "./InputDKK";
 import StatementSection from "./StatementSection";
@@ -21,21 +20,13 @@ const StatementForm: FC<Props> = ({ statement }) => {
   const { handleSubmit, watch, errors, control } = useForm();
   const [localForm, setLocalform] = useState<IStatementDto>(statement);
 
-  const onSubmit = useCallback((data: IStatementDto) => {
-    //Converts all strings of the form data into numbers.
-    //Works for now because all inputs are numbers, but should be changed if other types of input are added..
-    const formattedData = Object.keys(data).reduce(
-      (attrs, key) => ({
-        ...attrs,
-        [key]:
-          typeof data[key as keyof IStatementDto] === "string" &&
-          parseInt(data[key as keyof IStatementDto] as string)
-      }),
-      {}
-    );
-    //TODO: Do something with the data.
-    console.log(formattedData);
-  }, []);
+  const onSubmit = useCallback(
+    (data: IStatementDto) => {
+      //TODO: Set statement as "signed off";
+      console.log(localForm);
+    },
+    [localForm]
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="statement_form">
@@ -47,11 +38,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="0.25"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s1_mushrooms)}
+                  name="s1_mushrooms"
                   control={control}
                   defaultValue={localForm.s1_mushrooms}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s1_mushrooms: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -60,11 +62,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="2.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s1_tomatoCucumberHerb)}
+                  name="s1_tomatoCucumberHerbs"
                   control={control}
                   defaultValue={localForm.s1_tomatoCucumberHerb}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s1_tomatoCucumberHerb: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -76,11 +89,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               helpInfo="Eksempel på hjælp til dette inputfelt."
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s1_boughtPlants)}
+                  name="s1_boughtPlants"
                   control={control}
                   defaultValue={localForm.s1_boughtPlants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s1_boughtPlants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -93,11 +117,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s3_carrots)}
+                  name="s3_carrots"
                   control={control}
                   defaultValue={localForm.s3_carrots}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s3_carrots: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -106,11 +141,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s3_peas)}
+                  name="s3_peas"
                   control={control}
                   defaultValue={localForm.s3_peas}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s3_peas: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -121,11 +167,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="3.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s3_boughtPlants)}
+                  name="s3_boughtplants"
                   control={control}
                   defaultValue={localForm.s3_boughtPlants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s3_boughtPlants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -138,11 +195,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s4_onions)}
+                  name="s4_onions"
                   control={control}
                   defaultValue={localForm.s4_onions}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s4_onions: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -151,11 +219,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s4_plants)}
+                  name="s4_plants"
                   control={control}
                   defaultValue={localForm.s4_plants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s4_plants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -164,11 +243,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s4_cutFlowers)}
+                  name="s4_cutFlowers"
                   control={control}
                   defaultValue={localForm.s4_cutFlowers}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s4_cutFlowers: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -179,11 +269,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="1.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s4_boughtPlants)}
+                  name="s4_boughtPlants"
                   control={control}
                   defaultValue={localForm.s4_boughtPlants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s4_boughtPlants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -196,11 +297,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.50"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s7_plants)}
+                  name="s8_plants"
                   control={control}
                   defaultValue={localForm.s7_plants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s7_plants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -210,11 +322,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.50"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s7_boughtPlants)}
+                  name="s7_boughtPlants"
                   control={control}
                   defaultValue={localForm.s7_boughtPlants}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s7_boughtPlants: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -234,11 +357,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="5.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_applesPearsEtc)}
+                  name="s8_applesPearsEtc"
                   control={control}
                   defaultValue={localForm.s8_applesPearsEtc}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_applesPearsEtc: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -249,11 +383,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="5.00"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_packaging)}
+                  name="s8_packaging"
                   control={control}
-                  defaultValue={localForm.s8_applesPearsEtc}
+                  defaultValue={localForm.s8_packaging}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_packaging: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -269,11 +414,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_cherries)}
+                  name="s8_cherries"
                   control={control}
                   defaultValue={localForm.s8_cherries}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_cherries: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -282,11 +438,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_plums)}
+                  name="s8_plums"
                   control={control}
                   defaultValue={localForm.s8_plums}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_plums: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -295,11 +462,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.65"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_otherStoneFruit)}
+                  name="s8_otherStoneFruit"
                   control={control}
                   defaultValue={localForm.s8_otherStoneFruit}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_otherStoneFruit: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -315,11 +493,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_currant)}
+                  name="s8_currant"
                   control={control}
                   defaultValue={localForm.s8_currant}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_currant: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -328,11 +517,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_strawberries)}
+                  name="s8_strawberries"
                   control={control}
                   defaultValue={localForm.s8_strawberries}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_strawberries: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />
@@ -341,11 +541,22 @@ const StatementForm: FC<Props> = ({ statement }) => {
               tax="4.60"
               inputElement={
                 <Controller
-                  name={nameof<IStatementDto>(o => o.s8_otherBerryFruit)}
+                  name="s8_otherBerryFruit"
                   control={control}
                   defaultValue={localForm.s8_otherBerryFruit}
                   rules={{ required: false }}
-                  render={({ onChange, value }) => <InputDKK value={value} onChange={onChange} />}
+                  render={({ onChange, value }) => (
+                    <InputDKK
+                      value={value}
+                      onChange={value => {
+                        onChange(value);
+                        setLocalform({
+                          ...localForm,
+                          ...{ s8_otherBerryFruit: parseInt(value) }
+                        });
+                      }}
+                    />
+                  )}
                 />
               }
             />

@@ -4,8 +4,9 @@ import { FC } from "react";
 
 interface Props {
   value: number;
-  onChange: (...event: any[]) => void;
+  onChange: (value: string) => void;
 }
+//(...event: any[]) => void;
 
 const InputDKK: FC<Props> = ({ value, onChange }) => {
   const { t } = useLocales();
@@ -13,7 +14,11 @@ const InputDKK: FC<Props> = ({ value, onChange }) => {
   return (
     <InputGroup>
       <NumberInput min={0} precision={0} w="100%">
-        <NumberInputField roundedEnd="none" value={value} onChange={onChange} />
+        <NumberInputField
+          roundedEnd="none"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+        />
       </NumberInput>
       <InputRightAddon>Kr.</InputRightAddon>
     </InputGroup>

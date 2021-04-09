@@ -87,23 +87,28 @@ const Statement: FC<Props> = ({ id }) => {
 
   return (
     <FormProvider {...methods}>
-      <BasicLayout variant="statementHeader" maxW="1000px">
-        <HStack>
-          <Button colorScheme="green" rounded="full" onClick={onSaveChanges}>
-            Gem ændringer
-          </Button>
-          <Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
-            Underskriv og send
-          </Button>
-        </HStack>
-        <StatementForm statement={statement} setStatement={setStatement} />
-      </BasicLayout>
+      <EditStatementContext.Provider
+        value={{ save: onSaveChanges, isSaving: isSaving, submit: onSubmit }}>
+        <BasicLayout variant="statementHeader" maxW="1000px">
+          <StatementForm statement={statement} setStatement={setStatement} />
+        </BasicLayout>
+      </EditStatementContext.Provider>
     </FormProvider>
   );
 };
 export default Statement;
 //statement={statement}
 /*
+<HStack>
+            <Button colorScheme="green" rounded="full" onClick={onSaveChanges}>
+              Gem ændringer
+            </Button>
+            <Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
+              Underskriv og send
+            </Button>
+          </HStack>
+
+
 fetchStatement: fetchData,
         statement: statement,
         setStatement: setStatement,

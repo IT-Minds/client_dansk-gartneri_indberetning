@@ -2,6 +2,14 @@ import { createContext, Dispatch, SetStateAction } from "react";
 import { IStatementDto } from "services/backend/nswagts";
 
 type ContextType = {
+  save: () => void;
+  isSaving: boolean;
+  submit: () => void;
+};
+
+export const EditStatementContext = createContext<ContextType>(null);
+/*
+type ContextType = {
   fetchStatement: () => Promise<void>;
   statement: IStatementDto;
   setStatement: Dispatch<SetStateAction<IStatementDto>>;
@@ -9,12 +17,4 @@ type ContextType = {
   isSaving: boolean;
   submit: () => void;
 };
-
-export const EditStatementContext = createContext<ContextType>({
-  fetchStatement: null,
-  statement: null,
-  setStatement: null,
-  save: null,
-  isSaving: false,
-  submit: null
-});
+*/

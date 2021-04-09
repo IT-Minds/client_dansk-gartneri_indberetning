@@ -13,23 +13,23 @@ using Domain.Enums;
 namespace Application.Statements.Commands.SignOffStatement
 {
   [Authenticated]
-  public class SignOffStatementcommand : IRequest
+  public class SignOffStatementCommand : IRequest
   {
     [JsonIgnore]
     public int Id { get; set; }
 
-    public class SignOffStatementcommandHandler : IRequestHandler<SignOffStatementcommand>
+    public class SignOffStatementCommandHandler : IRequestHandler<SignOffStatementCommand>
     {
       private readonly IApplicationDbContext _context;
       private readonly ICurrentUserService _currentUser;
 
-      public SignOffStatementcommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+      public SignOffStatementCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
       {
         _context = context;
         _currentUser = currentUser;
       }
 
-      public async Task<Unit> Handle(SignOffStatementcommand request, CancellationToken cancellationToken)
+      public async Task<Unit> Handle(SignOffStatementCommand request, CancellationToken cancellationToken)
       {
         var statementEntity = await _context.Statements.FindAsync(request.Id);
 

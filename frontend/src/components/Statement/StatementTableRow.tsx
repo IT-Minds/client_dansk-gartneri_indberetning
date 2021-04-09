@@ -22,10 +22,11 @@ interface Props {
   subText?: string;
   tax: string;
   helpInfo?: string;
-  inputElement: ReactNode;
+  inputElement?: ReactNode;
+  children?: ReactNode;
 }
 
-const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, inputElement }) => {
+const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, inputElement, children }) => {
   const { t } = useLocales();
   const { subTextColor } = useColors();
 

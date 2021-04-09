@@ -858,7 +858,9 @@ export interface IStatementClient {
     getAllStatements(): Promise<StatementDto[]>;
     getMyStatements(): Promise<StatementDto[]>;
     getStatement(id: number): Promise<StatementDto>;
+    updateStatement(id: number, command: UpdateStatementCommand): Promise<FileResponse>;
     createStatement(command: CreateStatementCommand): Promise<number>;
+    signOffStatement(id: number, command: SignOffStatementCommand): Promise<FileResponse>;
 }
 
 export class StatementClient extends ClientBase implements IStatementClient {
@@ -991,6 +993,47 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return Promise.resolve<StatementDto>(<any>null);
     }
 
+    updateStatement(id: number, command: UpdateStatementCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Statement/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processUpdateStatement(_response));
+        });
+    }
+
+    protected processUpdateStatement(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
+    }
+
     createStatement(command: CreateStatementCommand): Promise<number> {
         let url_ = this.baseUrl + "/api/Statement/statement";
         url_ = url_.replace(/[?&]$/, "");
@@ -1029,6 +1072,47 @@ export class StatementClient extends ClientBase implements IStatementClient {
             });
         }
         return Promise.resolve<number>(<any>null);
+    }
+
+    signOffStatement(id: number, command: SignOffStatementCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Statement/signoff/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processSignOffStatement(_response));
+        });
+    }
+
+    protected processSignOffStatement(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
     }
 }
 
@@ -2344,6 +2428,73 @@ export class CreateStatementCommand implements ICreateStatementCommand {
 export interface ICreateStatementCommand {
     accountId?: number;
     revisionYear?: number;
+}
+
+export class UpdateStatementCommand implements IUpdateStatementCommand {
+    statementDto?: StatementDto | null;
+
+    constructor(data?: IUpdateStatementCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+            this.statementDto = data.statementDto && !(<any>data.statementDto).toJSON ? new StatementDto(data.statementDto) : <StatementDto>this.statementDto; 
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.statementDto = _data["statementDto"] ? StatementDto.fromJS(_data["statementDto"]) : <any>null;
+        }
+    }
+
+    static fromJS(data: any): UpdateStatementCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateStatementCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statementDto"] = this.statementDto ? this.statementDto.toJSON() : <any>null;
+        return data; 
+    }
+}
+
+export interface IUpdateStatementCommand {
+    statementDto?: IStatementDto | null;
+}
+
+export class SignOffStatementCommand implements ISignOffStatementCommand {
+
+    constructor(data?: ISignOffStatementCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+    }
+
+    static fromJS(data: any): SignOffStatementCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new SignOffStatementCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        return data; 
+    }
+}
+
+export interface ISignOffStatementCommand {
 }
 
 export class CreateAccountantCommand implements ICreateAccountantCommand {

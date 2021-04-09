@@ -17,7 +17,11 @@ export const table: Locale = {
   common: {
     search: "Søg",
     add: "Tilføj",
-    fetchingData: "Henter data..."
+    fetchingData: "Henter data...",
+    saveSuccessTitle: "Ændringer gemt",
+    saveSuccessText: "Dine ændringer er blevet gemt.",
+    saveErrorTitle: "Fejl",
+    saveErrorText: "Der skete den fejl, da vi forsøgte at gemme dine ændringer."
   },
 
   accounts: {

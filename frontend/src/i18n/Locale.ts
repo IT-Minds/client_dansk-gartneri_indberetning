@@ -16,6 +16,10 @@ export interface Locale {
     search: string;
     add: string;
     fetchingData: string;
+    saveSuccessTitle: string;
+    saveSuccessText: string;
+    saveErrorTitle: string;
+    saveErrorText: string;
   };
 
   accounts: {

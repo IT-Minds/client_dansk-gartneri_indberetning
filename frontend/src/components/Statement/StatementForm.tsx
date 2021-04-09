@@ -3,7 +3,7 @@ import { EditStatementContext } from "contexts/EditStatementContext";
 import { useEffectAsync } from "hooks/useEffectAsync";
 import { useLocales } from "hooks/useLocales";
 import { Dispatch, FC, SetStateAction, useCallback, useContext, useEffect, useMemo } from "react";
-import { Control, Controller, FieldValues, useForm } from "react-hook-form";
+import { Control, Controller, FieldValues, useForm, useFormContext } from "react-hook-form";
 import { IStatementDto } from "services/backend/nswagts";
 
 import InputDKK from "./InputDKK";
@@ -22,7 +22,7 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
   const { t } = useLocales();
   //const { statement, setStatement, submit } = useContext(EditStatementContext);
   //const { register, handleSubmit, watch, errors, control, reset, setValue } = useForm();
-  const { handleSubmit, watch, control } = useForm();
+  const { handleSubmit, control } = useFormContext();
   //useMemo(() => statement, [statement])
 
   /*
@@ -52,12 +52,6 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
     [statement]
   );
 
-  const all = watch();
-
-  useEffect(() => {
-    console.log(all);
-  }, [all]);
-
   return (
     <>
       {statement && (
@@ -72,10 +66,16 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                     <Controller
                       name="s1_mushrooms"
                       control={control}
-                      defaultValue={statement.s3_carrots}
+                      defaultValue={statement.s1_mushrooms}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s1_mushrooms: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -87,10 +87,19 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                     <Controller
                       name="s1_tomatoCucumberHerbs"
                       control={control}
-                      defaultValue={statement.s3_carrots}
+                      defaultValue={statement.s1_tomatoCucumberHerb}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({
+                              ...statement,
+                              ...{ s1_tomatoCucumberHerb: parseInt(value) }
+                            });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -108,7 +117,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s1_boughtPlants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s1_boughtPlants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -127,7 +142,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s3_carrots}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s3_carrots: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -142,7 +163,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s3_peas}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s3_peas: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -159,7 +186,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s3_boughtPlants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s3_boughtPlants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -178,7 +211,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s4_onions}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s4_onions: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -193,7 +232,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s4_plants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s4_plants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -208,7 +253,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s4_cutFlowers}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s4_cutFlowers: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -225,7 +276,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s4_boughtPlants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s4_boughtPlants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -244,7 +301,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s7_plants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s7_plants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -260,7 +323,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s7_boughtPlants}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s7_boughtPlants: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -286,7 +355,16 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_applesPearsEtc}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({
+                              ...statement,
+                              ...{ s8_applesPearsEtc: parseInt(value) }
+                            });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -303,7 +381,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_packaging}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s8_packaging: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -325,7 +409,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_cherries}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s8_cherries: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -340,7 +430,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_plums}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s8_plums: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -355,7 +451,16 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_otherStoneFruit}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({
+                              ...statement,
+                              ...{ s8_otherStoneFruit: parseInt(value) }
+                            });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -377,7 +482,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_currant}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s8_currant: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -392,7 +503,13 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_strawberries}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({ ...statement, ...{ s8_strawberries: parseInt(value) } });
+                          }}
+                        />
                       )}
                     />
                   }
@@ -407,7 +524,16 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
                       defaultValue={statement.s8_otherBerryFruit}
                       rules={{ required: false }}
                       render={({ onChange, value }) => (
-                        <InputDKK value={value} onChange={value => onChange(value)} />
+                        <InputDKK
+                          value={value}
+                          onChange={value => {
+                            onChange(value);
+                            setStatement({
+                              ...statement,
+                              ...{ s8_otherBerryFruit: parseInt(value) }
+                            });
+                          }}
+                        />
                       )}
                     />
                   }

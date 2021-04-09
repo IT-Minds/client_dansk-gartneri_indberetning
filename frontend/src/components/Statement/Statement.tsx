@@ -6,7 +6,7 @@ import { EditStatementContext } from "contexts/EditStatementContext";
 import { useLocales } from "hooks/useLocales";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { genStatementClient } from "services/backend/apiClients";
 import { IStatementDto, UpdateStatementCommand } from "services/backend/nswagts";
 import { logger } from "utils/logger";
@@ -23,7 +23,7 @@ const Statement: FC<Props> = ({ id }) => {
   const toast = useToast();
   const [statement, setStatement] = useState<IStatementDto>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const { register, handleSubmit, watch, errors, control, reset, setValue } = useForm();
+  const methods = useForm();
 
   const fetchData = useCallback(async () => {
     try {
@@ -79,18 +79,26 @@ const Statement: FC<Props> = ({ id }) => {
     console.log("submitting!");
   }, []);
 
+  const all = methods.watch();
+
+  useEffect(() => {
+    //console.log(all);
+  }, [all]);
+
   return (
-    <BasicLayout variant="statementHeader" maxW="1000px">
-      <HStack>
-        <Button colorScheme="green" rounded="full" onClick={onSaveChanges}>
-          Gem ændringer
-        </Button>
-        <Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
-          Underskriv og send
-        </Button>
-      </HStack>
-      <StatementForm statement={statement} setStatement={setStatement} control={control} />
-    </BasicLayout>
+    <FormProvider {...methods}>
+      <BasicLayout variant="statementHeader" maxW="1000px">
+        <HStack>
+          <Button colorScheme="green" rounded="full" onClick={onSaveChanges}>
+            Gem ændringer
+          </Button>
+          <Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
+            Underskriv og send
+          </Button>
+        </HStack>
+        <StatementForm statement={statement} setStatement={setStatement} />
+      </BasicLayout>
+    </FormProvider>
   );
 };
 export default Statement;

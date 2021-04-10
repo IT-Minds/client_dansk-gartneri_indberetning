@@ -9,7 +9,7 @@ import { logger } from "utils/logger";
 import StatementForm from "./StatementForm";
 
 interface Props {
-  id: string | string[];
+  id: number;
 }
 
 const Statement: FC<Props> = ({ id }) => {
@@ -20,7 +20,7 @@ const Statement: FC<Props> = ({ id }) => {
   const fetchData = useCallback(async () => {
     try {
       const statementClient = await genStatementClient();
-      const data = await statementClient.getStatement(parseInt(id as string));
+      const data = await statementClient.getStatement(id);
 
       if (data != null) setStatement(data);
       else {

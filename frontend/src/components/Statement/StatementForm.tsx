@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import { EditStatementContext } from "contexts/EditStatementContext";
 import { useLocales } from "hooks/useLocales";
-import { Dispatch, FC, SetStateAction, useCallback, useContext, useState } from "react";
+import { FC, useCallback, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { IStatementDto } from "services/backend/nswagts";
 
@@ -13,16 +13,10 @@ import StatementTableColHeadings from "./StatementTableColHeadings";
 import StatementTableRow from "./StatementTableRow";
 import StatementTableSubHeading from "./StatementTableSubHeading";
 
-interface Props {
-  statement: IStatementDto;
-  setStatement: Dispatch<SetStateAction<IStatementDto>>;
-}
-
-const StatementForm: FC<Props> = ({ statement, setStatement }) => {
+const StatementForm: FC = () => {
   const { t } = useLocales();
   const { handleSubmit, control } = useForm<IStatementDto>();
-  //const [localForm, setLocalform] = useState<IStatementDto>(statement);
-  const { submit } = useContext(EditStatementContext);
+  const { statement, setStatement, submit } = useContext(EditStatementContext);
 
   const updatedFormAttribute = useCallback(
     (key: keyof IStatementDto, value: IStatementDto[keyof IStatementDto]) => {

@@ -109,6 +109,8 @@ const Statement: FC<Props> = ({ id }) => {
       {statement && (
         <EditStatementContext.Provider
           value={{
+            statement: statement,
+            setStatement: setStatement,
             save: onSaveChanges,
             isSaving: isSaving,
             submit: onSubmit
@@ -119,7 +121,7 @@ const Statement: FC<Props> = ({ id }) => {
               <Heading size="sm">{`${t("statements.accountingYear")}: ${
                 statement.revisionYear
               }`}</Heading>
-              <StatementForm statement={statement} setStatement={setStatement} />
+              <StatementForm />
             </Stack>
           </BasicLayout>
         </EditStatementContext.Provider>

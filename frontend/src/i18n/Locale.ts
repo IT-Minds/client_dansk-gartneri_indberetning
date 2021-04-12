@@ -69,6 +69,8 @@ export interface Locale {
     saveSuccessText: string;
     saveErrorTitle: string;
     saveErrorText: string;
+    saveChanges: string;
+    back: string;
   };
 
   password: {
@@ -127,6 +129,9 @@ export interface Locale {
     expences: string;
     accountingYear: string;
     editStatementHeading: string;
+    signOff: string;
+    confirmSignOffButton: string;
+    confirmSignOffText: string;
 
     signOffSuccessTitle: string;
     signOffSuccessText: string;

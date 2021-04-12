@@ -78,8 +78,8 @@ const Statement: FC<Props> = ({ id }) => {
       const statementClient = await genStatementClient();
       await statementClient.signOffStatement(id);
       toast({
-        title: t("common.saveSuccessTitle"),
-        description: t("common.saveSuccessText"),
+        title: t("common.signOffSuccessTitle"),
+        description: t("common.signOffSuccessText"),
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -89,8 +89,8 @@ const Statement: FC<Props> = ({ id }) => {
     } catch (err) {
       logger.warn("statementClient.put Error", err);
       toast({
-        title: t("common.saveErrorTitle"),
-        description: t("common.saveErrorText"),
+        title: t("common.signOffErrorTitle"),
+        description: t("common.signOffErrorText"),
         status: "error",
         duration: 5000,
         isClosable: true,

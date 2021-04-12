@@ -67,10 +67,12 @@ export const table: Locale = {
   actions: {
     update: "Update",
     delete: "Delete",
+    saveChanges: "Gem ændringer",
     saveSuccessTitle: "Changes saved",
     saveSuccessText: "Your changes has been saved.",
     saveErrorTitle: "Error",
-    saveErrorText: "An error happened when trying to save your changes."
+    saveErrorText: "An error happened when trying to save your changes.",
+    back: "Cancel"
   },
 
   password: {
@@ -131,6 +133,9 @@ export const table: Locale = {
     expences: "Udgifter",
     accountingYear: "Revisionsår",
     editStatementHeading: "Oplysningsskema",
+    signOff: "Sign off",
+    confirmSignOffButton: "Underskriv",
+    confirmSignOffText: "Du er ved at underskrive dit oplysningsskema. Vil du fortsætte?",
 
     signOffSuccessTitle: "Indberetning underskrevet",
     signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",

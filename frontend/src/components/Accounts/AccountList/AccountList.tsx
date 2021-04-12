@@ -1,13 +1,7 @@
-import { Button, Flex, Stack, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { SearchFilter } from "components/Accounts/Filters/AccountFilters";
-import QueryMultiSelectBtn from "components/Common/QueryMultiSelectBtn";
-import QuerySortBtn, { Direction } from "components/Common/QuerySortBtn";
+import { Accordion } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useState } from "react";
-import { BiCheck } from "react-icons/bi";
+import { FC } from "react";
 import { IAccountDto } from "services/backend/nswagts";
-import { AccountFilter } from "types/AccountFilter";
-import SelectType from "types/SelectType";
 
 import AccountListItem from "./AccountListItem";
 
@@ -20,11 +14,11 @@ const AccountList: FC<Props> = ({ data, accountingYear }) => {
   const { t, locale, localeNameMap } = useLocales();
 
   return (
-    <Stack spacing={2}>
+    <Accordion allowToggle>
       {data.map(account => (
         <AccountListItem key={account.id} account={account} accountingYear={accountingYear} />
       ))}
-    </Stack>
+    </Accordion>
   );
 };
 export default AccountList;

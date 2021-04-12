@@ -17,11 +17,7 @@ import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext } from "react";
 import { IStatementDto } from "services/backend/nswagts";
 
-interface Props {
-  statement: IStatementDto;
-}
-
-const ConfirmSignOffModal: FC<Props> = ({ statement }) => {
+const ConfirmSignOffModal: FC = () => {
   const { buttonFont } = useColors();
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();

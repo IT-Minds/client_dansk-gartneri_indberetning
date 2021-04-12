@@ -26,7 +26,7 @@ interface Props {
   children?: ReactNode;
 }
 
-const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, inputElement, children }) => {
+const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, children }) => {
   const { t } = useLocales();
   const { subTextColor } = useColors();
 
@@ -61,7 +61,7 @@ const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, inputEleme
           </Stack>
         </HStack>
       </Td>
-      <Td>{inputElement}</Td>
+      <Td>{children}</Td>
       <Td>{tax}‰</Td>
     </Tr>
   );

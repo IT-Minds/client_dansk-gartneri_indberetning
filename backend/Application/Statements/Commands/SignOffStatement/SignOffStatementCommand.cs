@@ -49,6 +49,8 @@ namespace Application.Statements.Commands.SignOffStatement
           throw new UnauthorizedAccessException("Tried to sign off a statement that belongs to another account");
         }
 
+        statementEntity.Status = StatementStatus.SignedOff;
+
         _context.Statements.Update(statementEntity);
         await _context.SaveChangesAsync(cancellationToken);
 

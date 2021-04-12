@@ -126,6 +126,12 @@ export interface Locale {
     other: string;
     expences: string;
     accountingYear: string;
+    editStatementHeading: string;
+
+    signOffSuccessTitle: string;
+    signOffSuccessText: string;
+    signOffErrorTitle: string;
+    signOffErrorText: string;
 
     section1: {
       heading: string;

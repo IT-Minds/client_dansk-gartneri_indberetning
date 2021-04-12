@@ -45,6 +45,15 @@ const MyStatements: FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const genStatus = useCallback((status: StatementStatus) => {
+    switch (status) {
+      case 0:
+        return "Ikke besvaret";
+      case 1:
+        return "Besvaret";
+    }
+  }, []);
+
   return (
     <BasicLayout maxW="80vw">
       <Stack spacing={10}>

@@ -1,36 +1,63 @@
 import {
+  Box,
+  Flex,
   Input,
   InputGroup,
   InputRightAddon,
   NumberInput,
-  NumberInputField
+  NumberInputField,
+  Text
 } from "@chakra-ui/react";
+import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC, useEffect } from "react";
+import { FC, useContext } from "react";
+import { useController } from "react-hook-form";
+import { IStatementDto } from "services/backend/nswagts";
+
+import { FormControlContext } from "./FormControlContext";
 
 interface Props {
-  value: number;
-  onChange: (value: string) => void;
+  name: keyof IStatementDto;
 }
 
-const InputDKK: FC<Props> = ({ value, onChange }) => {
+const InputDKK: FC<Props> = ({ name }) => {
   const { t } = useLocales();
-  return <Input type="number" value={value} onChange={e => onChange(e.target.value)}></Input>;
+  const { menuBg } = useColors();
+
+  const { control, form, updatedFormAttribute } = useContext(FormControlContext);
+
+  const {
+    field: { ref, onChange, value }
+  } = useController({
+    name,
+    control,
+    rules: { required: false, valueAsNumber: true },
+    defaultValue: form[name]
+  });
+
+  return (
+    <Flex>
+      <Input
+        name={name}
+        ref={ref}
+        roundedEnd="none"
+        value={value}
+        type="number"
+        onChange={e => {
+          onChange(e.target.value);
+          updatedFormAttribute(name, parseInt(e.target.value));
+        }}
+      />
+      <Text
+        roundedEnd="md"
+        background={menuBg}
+        w="60px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center">
+        Kr.
+      </Text>
+    </Flex>
+  );
 };
 export default InputDKK;
-/*
-<NumberInput min={0} precision={0} w="100%">
-      <NumberInputField value={value} onChange={e => onChange(e.target.value)} />
-    </NumberInput>
-<Input value={value} onChange={e => onChange(e.target.value)} type="number"></Input>;
-<InputGroup>
-      <NumberInput min={0} precision={0} w="100%">
-        <NumberInputField
-          roundedEnd="none"
-          value={value}
-          onChange={e => onChange(e.target.value)}
-        />
-      </NumberInput>
-      <InputRightAddon>Kr.</InputRightAddon>
-    </InputGroup>
-*/

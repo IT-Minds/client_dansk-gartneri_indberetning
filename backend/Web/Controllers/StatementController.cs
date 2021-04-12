@@ -50,10 +50,12 @@ namespace Web.Controllers
     }
 
     [HttpPut("signoff/{id}")]
-    public async Task<ActionResult> SignOffStatement([FromRoute] int id, SignOffStatementCommand command)
-    {
-      command.Id = id;
-      await Mediator.Send(command);
+    public async Task<ActionResult> SignOffStatement([FromRoute] int id) { 
+    
+      await Mediator.Send(new SignOffStatementCommand
+      {
+        Id = id
+      });
 
       return NoContent();
     }

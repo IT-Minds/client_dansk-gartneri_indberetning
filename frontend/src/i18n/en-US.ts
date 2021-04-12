@@ -130,6 +130,12 @@ export const table: Locale = {
     other: "Andet",
     expences: "Udgifter",
     accountingYear: "Revisionsår",
+    editStatementHeading: "Oplysningsskema",
+
+    signOffSuccessTitle: "Indberetning underskrevet",
+    signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",
+    signOffErrorTitle: "Fejl",
+    signOffErrorText: "Der skete en fejl, da vi forsøgte at behandle din underskrivning.",
 
     section1: {
       heading: "1. Grøntsager i væksthus",

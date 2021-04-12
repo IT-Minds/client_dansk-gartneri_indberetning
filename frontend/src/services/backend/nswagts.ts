@@ -860,7 +860,7 @@ export interface IStatementClient {
     getStatement(id: number): Promise<StatementDto>;
     updateStatement(id: number, command: UpdateStatementCommand): Promise<FileResponse>;
     createStatement(command: CreateStatementCommand): Promise<number>;
-    signOffStatement(id: number, command: SignOffStatementCommand): Promise<FileResponse>;
+    signOffStatement(id: number): Promise<FileResponse>;
 }
 
 export class StatementClient extends ClientBase implements IStatementClient {
@@ -1074,20 +1074,16 @@ export class StatementClient extends ClientBase implements IStatementClient {
         return Promise.resolve<number>(<any>null);
     }
 
-    signOffStatement(id: number, command: SignOffStatementCommand): Promise<FileResponse> {
+    signOffStatement(id: number): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Statement/signoff/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(command);
-
         let options_ = <RequestInit>{
-            body: content_,
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
                 "Accept": "application/octet-stream"
             }
         };
@@ -2465,36 +2461,6 @@ export class UpdateStatementCommand implements IUpdateStatementCommand {
 
 export interface IUpdateStatementCommand {
     statementDto?: IStatementDto | null;
-}
-
-export class SignOffStatementCommand implements ISignOffStatementCommand {
-
-    constructor(data?: ISignOffStatementCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): SignOffStatementCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new SignOffStatementCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
-}
-
-export interface ISignOffStatementCommand {
 }
 
 export class CreateAccountantCommand implements ICreateAccountantCommand {

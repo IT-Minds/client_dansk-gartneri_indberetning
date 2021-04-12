@@ -16,23 +16,13 @@ const EditEmailForm: FC<Props> = ({ email, setEmail, variant }) => {
 
   return (
     <Stack>
-      <Tooltip label={t("mailEditor.nameTooltip")} aria-label="A tooltip" placement="auto-end">
-        <FormControl id="name">
-          <InputGroup>
-            <InputLeftAddon w="110px">{t("mailEditor.name")}</InputLeftAddon>
-            <Input
-              value={email.name}
-              onChange={e => setEmail({ ...email, ...{ name: e.target.value } })}></Input>{" "}
-          </InputGroup>
-        </FormControl>
-      </Tooltip>
       <Tooltip label={t("mailEditor.subjectTooltip")} aria-label="A tooltip" placement="auto-end">
         <FormControl id="subject">
           <InputGroup>
             <InputLeftAddon w="110px">{t("mailEditor.subject")}</InputLeftAddon>
             <Input
               value={email.subject}
-              onChange={e => setEmail({ ...email, ...{ title: e.target.value } })}></Input>
+              onChange={e => setEmail({ ...email, ...{ subject: e.target.value } })}></Input>
           </InputGroup>
         </FormControl>
       </Tooltip>

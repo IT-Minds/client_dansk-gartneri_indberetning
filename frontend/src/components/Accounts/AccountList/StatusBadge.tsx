@@ -44,7 +44,14 @@ const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
   }, [account.statements, accountingYear]);
 
   return (
-    <Flex rounded="md" background={genStatus.color} h="40px" p="10px" alignItems="center">
+    <Flex
+      rounded="md"
+      background={genStatus.color}
+      h="40px"
+      w="100px"
+      p="10px"
+      justifyContent="center"
+      alignItems="center">
       <Text fontSize="xs" fontWeight="bold">
         {genStatus.msg.toUpperCase()}
       </Text>

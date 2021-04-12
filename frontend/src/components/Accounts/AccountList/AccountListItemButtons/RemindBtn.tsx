@@ -6,6 +6,8 @@ import { BiMessageRoundedError } from "react-icons/bi";
 const RemindBtn: FC = () => {
   const { t } = useLocales();
 
+  //TODO: Implement functionality
+
   return (
     <Tooltip label="Send reminder">
       <IconButton aria-label="Remind to fill statement" icon={<BiMessageRoundedError />} />

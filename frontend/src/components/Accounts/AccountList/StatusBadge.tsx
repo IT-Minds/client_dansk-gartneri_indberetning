@@ -1,22 +1,7 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  Stack,
-  Text,
-  useColorMode
-} from "@chakra-ui/react";
-import { AuthContext } from "contexts/AuthContext";
-import { setAuthToken } from "hooks/useAuth";
+import { Flex, Text, useColorMode } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { useRouter } from "next/router";
-import { FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 
 interface Props {

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC, useMemo, useRef } from "react";
+import { FC, useMemo } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 
@@ -31,7 +31,6 @@ interface Props {
 const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
   const { t } = useLocales();
   const { boxBorder } = useColors();
-  const itemRef = useRef(null);
 
   const statement = useMemo(() => {
     return account.statements.find(s => s.revisionYear == accountingYear);
@@ -39,7 +38,7 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
 
   return (
     <Flex shadow="sm" p={2} border="1px" borderColor={boxBorder} rounded="md" mb={2}>
-      <AccordionItem w="100%" border="none" ref={itemRef}>
+      <AccordionItem w="100%" border="none">
         {({ isExpanded }) => (
           <>
             <Flex justifyContent="space-between">

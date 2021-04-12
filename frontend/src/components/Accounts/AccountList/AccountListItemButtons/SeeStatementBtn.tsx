@@ -14,6 +14,8 @@ interface Props {
 const SeeStatementBtn: FC<Props> = ({ account, accountingYear }) => {
   const { t } = useLocales();
 
+  //TODO: Implement functionality
+
   return (
     <Tooltip label="Se besvarelse">
       <IconButton aria-label="Read statement" icon={<MdAssignment />} />

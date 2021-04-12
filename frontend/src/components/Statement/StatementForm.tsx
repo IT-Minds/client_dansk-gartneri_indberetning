@@ -1,8 +1,8 @@
 import { Stack } from "@chakra-ui/react";
 import { EditStatementContext } from "contexts/EditStatementContext";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useContext } from "react";
-import { useForm } from "react-hook-form";
+import { FC, useCallback, useContext, useState } from "react";
+import { DeepMap, FieldError, useForm } from "react-hook-form";
 import { IStatementDto } from "services/backend/nswagts";
 
 import { FormControlContext } from "./FormControlContext";
@@ -28,7 +28,7 @@ const StatementForm: FC = () => {
     []
   );
 
-  const onSubmit = useCallback(
+  const onValid = useCallback(
     (data: IStatementDto) => {
       console.log(statement, data);
       submit(data);
@@ -36,8 +36,15 @@ const StatementForm: FC = () => {
     [statement]
   );
 
+  const onInvalid = useCallback(
+    (errors: DeepMap<IStatementDto, FieldError>) => {
+      console.log(statement, errors);
+    },
+    [statement]
+  );
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} id="statement_form">
+    <form onSubmit={handleSubmit(onValid, onInvalid)} id="statement_form">
       <Stack>
         <FormControlContext.Provider
           value={{

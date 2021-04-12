@@ -1,6 +1,7 @@
-import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftAddon, InputRightAddon } from "@chakra-ui/react";
+import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC, useContext } from "react";
+import { FC, useContext, useMemo } from "react";
 import { useController } from "react-hook-form";
 import { IStatementDto } from "services/backend/nswagts";
 
@@ -11,11 +12,14 @@ interface Props {
 }
 
 const InputDKK: FC<Props> = ({ name }) => {
-  const { t } = useLocales();
+  const { formatCurrency } = useLocales();
+
   const { control, form, updatedFormAttribute } = useContext(FormControlContext);
+  const colors = useColors();
 
   const {
-    field: { ref, onChange, value }
+    field: { ref, onChange, value, onBlur },
+    meta: { isDirty, isTouched, invalid }
   } = useController({
     name,
     control,
@@ -23,20 +27,31 @@ const InputDKK: FC<Props> = ({ name }) => {
     defaultValue: form[name]
   });
 
+  const bgColor = useMemo(() => {
+    if (invalid) return colors.errorColor;
+    if (isDirty) return colors.warningColor;
+    if (isTouched) return colors.infoColor;
+  }, [isDirty, isTouched, invalid, colors]);
+
+  const { leftOrRight } = useMemo(() => formatCurrency(value), [value, formatCurrency]);
+
   return (
     <InputGroup>
+      {leftOrRight === "left" && <InputLeftAddon>Kr.</InputLeftAddon>}
       <Input
         name={name}
         ref={ref}
-        roundedEnd="none"
+        roundedLeft={leftOrRight === "left" ? "none" : "base"}
+        roundedRight={leftOrRight === "right" ? "none" : "base"}
         value={value}
-        type="number"
+        bgColor={bgColor}
+        onBlur={onBlur}
         onChange={e => {
-          onChange(e.target.value);
-          updatedFormAttribute(name, parseInt(e.target.value));
+          onChange(e.target.valueAsNumber);
+          updatedFormAttribute(name, e.target.valueAsNumber);
         }}
       />
-      <InputRightAddon>Kr.</InputRightAddon>
+      {leftOrRight === "right" && <InputRightAddon>Kr.</InputRightAddon>}
     </InputGroup>
   );
 };

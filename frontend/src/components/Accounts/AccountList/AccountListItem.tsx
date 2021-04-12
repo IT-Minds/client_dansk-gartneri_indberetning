@@ -15,7 +15,8 @@ import {
   Input,
   Spacer,
   Stack,
-  Text
+  Text,
+  Tooltip
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
 import { setAuthToken } from "hooks/useAuth";
@@ -28,6 +29,7 @@ import { IAccountDto, IUserAccountIdDto } from "services/backend/nswagts";
 
 import ChangeAccountantModal from "../ChangeAccountant/ChangeAccountantModal";
 import InviteBtn from "./AccountListItemButtons/InviteBtn";
+import StatusBadge from "./StatusBadge";
 
 interface Props {
   account: IAccountDto;
@@ -50,18 +52,21 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
                 <Text>{account.name}</Text>
               </HStack>
               <HStack>
+                <StatusBadge account={account} accountingYear={accountingYear} />
                 {!account.statements.some(s => s.revisionYear == accountingYear) && (
                   <InviteBtn account={account} accountingYear={accountingYear} />
                 )}
                 <ChangeAccountantModal account={account} />
-                <AccordionButton
-                  as={IconButton}
-                  icon={isExpanded ? <BiChevronUp /> : <BiChevronDown />}
-                  w={0}
-                  p={0}></AccordionButton>
+                <Tooltip label={isExpanded ? "Skjul info" : "Vis info"}>
+                  <AccordionButton
+                    as={IconButton}
+                    icon={isExpanded ? <BiChevronUp /> : <BiChevronDown />}
+                    w={0}
+                    p={0}></AccordionButton>
+                </Tooltip>
               </HStack>
             </Flex>
-            <AccordionPanel p="0">
+            <AccordionPanel p="0" mb="10px">
               <Stack spacing={0} pl="52px" w="max-content">
                 <Divider mb={3} />
                 <Text>CVR: {account.cvrNumber}</Text>

@@ -13,7 +13,11 @@ export const useColors = () => {
   const infoColor = useColorModeValue("yellow.100", "yellow.600");
   const warningColor = useColorModeValue("orange.100", "orange.600");
   const errorColor = useColorModeValue("red.100", "red.600");
-  const iconGreenColor = useColorModeValue("green.200", "green.800");
+
+  const statusNotSent = useColorModeValue("red.100", "red.600");
+  const statusIsSent = useColorModeValue("yellow.100", "yellow.600");
+  const statusIsEdited = useColorModeValue("cyan.100", "cyan.600");
+  const statusIsSigned = useColorModeValue("green.100", "green.600");
 
   return {
     hoverBg,
@@ -26,6 +30,9 @@ export const useColors = () => {
     warningColor,
     errorColor,
     infoColor,
-    iconGreenColor
+    statusNotSent,
+    statusIsSent,
+    statusIsEdited,
+    statusIsSigned
   };
 };

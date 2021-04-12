@@ -33,18 +33,13 @@ interface Props {
 
 const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
   const { t } = useLocales();
-  const { iconGreenColor } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { fetchData } = useContext(AccountsContext);
 
   return (
     <>
       <Tooltip label="Redigér revisor">
-        <IconButton
-          aria-label="Edit accountant"
-          onClick={onOpen}
-          icon={<MdSupervisorAccount color={account.accountant ? iconGreenColor : "black"} />}
-        />
+        <IconButton aria-label="Edit accountant" onClick={onOpen} icon={<MdSupervisorAccount />} />
       </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose}>

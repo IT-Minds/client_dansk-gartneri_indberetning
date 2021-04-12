@@ -27,7 +27,7 @@
   "dependencies": {
     "@chakra-ui/react": "^1.4.2",
     "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
     "@microsoft/signalr": "^5.0.5",
     "@react-icons/all-files": "^4.1.0",
     "framer-motion": "^4.1.2",

@@ -39,8 +39,3 @@ const StatementFormHeader: FC = () => {
   );
 };
 export default StatementFormHeader;
-/*
-<Button colorScheme="blue" rounded="full" type="submit" form="statement_form">
-          Underskriv og send
-        </Button>
-*/

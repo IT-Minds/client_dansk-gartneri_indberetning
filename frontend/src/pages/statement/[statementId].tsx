@@ -1,9 +1,8 @@
 import Statement from "components/Statement/Statement";
 import { Locale } from "i18n/Locale";
 // import { runTimeTable } from "i18n/runtimeTable";
-import { GetServerSideProps, GetStaticPaths, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { I18nProps } from "next-rosetta";
-import { ParsedUrlQuery } from "node:querystring";
 
 interface Props {
   statementId: number;

@@ -1,5 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from "react";
-import { IStatementDto } from "services/backend/nswagts";
+import { createContext } from "react";
 
 type ContextType = {
   save: () => void;
@@ -12,4 +11,3 @@ export const EditStatementContext = createContext<ContextType>({
   isSaving: false,
   submit: () => null
 });
-

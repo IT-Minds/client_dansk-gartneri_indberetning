@@ -8,7 +8,8 @@ import {
   IconButton,
   Input,
   Stack,
-  Text
+  Text,
+  useColorMode
 } from "@chakra-ui/react";
 import { AuthContext } from "contexts/AuthContext";
 import { setAuthToken } from "hooks/useAuth";
@@ -26,22 +27,23 @@ interface Props {
 const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
   const { t } = useLocales();
   const { statusNotSent, statusIsSent, statusIsEdited, statusIsSigned } = useColors();
+  const { colorMode } = useColorMode();
 
   const genStatus: { msg: string; color: string } = useMemo(() => {
     const statement = account.statements.find(s => s.revisionYear == accountingYear);
     if (statement) {
       switch (statement.status) {
         case StatementStatus.InvitedNotEdited:
-          return { msg: "Sendt", color: statusIsSent };
+          return { msg: "Afsendt", color: statusIsSent };
         case StatementStatus.InvitedAndEdited:
           return { msg: "Redigeret", color: statusIsEdited };
         case StatementStatus.SignedOff:
-          return { msg: "Sendt", color: statusIsSigned };
+          return { msg: "Færdig", color: statusIsSigned };
       }
     } else {
       return { msg: "Ej afsendt", color: statusNotSent };
     }
-  }, [account.statements, accountingYear]);
+  }, [account.statements, accountingYear, colorMode]);
 
   return (
     <Flex

@@ -76,9 +76,6 @@ const Accounts: FC = () => {
               cb={setAccountingYear}
             />
             <HStack spacing={5}>
-              <Box>
-                <SearchFilterInput onChange={setSearchString} value={searchString} />
-              </Box>
               <NewAccountModal onSubmit={fetchData} />
             </HStack>
           </Flex>

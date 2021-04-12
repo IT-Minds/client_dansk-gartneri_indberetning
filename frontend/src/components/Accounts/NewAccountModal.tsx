@@ -33,7 +33,7 @@ const NewAccountModal: FC<Props> = (props: Props) => {
   return (
     <>
       <Button
-        rounded="full"
+        rounded="md"
         colorScheme="blue"
         textColor={buttonFont}
         onClick={onOpen}

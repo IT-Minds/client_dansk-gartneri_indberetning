@@ -1,35 +1,26 @@
 import {
   AccordionButton,
-  AccordionIcon,
   AccordionItem,
-  AccordionItemProps,
   AccordionPanel,
   Avatar,
-  Button,
   Divider,
   Flex,
-  Grid,
-  Heading,
   HStack,
   IconButton,
-  Input,
-  Spacer,
   Stack,
   Text,
   Tooltip
 } from "@chakra-ui/react";
-import { AuthContext } from "contexts/AuthContext";
-import { setAuthToken } from "hooks/useAuth";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { useRouter } from "next/router";
-import { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useMemo, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { IAccountDto, IUserAccountIdDto, StatementStatus } from "services/backend/nswagts";
+import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 
 import ChangeAccountantModal from "../ChangeAccountant/ChangeAccountantModal";
 import InviteBtn from "./AccountListItemButtons/InviteBtn";
 import RemindBtn from "./AccountListItemButtons/RemindBtn";
+import SeeStatementBtn from "./AccountListItemButtons/SeeStatementBtn";
 import StatusBadge from "./StatusBadge";
 
 interface Props {
@@ -59,7 +50,10 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
               <HStack>
                 <StatusBadge account={account} accountingYear={accountingYear} />
                 {!statement && <InviteBtn account={account} accountingYear={accountingYear} />}
-                {statement && statement.status == StatementStatus.InvitedNotEdited && <RemindBtn />}
+                {statement && statement.status != StatementStatus.SignedOff && <RemindBtn />}
+                {statement && statement.status == StatementStatus.SignedOff && (
+                  <SeeStatementBtn account={account} accountingYear={accountingYear} />
+                )}
                 <ChangeAccountantModal account={account} />
                 <Tooltip label={isExpanded ? "Skjul info" : "Vis info"}>
                   <AccordionButton

@@ -11,22 +11,14 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { EditStatementContext } from "contexts/EditStatementContext";
 import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useContext } from "react";
-import { IStatementDto } from "services/backend/nswagts";
+import { FC } from "react";
 
 const ConfirmSignOffModal: FC = () => {
   const { buttonFont } = useColors();
   const { t } = useLocales();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { submit } = useContext(EditStatementContext);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-    onClose();
-  }, []);
 
   return (
     <>
@@ -47,7 +39,7 @@ const ConfirmSignOffModal: FC = () => {
               <Button rounded="full" onClick={onClose}>
                 {t("actions.back")}
               </Button>
-              <Button colorScheme="green" rounded="full" onClick={handleSubmit}>
+              <Button colorScheme="green" rounded="full" type="submit" form="statement_form">
                 {t("statements.confirmSignOffButton")}
               </Button>
             </HStack>

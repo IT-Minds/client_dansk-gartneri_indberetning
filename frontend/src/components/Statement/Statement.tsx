@@ -81,8 +81,8 @@ const Statement: FC<Props> = ({ id }) => {
         await statementClient.updateStatement(statement.id, command);
         await statementClient.signOffStatement(id);
         toast({
-          title: t("common.signOffSuccessTitle"),
-          description: t("common.signOffSuccessText"),
+          title: t("statements.signOffSuccessTitle"),
+          description: t("statements.signOffSuccessText"),
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -92,8 +92,8 @@ const Statement: FC<Props> = ({ id }) => {
       } catch (err) {
         logger.warn("statementClient.put Error", err);
         toast({
-          title: t("common.signOffErrorTitle"),
-          description: t("common.signOffErrorText"),
+          title: t("statements.signOffErrorTitle"),
+          description: t("statements.signOffErrorText"),
           status: "error",
           duration: 5000,
           isClosable: true,

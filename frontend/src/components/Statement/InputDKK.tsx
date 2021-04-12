@@ -40,6 +40,7 @@ const InputDKK: FC<Props> = ({ name }) => {
       {leftOrRight === "left" && <InputLeftAddon>Kr.</InputLeftAddon>}
       <Input
         name={name}
+        type="number"
         ref={ref}
         roundedLeft={leftOrRight === "left" ? "none" : "base"}
         roundedRight={leftOrRight === "right" ? "none" : "base"}

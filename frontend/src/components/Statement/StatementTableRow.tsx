@@ -22,8 +22,6 @@ interface Props {
   subText?: string;
   tax: string;
   helpInfo?: string;
-  inputElement?: ReactNode;
-  children?: ReactNode;
 }
 
 const StatementTableRow: FC<Props> = ({ text, subText, tax, helpInfo, children }) => {

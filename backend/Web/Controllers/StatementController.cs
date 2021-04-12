@@ -49,7 +49,7 @@ namespace Web.Controllers
       return NoContent();
     }
 
-    [HttpPut("signoff/{id}")]
+    [HttpPut("{id}/signoff")]
     public async Task<ActionResult> SignOffStatement([FromRoute] int id) { 
     
       await Mediator.Send(new SignOffStatementCommand

@@ -1,14 +1,4 @@
-import {
-  Box,
-  Flex,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  NumberInput,
-  NumberInputField,
-  Text
-} from "@chakra-ui/react";
-import { useColors } from "hooks/useColors";
+import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
 import { useLocales } from "hooks/useLocales";
 import { FC, useContext } from "react";
 import { useController } from "react-hook-form";
@@ -22,8 +12,6 @@ interface Props {
 
 const InputDKK: FC<Props> = ({ name }) => {
   const { t } = useLocales();
-  const { menuBg } = useColors();
-
   const { control, form, updatedFormAttribute } = useContext(FormControlContext);
 
   const {
@@ -36,7 +24,7 @@ const InputDKK: FC<Props> = ({ name }) => {
   });
 
   return (
-    <Flex>
+    <InputGroup>
       <Input
         name={name}
         ref={ref}
@@ -48,16 +36,8 @@ const InputDKK: FC<Props> = ({ name }) => {
           updatedFormAttribute(name, parseInt(e.target.value));
         }}
       />
-      <Text
-        roundedEnd="md"
-        background={menuBg}
-        w="60px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center">
-        Kr.
-      </Text>
-    </Flex>
+      <InputRightAddon>Kr.</InputRightAddon>
+    </InputGroup>
   );
 };
 export default InputDKK;

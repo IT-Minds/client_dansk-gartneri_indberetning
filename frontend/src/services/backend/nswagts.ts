@@ -1075,7 +1075,7 @@ export class StatementClient extends ClientBase implements IStatementClient {
     }
 
     signOffStatement(id: number): Promise<FileResponse> {
-        let url_ = this.baseUrl + "/api/Statement/signoff/{id}";
+        let url_ = this.baseUrl + "/api/Statement/{id}/signoff";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));

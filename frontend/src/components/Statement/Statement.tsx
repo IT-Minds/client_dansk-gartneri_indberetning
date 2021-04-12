@@ -72,32 +72,37 @@ const Statement: FC<Props> = ({ id }) => {
     setIsSaving(false);
   }, [statement]);
 
-  const onSubmit = useCallback(async () => {
-    console.log(statement);
-    try {
-      const statementClient = await genStatementClient();
-      await statementClient.signOffStatement(id);
-      toast({
-        title: t("common.signOffSuccessTitle"),
-        description: t("common.signOffSuccessText"),
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left"
-      });
-      router.push("/mystatements");
-    } catch (err) {
-      logger.warn("statementClient.put Error", err);
-      toast({
-        title: t("common.signOffErrorTitle"),
-        description: t("common.signOffErrorText"),
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left"
-      });
-    }
-  }, [id]);
+  const onSubmit = useCallback(
+    async (data: IStatementDto) => {
+      try {
+        const commandData = { ...statement, ...data };
+        const statementClient = await genStatementClient();
+        const command = new UpdateStatementCommand({ statementDto: commandData });
+        await statementClient.updateStatement(statement.id, command);
+        await statementClient.signOffStatement(id);
+        toast({
+          title: t("common.signOffSuccessTitle"),
+          description: t("common.signOffSuccessText"),
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+        router.push("/mystatements");
+      } catch (err) {
+        logger.warn("statementClient.put Error", err);
+        toast({
+          title: t("common.signOffErrorTitle"),
+          description: t("common.signOffErrorText"),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left"
+        });
+      }
+    },
+    [id, statement]
+  );
 
   return (
     <>

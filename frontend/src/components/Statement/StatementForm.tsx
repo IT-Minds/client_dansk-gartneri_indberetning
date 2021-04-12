@@ -37,7 +37,7 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
   const onSubmit = useCallback(
     (data: IStatementDto) => {
       console.log(statement, data);
-      submit();
+      submit(data);
     },
     [statement]
   );
@@ -76,6 +76,12 @@ const StatementForm: FC<Props> = ({ statement, setStatement }) => {
               </StatementTableRow>
               <StatementTableRow text={t("statements.section3.pea")} tax="3.00">
                 <InputDKK name="s3_peas" />
+              </StatementTableRow>
+              <StatementTableRow text={t("statements.section3.onion")} tax="3.00">
+                <InputDKK name="s3_onions" />
+              </StatementTableRow>
+              <StatementTableRow text={t("statements.other")} tax="3.00">
+                <InputDKK name="s3_other" />
               </StatementTableRow>
               <StatementTableColHeadings h2={t("statements.expences")} />
               <StatementTableRow

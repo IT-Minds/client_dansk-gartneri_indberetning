@@ -25,13 +25,4 @@ export const getServerSideProps: GetServerSideProps<I18nProps<Locale> & Props> =
   };
 };
 
-/*
-export const getStaticPaths: GetStaticPaths<ParsedUrlQuery> = async () => {
-  return {
-    paths: [],
-    fallback: false
-  };
-};
-*/
-
 export default StatementPage;

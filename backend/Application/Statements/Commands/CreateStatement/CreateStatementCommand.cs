@@ -48,7 +48,7 @@ namespace Application.Statements.Commands.CreateStatementCommand
           AccountId = request.AccountId,
           Account = accountEntity,
           RevisionYear = request.RevisionYear,
-          Status = StatementStatus.Unsigned
+          Status = StatementStatus.InvitedNotEdited
         };
         _context.Statements.Add(statement);
 

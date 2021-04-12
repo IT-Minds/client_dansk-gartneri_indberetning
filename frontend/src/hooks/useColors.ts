@@ -10,6 +10,10 @@ export const useColors = () => {
   const headerBg = "gray.700";
   const boxBorder = useColorModeValue("gray.200", "gray.700");
   const subTextColor = useColorModeValue("gray.500", "gray.500");
+  const infoColor = useColorModeValue("yellow.100", "yellow.600");
+  const warningColor = useColorModeValue("orange.100", "orange.600");
+  const errorColor = useColorModeValue("red.100", "red.600");
+  const iconGreenColor = useColorModeValue("green.200", "green.800");
 
   return {
     hoverBg,
@@ -18,6 +22,10 @@ export const useColors = () => {
     buttonFont,
     headerBg,
     boxBorder,
-    subTextColor
+    subTextColor,
+    warningColor,
+    errorColor,
+    infoColor,
+    iconGreenColor
   };
 };

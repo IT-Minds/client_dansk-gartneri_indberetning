@@ -6,12 +6,14 @@ import {
   AccordionPanel,
   Avatar,
   Button,
+  Divider,
   Flex,
   Grid,
   Heading,
   HStack,
   IconButton,
   Input,
+  Spacer,
   Stack,
   Text
 } from "@chakra-ui/react";
@@ -59,10 +61,17 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
                   p={0}></AccordionButton>
               </HStack>
             </Flex>
-            <AccordionPanel pb={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <AccordionPanel p="0">
+              <Stack spacing={0} pl="52px" w="max-content">
+                <Divider mb={3} />
+                <Text>CVR: {account.cvrNumber}</Text>
+                <Text>Email: {account.email}</Text>
+                <Text>Tlf: {account.tel}</Text>
+                <Text>
+                  Adresse:
+                  {` ${account.address.addressLine1} ${account.address.addressLine2} ${account.address.addressLine3} ${account.address.addressLine4}`}
+                </Text>
+              </Stack>
             </AccordionPanel>
           </>
         )}

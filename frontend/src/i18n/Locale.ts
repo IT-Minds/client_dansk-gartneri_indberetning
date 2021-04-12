@@ -1,6 +1,7 @@
 export interface Locale {
   locale: string; // !Must not be deleted. Used for providing the locale in the native language
   flagUrl: string;
+  currencyCode: string;
 
   example: {
     title: string;
@@ -16,6 +17,10 @@ export interface Locale {
     search: string;
     add: string;
     fetchingData: string;
+    saveSuccessTitle: string;
+    saveSuccessText: string;
+    saveErrorTitle: string;
+    saveErrorText: string;
   };
 
   accounts: {
@@ -52,6 +57,7 @@ export interface Locale {
     login: string;
     forgotPassword: string;
     invalidMsg: string;
+    logout: string;
   };
 
   admins: {
@@ -65,6 +71,8 @@ export interface Locale {
     saveSuccessText: string;
     saveErrorTitle: string;
     saveErrorText: string;
+    saveChanges: string;
+    back: string;
   };
 
   password: {
@@ -122,6 +130,15 @@ export interface Locale {
     other: string;
     expences: string;
     accountingYear: string;
+    editStatementHeading: string;
+    signOff: string;
+    confirmSignOffButton: string;
+    confirmSignOffText: string;
+
+    signOffSuccessTitle: string;
+    signOffSuccessText: string;
+    signOffErrorTitle: string;
+    signOffErrorText: string;
 
     section1: {
       heading: string;

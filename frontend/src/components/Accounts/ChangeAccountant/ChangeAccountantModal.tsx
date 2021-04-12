@@ -16,8 +16,10 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
+import { useColors } from "hooks/useColors";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext } from "react";
+import { BiCheck } from "react-icons/bi";
 import { MdSupervisorAccount } from "react-icons/md";
 import { IAccountDto } from "services/backend/nswagts";
 
@@ -31,13 +33,18 @@ interface Props {
 
 const ChangeAccountantModal: FC<Props> = ({ account, onSubmit }) => {
   const { t } = useLocales();
+  const { iconGreenColor } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { fetchData } = useContext(AccountsContext);
 
   return (
     <>
       <Tooltip label="Redigér revisor">
-        <IconButton aria-label="Edit accountant" onClick={onOpen} icon={<MdSupervisorAccount />} />
+        <IconButton
+          aria-label="Edit accountant"
+          onClick={onOpen}
+          icon={<MdSupervisorAccount color={account.accountant ? iconGreenColor : "black"} />}
+        />
       </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose}>

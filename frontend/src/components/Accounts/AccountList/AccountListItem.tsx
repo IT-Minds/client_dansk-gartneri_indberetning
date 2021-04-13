@@ -41,9 +41,8 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
       <AccordionItem w="100%" border="none">
         {({ isExpanded }) => (
           <>
-            <Flex justifyContent="space-between">
+            <Flex justifyContent="space-between" pl={3}>
               <HStack spacing={5}>
-                <Avatar size="sm" />
                 <Text>{account.name}</Text>
               </HStack>
               <HStack>
@@ -63,8 +62,8 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
                 </Tooltip>
               </HStack>
             </Flex>
-            <AccordionPanel p="0" mb="10px">
-              <Stack spacing={0} pl="52px" w="max-content">
+            <AccordionPanel p={3}>
+              <Stack spacing={0} w="max-content">
                 <Divider mb={3} />
                 <Text>CVR: {account.cvrNumber}</Text>
                 <Text>Email: {account.email}</Text>

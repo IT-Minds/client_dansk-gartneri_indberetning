@@ -31,7 +31,7 @@ const AccountItemExpandedPanel: FC<Props> = ({ account }) => {
       </Stack>
       {account.accountant && (
         <Stack spacing={0} w="max-content">
-          <Heading size="xs">{t("account.accountant")}</Heading>
+          <Heading size="xs">{t("accounts.accountant")}</Heading>
           <Text>
             {t("accounts.name")}: {account.accountant.name}
           </Text>

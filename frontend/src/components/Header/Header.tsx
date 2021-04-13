@@ -10,8 +10,6 @@ import Navbar from "./Navbar";
 const Header: FC = () => {
   const { headerBg } = useColors();
 
-  const { activeUser } = useContext(AuthContext);
-
   return (
     <Flex
       justifyContent="space-between"

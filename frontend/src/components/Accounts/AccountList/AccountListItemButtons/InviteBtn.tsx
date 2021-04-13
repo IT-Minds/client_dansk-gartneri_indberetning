@@ -2,7 +2,7 @@ import { IconButton, Spinner, Tooltip, useToast } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext, useState } from "react";
-import { MdAssignment, MdMessage } from "react-icons/md";
+import { MdMessage } from "react-icons/md";
 import { genStatementClient } from "services/backend/apiClients";
 import { CreateStatementCommand, IAccountDto } from "services/backend/nswagts";
 

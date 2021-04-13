@@ -2,14 +2,9 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
-  Avatar,
-  Divider,
   Flex,
-  Heading,
   HStack,
   IconButton,
-  Spacer,
-  Stack,
   Text,
   Tooltip
 } from "@chakra-ui/react";
@@ -22,7 +17,6 @@ import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 import ChangeAccountantModal from "../ChangeAccountant/ChangeAccountantModal";
 import AccountItemExpandedPanel from "./AccountListItemButtons/AccountItemExpandedPanel";
 import InviteBtn from "./AccountListItemButtons/InviteBtn";
-import RemindBtn from "./AccountListItemButtons/RemindBtn";
 import SeeStatementBtn from "./AccountListItemButtons/SeeStatementBtn";
 import StatusBadge from "./StatusBadge";
 
@@ -51,7 +45,9 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
               <HStack>
                 <StatusBadge account={account} accountingYear={accountingYear} />
                 {!statement && <InviteBtn account={account} accountingYear={accountingYear} />}
-                {statement && statement.status != StatementStatus.SignedOff && <RemindBtn />}
+                {statement && statement.status != StatementStatus.SignedOff && (
+                  <SeeStatementBtn disabled={true} />
+                )}
                 {statement && statement.status == StatementStatus.SignedOff && (
                   <SeeStatementBtn account={account} accountingYear={accountingYear} />
                 )}

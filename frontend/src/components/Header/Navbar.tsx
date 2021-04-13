@@ -10,35 +10,39 @@ const Navbar: FC = () => {
   const { activeUser } = useContext(AuthContext);
 
   return (
-    <ButtonGroup spacing={5}>
-      {activeUser.role == RoleEnum.Admin ? (
-        <>
-          <Link href="/accounts" passHref>
-            <Button variant="link" textColor="white">
-              Kunder
-            </Button>
-          </Link>
-          <Link href="/admins" passHref>
-            <Button variant="link" textColor="white">
-              Admins
-            </Button>
-          </Link>
-          <Link href="/editemails" passHref>
-            <Button variant="link" textColor="white">
-              Emails
-            </Button>
-          </Link>
-        </>
-      ) : (
-        <>
-          <Link href="/mystatements" passHref>
-            <Button variant="link" textColor="white">
-              Indberetninger
-            </Button>
-          </Link>
-        </>
+    <>
+      {activeUser && (
+        <ButtonGroup spacing={5}>
+          {activeUser.role == RoleEnum.Admin ? (
+            <>
+              <Link href="/accounts" passHref>
+                <Button variant="link" textColor="white">
+                  Kunder
+                </Button>
+              </Link>
+              <Link href="/admins" passHref>
+                <Button variant="link" textColor="white">
+                  Admins
+                </Button>
+              </Link>
+              <Link href="/editemails" passHref>
+                <Button variant="link" textColor="white">
+                  Emails
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/mystatements" passHref>
+                <Button variant="link" textColor="white">
+                  Indberetninger
+                </Button>
+              </Link>
+            </>
+          )}
+        </ButtonGroup>
       )}
-    </ButtonGroup>
+    </>
   );
 };
 export default Navbar;

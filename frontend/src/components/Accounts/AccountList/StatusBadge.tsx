@@ -19,6 +19,7 @@ const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
     statusTextColor
   } = useColors();
   const { colorMode } = useColorMode();
+  const locales = useLocales();
 
   const genStatus: { msg: string; color: string } = useMemo(() => {
     const statement = account.statements.find(s => s.revisionYear == accountingYear);
@@ -34,7 +35,7 @@ const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
     } else {
       return { msg: t("statements.statusNotInvited"), color: statusNotSent };
     }
-  }, [account.statements, accountingYear, colorMode]);
+  }, [account.statements, accountingYear, colorMode, locales]);
 
   return (
     <Flex

@@ -15,7 +15,7 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 
 import ChangeAccountantModal from "../ChangeAccountant/ChangeAccountantModal";
-import AccountItemExpandedPanel from "./AccountListItemButtons/AccountItemExpandedPanel";
+import AccountItemExpandedPanel from "./AccountItemExpandedPanel";
 import InviteBtn from "./AccountListItemButtons/InviteBtn";
 import SeeStatementBtn from "./AccountListItemButtons/SeeStatementBtn";
 import StatusBadge from "./StatusBadge";

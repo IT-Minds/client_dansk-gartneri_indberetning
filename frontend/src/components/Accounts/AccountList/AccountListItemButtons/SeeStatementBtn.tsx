@@ -16,7 +16,8 @@ const SeeStatementBtn: FC<Props> = ({ account, accountingYear, disabled }) => {
   //TODO: Implement functionality
 
   return (
-    <Tooltip label={disabled ? "Ikke besvaret endnu" : "Se besvarelse"}>
+    <Tooltip
+      label={disabled ? t("accounts.tooltipNotYetSignedOff") : t("accounts.tooltipReadStatement")}>
       {/*wrapping div is needed to make the tooltip appear if button is disabled*/}
       <div>
         <IconButton aria-label="Read statement" icon={<MdAssignment />} disabled={disabled} />

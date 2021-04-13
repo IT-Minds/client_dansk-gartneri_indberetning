@@ -50,7 +50,14 @@ export const table: Locale = {
     CVR_apiErrorDescription: "Kunne ikke finde CVR-nummer i registret",
     accountant: "Revisor",
     fetching: "Henter kunder...",
-    statementStatus: "Indberetning status"
+    statementStatus: "Indberetning status",
+
+    tooltipInvite: "Invitér til at udfylde oplysningsksema",
+    tooltipNotYetSignedOff: "Ikke besvaret endnu",
+    tooltipEditAccountant: "Rediger revisor",
+    tooltipShowInfo: "Vis info",
+    tooltipHideInfo: "Skjul info",
+    tooltipReadStatement: "Se besvarelse"
   },
 
   login: {

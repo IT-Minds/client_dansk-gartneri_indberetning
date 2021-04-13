@@ -15,7 +15,7 @@ const EditAccountantBtn: FC<Props> = ({ account, cb }) => {
   const { iconGreenColor } = useColors();
 
   return (
-    <Tooltip label="Redigér revisor">
+    <Tooltip label={t("accounts.tooltipEditAccountant")}>
       <IconButton
         aria-label="Edit accountant"
         color={account.accountant != null ? iconGreenColor : "auto"}

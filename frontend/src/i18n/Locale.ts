@@ -49,6 +49,13 @@ export interface Locale {
     accountant: string;
     fetching: string;
     statementStatus: string;
+
+    tooltipInvite: string;
+    tooltipNotYetSignedOff: string;
+    tooltipEditAccountant: string;
+    tooltipShowInfo: string;
+    tooltipHideInfo: string;
+    tooltipReadStatement: string;
   };
 
   login: {

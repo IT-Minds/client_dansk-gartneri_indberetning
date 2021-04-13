@@ -31,7 +31,7 @@ const InviteBtn: FC<Props> = ({ account, accountingYear }) => {
   }, [account, accountingYear]);
 
   return (
-    <Tooltip label="Invitér til at udfylde oplysningsksema">
+    <Tooltip label={t("accounts.tooltipInvite")}>
       <IconButton
         aria-label="Invite to fill out statement"
         icon={<MdMessage />}

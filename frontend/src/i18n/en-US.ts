@@ -50,7 +50,14 @@ export const table: Locale = {
     CVR_apiErrorDescription: "Could not find CVR number in the registry",
     accountant: "Accountant",
     fetching: "Fetching clients...",
-    statementStatus: "Statement status"
+    statementStatus: "Statement status",
+
+    tooltipInvite: "Invite to fill out statement",
+    tooltipNotYetSignedOff: "Not yet signed off",
+    tooltipEditAccountant: "Edit accountant",
+    tooltipShowInfo: "Show info",
+    tooltipHideInfo: "Hide info",
+    tooltipReadStatement: "See statement"
   },
 
   login: {

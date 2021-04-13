@@ -87,12 +87,3 @@ const Accounts: FC = () => {
   );
 };
 export default Accounts;
-/*
-<AccountsTable
-            data={accounts}
-            accountingYear={accountingYear}
-            searchString={searchString}
-            fetchData={fetchData}
-            requestStatement={handleRequestStatement}
-          />
-*/

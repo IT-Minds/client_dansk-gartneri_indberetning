@@ -1,7 +1,7 @@
-import { IconButton, Tooltip } from "@chakra-ui/react";
+import { IconButton, Spinner, Tooltip, useToast } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
-import { FC, useCallback, useContext } from "react";
+import { FC, useCallback, useContext, useState } from "react";
 import { MdAssignment, MdMessage } from "react-icons/md";
 import { genStatementClient } from "services/backend/apiClients";
 import { CreateStatementCommand, IAccountDto } from "services/backend/nswagts";
@@ -14,9 +14,12 @@ interface Props {
 const InviteBtn: FC<Props> = ({ account, accountingYear }) => {
   const { t } = useLocales();
   const { fetchData } = useContext(AccountsContext);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const toast = useToast();
 
   const onInvite = useCallback(async () => {
     try {
+      setIsProcessing(true);
       const statementclient = await genStatementClient();
       await statementclient.createStatement(
         new CreateStatementCommand({
@@ -24,9 +27,26 @@ const InviteBtn: FC<Props> = ({ account, accountingYear }) => {
           revisionYear: accountingYear
         })
       );
-      await fetchData();
+      toast({
+        title: t("statements.invitationSentSuccessTitle"),
+        description: t("statements.invitationSentSuccessText"),
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left"
+      });
+      setIsProcessing(false);
+      fetchData();
     } catch (err) {
       console.error(err);
+      toast({
+        title: t("statements.invitationSentErrorTitle"),
+        description: t("statements.invitationSentErrorTitle"),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left"
+      });
     }
   }, [account, accountingYear]);
 
@@ -34,7 +54,7 @@ const InviteBtn: FC<Props> = ({ account, accountingYear }) => {
     <Tooltip label={t("accounts.tooltipInvite")}>
       <IconButton
         aria-label="Invite to fill out statement"
-        icon={<MdMessage />}
+        icon={isProcessing ? <Spinner size="sm" /> : <MdMessage />}
         onClick={e => onInvite()}
       />
     </Tooltip>

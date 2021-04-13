@@ -151,6 +151,11 @@ export const table: Locale = {
     statusEdited: "Has edited",
     statusSignedOff: "Signed off",
 
+    invitationSentSuccessTitle: "Invite sent",
+    invitationSentSuccessText: "Invite to fill out statement has been sent",
+    invitationSentErrorTitle: "Invite not sent",
+    invitationSentErrorText: "An error occured when trying to send the invite.",
+
     signOffSuccessTitle: "Indberetning underskrevet",
     signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",
     signOffErrorTitle: "Fejl",

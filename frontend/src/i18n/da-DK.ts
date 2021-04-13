@@ -137,6 +137,11 @@ export const table: Locale = {
     confirmSignOffButton: "Underskriv",
     confirmSignOffText: "Du er ved at underskrive dit oplysningsskema. Vil du fortsætte?",
 
+    statusNotInvited: "Ikke inviteret",
+    statusInvited: "Inviteret",
+    statusEdited: "Har redigeret",
+    statusSignedOff: "Underskrevet",
+
     signOffSuccessTitle: "Indberetning underskrevet",
     signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",
     signOffErrorTitle: "Fejl",

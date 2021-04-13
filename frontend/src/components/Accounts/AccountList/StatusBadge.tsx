@@ -11,7 +11,13 @@ interface Props {
 
 const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
   const { t } = useLocales();
-  const { statusNotSent, statusIsSent, statusIsEdited, statusIsSigned } = useColors();
+  const {
+    statusNotSent,
+    statusIsSent,
+    statusIsEdited,
+    statusIsSigned,
+    statusTextColor
+  } = useColors();
   const { colorMode } = useColorMode();
 
   const genStatus: { msg: string; color: string } = useMemo(() => {
@@ -19,14 +25,14 @@ const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
     if (statement) {
       switch (statement.status) {
         case StatementStatus.InvitedNotEdited:
-          return { msg: "Afsendt", color: statusIsSent };
+          return { msg: t("statements.statusInvited"), color: statusIsSent };
         case StatementStatus.InvitedAndEdited:
-          return { msg: "Redigeret", color: statusIsEdited };
+          return { msg: t("statements.statusEdited"), color: statusIsEdited };
         case StatementStatus.SignedOff:
-          return { msg: "Færdig", color: statusIsSigned };
+          return { msg: t("statements.statusSignedOff"), color: statusIsSigned };
       }
     } else {
-      return { msg: "Ej afsendt", color: statusNotSent };
+      return { msg: t("statements.statusNotInvited"), color: statusNotSent };
     }
   }, [account.statements, accountingYear, colorMode]);
 
@@ -35,11 +41,11 @@ const StatusBadge: FC<Props> = ({ account, accountingYear }) => {
       rounded="md"
       background={genStatus.color}
       h="40px"
-      w="100px"
+      w="120px"
       p="10px"
       justifyContent="center"
       alignItems="center">
-      <Text fontSize="xs" fontWeight="bold">
+      <Text fontSize="xs" fontWeight="bold" textColor={statusTextColor}>
         {genStatus.msg.toUpperCase()}
       </Text>
     </Flex>

@@ -2,7 +2,7 @@ import { IconButton, Tooltip } from "@chakra-ui/react";
 import { AccountsContext } from "contexts/AccountsContext";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useContext } from "react";
-import { MdAssignment } from "react-icons/md";
+import { MdAssignment, MdMessage } from "react-icons/md";
 import { genStatementClient } from "services/backend/apiClients";
 import { CreateStatementCommand, IAccountDto } from "services/backend/nswagts";
 
@@ -34,7 +34,7 @@ const InviteBtn: FC<Props> = ({ account, accountingYear }) => {
     <Tooltip label="Invitér til at udfylde oplysningsksema">
       <IconButton
         aria-label="Invite to fill out statement"
-        icon={<MdAssignment />}
+        icon={<MdMessage />}
         onClick={e => onInvite()}
       />
     </Tooltip>

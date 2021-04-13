@@ -5,8 +5,10 @@ import {
   Avatar,
   Divider,
   Flex,
+  Heading,
   HStack,
   IconButton,
+  Spacer,
   Stack,
   Text,
   Tooltip
@@ -18,6 +20,7 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { IAccountDto, StatementStatus } from "services/backend/nswagts";
 
 import ChangeAccountantModal from "../ChangeAccountant/ChangeAccountantModal";
+import AccountItemExpandedPanel from "./AccountListItemButtons/AccountItemExpandedPanel";
 import InviteBtn from "./AccountListItemButtons/InviteBtn";
 import RemindBtn from "./AccountListItemButtons/RemindBtn";
 import SeeStatementBtn from "./AccountListItemButtons/SeeStatementBtn";
@@ -63,16 +66,7 @@ const AccountListItem: FC<Props> = ({ account, accountingYear }) => {
               </HStack>
             </Flex>
             <AccordionPanel p={3}>
-              <Stack spacing={0} w="max-content">
-                <Divider mb={3} />
-                <Text>CVR: {account.cvrNumber}</Text>
-                <Text>Email: {account.email}</Text>
-                <Text>Tlf: {account.tel}</Text>
-                <Text>
-                  Adresse:
-                  {` ${account.address.addressLine1} ${account.address.addressLine2} ${account.address.addressLine3} ${account.address.addressLine4}`}
-                </Text>
-              </Stack>
+              <AccountItemExpandedPanel account={account} />
             </AccordionPanel>
           </>
         )}

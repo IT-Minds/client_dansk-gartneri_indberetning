@@ -135,6 +135,11 @@ export interface Locale {
     confirmSignOffButton: string;
     confirmSignOffText: string;
 
+    statusNotInvited: string;
+    statusInvited: string;
+    statusEdited: string;
+    statusSignedOff: string;
+
     signOffSuccessTitle: string;
     signOffSuccessText: string;
     signOffErrorTitle: string;

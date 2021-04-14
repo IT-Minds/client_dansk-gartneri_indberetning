@@ -3,7 +3,6 @@ import AccountingYearSelect from "components/Common/AccountingYearSelect";
 import FetchingSpinner from "components/Common/FetchingSpinner";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AccountsContext } from "contexts/AccountsContext";
-import { useGenCSV } from "hooks/useGenCSV";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
@@ -17,7 +16,6 @@ import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
-  const { genCSV } = useGenCSV();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [isFetching, setIsFetching] = useState(false);
@@ -77,6 +75,24 @@ const Accounts: FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const downloadCSV = useCallback(async () => {
+    try {
+      const statementclient = await genStatementClient();
+      const res = await statementclient.getStatementsCSV(accountingYear);
+      const uri = "data:text/csv;charset=utf-8," + res.content;
+
+      const downloadLink = document.createElement("a");
+      downloadLink.href = uri;
+      downloadLink.download = res.fileName;
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [accountingYear]);
+
   return (
     <AccountsContext.Provider
       value={{
@@ -99,7 +115,6 @@ const Accounts: FC = () => {
                 <SearchFilterInput onChange={setSearchString} value={searchString} />
               </Box>
               <NewAccountModal onSubmit={fetchData} />
-              <Button onClick={e => genCSV(accounts, accountingYear)}>test</Button>
             </HStack>
           </Flex>
           <FetchingSpinner isFetching={isFetching} text={t("accounts.fetching")} />

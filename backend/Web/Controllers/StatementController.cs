@@ -66,14 +66,12 @@ namespace Web.Controllers
     }
 
     [HttpGet("csv")]
-    public async Task<FileResult> GetStatementsCSV([FromQuery] int? accountingYear)
+    public async Task<CSVResponseDto> GetStatementsCSV([FromQuery] int? accountingYear)
     {
-      var res = await Mediator.Send(new GetStatementsCSVQuery
+      return await Mediator.Send(new GetStatementsCSVQuery
       {
         AccountingYear = accountingYear
       });
-
-      return File(Encoding.UTF8.GetBytes(res.Item1), "text/csv", res.Item2);
     }
   }
 }

@@ -14,11 +14,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Statements.Queries.GetStatementsCSVQuery
 {
   [Authorize(Role = RoleEnum.Admin)]
-  public class GetStatementsCSVQuery : IRequest<(string, string)>
+  public class GetStatementsCSVQuery : IRequest<CSVResponseDto>
   {
     public int? AccountingYear { get; set; }
 
-    public class GetStatementsCSVQueryHandler : IRequestHandler<GetStatementsCSVQuery, (string, string)>
+    public class GetStatementsCSVQueryHandler : IRequestHandler<GetStatementsCSVQuery, CSVResponseDto>
     {
       private readonly IApplicationDbContext _context;
       private readonly IMapper _mapper;
@@ -28,11 +28,11 @@ namespace Application.Statements.Queries.GetStatementsCSVQuery
         _context = context;
         _mapper = mapper;
       }
-      public async Task<(string, string)> Handle(GetStatementsCSVQuery request, CancellationToken cancellationToken)
+      public async Task<CSVResponseDto> Handle(GetStatementsCSVQuery request, CancellationToken cancellationToken)
       {
-        //Find statements of the provided accounting year, or all if no year is provided
+        //Find all signed-off statements of the provided accounting year, or all if no year is provided
         var statements = await _context.Statements
-          .Where(e => request.AccountingYear == null || e.RevisionYear == request.AccountingYear)
+          .Where(e => (request.AccountingYear == null || e.RevisionYear == request.AccountingYear) && e.Status == StatementStatus.SignedOff)
           .Include(e => e.Account)
           .ProjectTo<StatementCSVDto>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
@@ -63,7 +63,7 @@ namespace Application.Statements.Queries.GetStatementsCSVQuery
           ? "oplysningsskemaer_" + request.AccountingYear + ".csv"
           : "oplysningsskemaer_alle.csv";
 
-        return (csv, fileName);
+        return new CSVResponseDto {FileName = fileName, Content = csv};
       }
     }
   }

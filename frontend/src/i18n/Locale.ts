@@ -134,6 +134,7 @@ export interface Locale {
     signOff: string;
     confirmSignOffButton: string;
     confirmSignOffText: string;
+    downloadCsv: string;
 
     signOffSuccessTitle: string;
     signOffSuccessText: string;

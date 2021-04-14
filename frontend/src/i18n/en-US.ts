@@ -138,6 +138,7 @@ export const table: Locale = {
     signOff: "Sign off",
     confirmSignOffButton: "Underskriv",
     confirmSignOffText: "Du er ved at underskrive dit oplysningsskema. Vil du fortsætte?",
+    downloadCsv: "Download CSV",
 
     signOffSuccessTitle: "Indberetning underskrevet",
     signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",

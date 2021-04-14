@@ -11,6 +11,7 @@ import { CreateStatementCommand, IAccountDto } from "services/backend/nswagts";
 import { logger } from "utils/logger";
 
 import AccountsTable from "./AccountsTable";
+import DownloadCsvBtn from "./Filters/DownloadCsvBtn";
 import NewAccountModal from "./NewAccountModal";
 import SearchFilterInput from "./SearchFilterInput";
 
@@ -75,24 +76,6 @@ const Accounts: FC = () => {
     fetchData();
   }, [fetchData]);
 
-  const downloadCSV = useCallback(async () => {
-    try {
-      const statementclient = await genStatementClient();
-      const res = await statementclient.getStatementsCSV(accountingYear);
-      const uri = "data:text/csv;charset=utf-8," + res.content;
-
-      const downloadLink = document.createElement("a");
-      downloadLink.href = uri;
-      downloadLink.download = res.fileName;
-
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [accountingYear]);
-
   return (
     <AccountsContext.Provider
       value={{
@@ -105,6 +88,7 @@ const Accounts: FC = () => {
         <Stack spacing={4}>
           <Heading>{t("accounts.accounts")}</Heading>
           <Flex justifyContent="space-between" alignItems="center">
+            <DownloadCsvBtn accountingYear={accountingYear} />
             <AccountingYearSelect
               options={accountingYears}
               value={accountingYear}

@@ -855,7 +855,7 @@ export class MailClient extends ClientBase implements IMailClient {
 }
 
 export interface IStatementClient {
-    getAllStatements(accountingyear?: number | null | undefined): Promise<StatementDto[]>;
+    getAllStatements(): Promise<StatementDto[]>;
     getMyStatements(): Promise<StatementDto[]>;
     getStatement(id: number): Promise<StatementDto>;
     updateStatement(id: number, command: UpdateStatementCommand): Promise<FileResponse>;
@@ -875,10 +875,8 @@ export class StatementClient extends ClientBase implements IStatementClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getAllStatements(accountingyear?: number | null | undefined): Promise<StatementDto[]> {
-        let url_ = this.baseUrl + "/api/Statement?";
-        if (accountingyear !== undefined && accountingyear !== null)
-            url_ += "accountingyear=" + encodeURIComponent("" + accountingyear) + "&";
+    getAllStatements(): Promise<StatementDto[]> {
+        let url_ = this.baseUrl + "/api/Statement";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{

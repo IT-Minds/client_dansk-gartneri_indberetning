@@ -16,12 +16,9 @@ namespace Web.Controllers
   public class StatementController : ApiControllerBase
   {
     [HttpGet]
-    public async Task<ActionResult<List<StatementDto>>> GetAllStatements([FromQuery] int? accountingyear)
+    public async Task<ActionResult<List<StatementDto>>> GetAllStatements()
     {
-      return await Mediator.Send(new GetAllStatementsQuery
-      {
-        AccountingYear = accountingyear
-      });
+      return await Mediator.Send(new GetAllStatementsQuery());
     }
 
     [HttpGet("mystatements")]

@@ -1,8 +1,9 @@
-import { Box, Flex, Heading, HStack, Select, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, HStack, Select, Spinner, Stack, Text } from "@chakra-ui/react";
 import AccountingYearSelect from "components/Common/AccountingYearSelect";
 import FetchingSpinner from "components/Common/FetchingSpinner";
 import BasicLayout from "components/Layouts/BasicLayout";
 import { AccountsContext } from "contexts/AccountsContext";
+import { useGenCSV } from "hooks/useGenCSV";
 import { useLocales } from "hooks/useLocales";
 import { FC, useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import ListReducer, { ListReducerActionType } from "react-list-reducer";
@@ -16,6 +17,7 @@ import SearchFilterInput from "./SearchFilterInput";
 
 const Accounts: FC = () => {
   const { t } = useLocales();
+  const { genCSV } = useGenCSV();
 
   const [accounts, dispatchAccounts] = useReducer(ListReducer<IAccountDto>("id"), []);
   const [isFetching, setIsFetching] = useState(false);
@@ -97,6 +99,7 @@ const Accounts: FC = () => {
                 <SearchFilterInput onChange={setSearchString} value={searchString} />
               </Box>
               <NewAccountModal onSubmit={fetchData} />
+              <Button onClick={e => genCSV(accounts, accountingYear)}>test</Button>
             </HStack>
           </Flex>
           <FetchingSpinner isFetching={isFetching} text={t("accounts.fetching")} />

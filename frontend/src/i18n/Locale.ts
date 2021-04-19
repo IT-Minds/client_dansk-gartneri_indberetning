@@ -141,6 +141,17 @@ export interface Locale {
     signOff: string;
     confirmSignOffButton: string;
     confirmSignOffText: string;
+    downloadCsv: string;
+
+    statusNotInvited: string;
+    statusInvited: string;
+    statusEdited: string;
+    statusSignedOff: string;
+
+    invitationSentSuccessTitle: string;
+    invitationSentSuccessText: string;
+    invitationSentErrorTitle: string;
+    invitationSentErrorText: string;
 
     statusNotInvited: string;
     statusInvited: string;

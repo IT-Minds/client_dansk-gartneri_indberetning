@@ -1,4 +1,5 @@
 import { Flex, HStack, Image, Spacer } from "@chakra-ui/react";
+import { AuthContext } from "contexts/AuthContext";
 import { useColors } from "hooks/useColors";
 import Link from "next/link";
 import { FC } from "react";

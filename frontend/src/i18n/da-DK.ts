@@ -143,6 +143,17 @@ export const table: Locale = {
     signOff: "Underskriv og send",
     confirmSignOffButton: "Underskriv",
     confirmSignOffText: "Du er ved at underskrive dit oplysningsskema. Vil du fortsætte?",
+    downloadCsv: "Download CSV",
+
+    statusNotInvited: "Ikke inviteret",
+    statusInvited: "Inviteret",
+    statusEdited: "Har redigeret",
+    statusSignedOff: "Underskrevet",
+
+    invitationSentSuccessTitle: "Invitation sendt",
+    invitationSentSuccessText: "Invitation til at udfylde oplysningsskema blev sendt.",
+    invitationSentErrorTitle: "Invitation ikke sendt",
+    invitationSentErrorText: "Der skete en fejl, da vi forsøgte at sende invitationen.",
 
     statusNotInvited: "Ikke inviteret",
     statusInvited: "Inviteret",
@@ -160,13 +171,13 @@ export const table: Locale = {
     signOffErrorText: "Der skete en fejl, da vi forsøgte at behandle din underskrivning.",
 
     section1: {
-      heading: "1. Grøntsager i væksthus",
+      heading: "Grøntsager i væksthus",
       mushrooms: "Svampe",
       tomatoCucumberHerbs: "Tomat, agurk, krydderurt",
       boughtPlantsDesc: "(excl. moms, ikke for svampe)"
     },
     section3: {
-      heading: "3. Grøntsager på friland",
+      heading: "Grøntsager på friland",
       turnoverExlPotatoes: "(excl. kartofler) Omsætning excl. moms",
       carrot: "Gulerod",
       pea: "Ært",
@@ -174,14 +185,14 @@ export const table: Locale = {
       boughtPlantsDesc: "(excl. moms kun vedr. stikløg eller andet)"
     },
     section4: {
-      heading: "4. Potteplanter m.v.",
+      heading: "Potteplanter m.v.",
       onions: "Løg og knolde",
       plants: "Potteplanter",
       flowers: "Snitblomster",
       boughtPlantsDesc: "(excl. moms kun vedr. snitblomster)"
     },
     section7: {
-      heading: "7. Planteskoleplanter",
+      heading: "Planteskoleplanter",
       description: "Inklusive videre- og detailsalg",
       plants: "Planteskoleplanter",
       turnoverDescription:
@@ -189,7 +200,7 @@ export const table: Locale = {
       boughtPlantsDesc: "(excl. moms)"
     },
     section8: {
-      heading: "8. Frugt og bær",
+      heading: "Frugt og bær",
       subHeading1: "Kernefrugt",
       subHeading2: "Stenfrugt",
       subHeading3: "Busk- og bærfrugt",

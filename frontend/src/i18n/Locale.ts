@@ -153,16 +153,6 @@ export interface Locale {
     invitationSentErrorTitle: string;
     invitationSentErrorText: string;
 
-    statusNotInvited: string;
-    statusInvited: string;
-    statusEdited: string;
-    statusSignedOff: string;
-
-    invitationSentSuccessTitle: string;
-    invitationSentSuccessText: string;
-    invitationSentErrorTitle: string;
-    invitationSentErrorText: string;
-
     signOffSuccessTitle: string;
     signOffSuccessText: string;
     signOffErrorTitle: string;

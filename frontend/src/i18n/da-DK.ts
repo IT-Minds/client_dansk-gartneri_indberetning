@@ -155,16 +155,6 @@ export const table: Locale = {
     invitationSentErrorTitle: "Invitation ikke sendt",
     invitationSentErrorText: "Der skete en fejl, da vi forsøgte at sende invitationen.",
 
-    statusNotInvited: "Ikke inviteret",
-    statusInvited: "Inviteret",
-    statusEdited: "Har redigeret",
-    statusSignedOff: "Underskrevet",
-
-    invitationSentSuccessTitle: "Invitation sendt",
-    invitationSentSuccessText: "Invitation til at udfylde oplysningsskema blev sendt.",
-    invitationSentErrorTitle: "Invitation ikke sendt",
-    invitationSentErrorText: "Der skete en fejl, da vi forsøgte at sende invitationen.",
-
     signOffSuccessTitle: "Indberetning underskrevet",
     signOffSuccessText: "Din indberetning er nu underskrevet og indsendt.",
     signOffErrorTitle: "Fejl",
